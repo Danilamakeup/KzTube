@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QazaqTube — Қазақстанның видеохостингі</title>
+    <title>QazaqTube — Қазақстан видеохостингі</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a2463 0%, #0a1b44 50%, #061845 100%);
+            background: linear-gradient(135deg, #0a2463 0%, #061845 100%);
             color: #fff;
             min-height: 100vh;
         }
-        
-        /* Желто-голубой дизайн */
         .header {
-            background: rgba(10, 36, 99, 0.95);
+            background: rgba(3, 18, 43, 0.95);
             backdrop-filter: blur(20px);
-            padding: 8px 20px;
+            padding: 10px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -31,9 +29,9 @@
             gap: 15px;
         }
         .logo {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 800;
-            background: linear-gradient(135deg, #f5b042, #ffd966, #fff5e0);
+            background: linear-gradient(135deg, #f5b042, #ffd966);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -278,7 +276,6 @@
         .action-btn.liked { background: #f5b042; color: #0a2463; border-color: #f5b042; }
         .action-btn.disliked { background: #3a3a5a; color: #ff8888; border-color: #ff6666; }
         
-        /* Комментарии */
         .comments-section {
             margin-top: 30px;
             padding: 20px;
@@ -339,16 +336,6 @@
         .comment-author { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #f5b042; }
         .comment-text { font-size: 14px; line-height: 1.4; }
         .comment-date { font-size: 11px; color: #8aa8dd; margin-top: 4px; }
-        .comment-actions { display: flex; gap: 15px; margin-top: 8px; }
-        .comment-like-btn, .comment-dislike-btn {
-            font-size: 12px;
-            cursor: pointer;
-            color: #8aa8dd;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .comment-like-btn:hover, .comment-dislike-btn:hover { color: #f5b042; }
         
         .recommendations-section { flex: 1; min-width: 280px; }
         .rec-title { font-size: 18px; margin-bottom: 15px; color: #f5b042; }
@@ -534,7 +521,6 @@
         </div>
         <div class="video-info-section" id="watchInfoSection"></div>
         
-        <!-- Комментарии -->
         <div class="comments-section">
             <div class="comments-title"><i class="far fa-comments"></i> <span id="commentsTitle">Комментарийлер</span> (<span id="commentsCount">0</span>)</div>
             <div class="comment-input-area" id="commentInputArea">
@@ -645,7 +631,7 @@
             needLogin: "Кіру қажет!", enterTitle: "Атауын енгізіңіз!", selectFile: "Файл таңдаңыз!",
             videoUploaded: "Видео жүктелді!", profileSaved: "Профиль жаңартылды!",
             cantSubscribe: "Өзіңізге жазыла алмайсыз!", subscribedMsg: "Жазылдыңыз ✅", unsubscribedMsg: "Жазылымнан шықтыңыз ❌",
-            qualityAuto: "Авто качество", speed: "жылдамдық", subtitlesBtn: "Субтитры (AI)"
+            speed: "жылдамдық", subtitlesBtn: "Субтитры (AI)"
         },
         ru: {
             loginBtn: "Вход", registerBtn: "Регистрация", logoutBtn: "Выйти",
@@ -660,7 +646,7 @@
             needLogin: "Нужно войти!", enterTitle: "Введите название!", selectFile: "Выберите файл!",
             videoUploaded: "Видео загружено!", profileSaved: "Профиль обновлён!",
             cantSubscribe: "Нельзя подписаться на себя!", subscribedMsg: "Вы подписались ✅", unsubscribedMsg: "Вы отписались ❌",
-            qualityAuto: "Авто качество", speed: "скорость", subtitlesBtn: "Субтитры (AI)"
+            speed: "скорость", subtitlesBtn: "Субтитры (AI)"
         }
     };
     
@@ -668,13 +654,16 @@
         const t = translations[currentLang];
         document.getElementById('loginBtn') && (document.getElementById('loginBtn').innerText = t.loginBtn);
         document.getElementById('registerBtn') && (document.getElementById('registerBtn').innerText = t.registerBtn);
-        document.querySelectorAll('.nav-link')[0] && (document.querySelectorAll('.nav-link')[0].innerHTML = t.homeNav);
-        document.querySelectorAll('.nav-link')[1] && (document.querySelectorAll('.nav-link')[1].innerHTML = t.profileNav);
-        document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label') && (document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label').innerText = t.subsLabel);
-        document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label') && (document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label').innerText = t.videosLabel);
-        document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label') && (document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label').innerText = t.likesLabel);
-        document.querySelector('#profilePage h3') && (document.querySelector('#profilePage h3').innerText = t.myVideos);
-        document.querySelector('.rec-title') && (document.querySelector('.rec-title').innerHTML = t.recommendations);
+        if(document.querySelectorAll('.nav-link')[0]) document.querySelectorAll('.nav-link')[0].innerHTML = t.homeNav;
+        if(document.querySelectorAll('.nav-link')[1]) document.querySelectorAll('.nav-link')[1].innerHTML = t.profileNav;
+        if(document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label')) 
+            document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label').innerText = t.subsLabel;
+        if(document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label'))
+            document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label').innerText = t.videosLabel;
+        if(document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label'))
+            document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label').innerText = t.likesLabel;
+        if(document.querySelector('#profilePage h3')) document.querySelector('#profilePage h3').innerText = t.myVideos;
+        if(document.querySelector('.rec-title')) document.querySelector('.rec-title').innerHTML = t.recommendations;
         document.getElementById('commentsTitle') && (document.getElementById('commentsTitle').innerText = t.comments);
         document.getElementById('postBtnText') && (document.getElementById('postBtnText').innerText = t.postComment);
         document.getElementById('commentInput') && (document.getElementById('commentInput').placeholder = t.commentPlaceholder);
@@ -706,17 +695,17 @@
     
     function generateAISubtitles(duration) {
         const phrases = subtitlePhrases[currentLang] || subtitlePhrases.ru;
-        const subtitles = [];
+        const subs = [];
         let time = 3;
         while(time < (duration || 60)) {
-            subtitles.push({ time: time, text: phrases[Math.floor(Math.random() * phrases.length)] });
+            subs.push({ time: time, text: phrases[Math.floor(Math.random() * phrases.length)] });
             time += 5 + Math.random() * 4;
         }
-        return subtitles;
+        return subs;
     }
     
     function loadData() {
-        const saved = localStorage.getItem('qaz_data');
+        const saved = localStorage.getItem('qaztube_data');
         if(saved) {
             const data = JSON.parse(saved);
             users = data.users || [];
@@ -726,22 +715,22 @@
             subs = data.subs || {};
             comments = data.comments || {};
             viewsRecord = new Set(data.viewsRecord || []);
-            const savedCurrent = localStorage.getItem('qaz_current');
-            if(savedCurrent) {
-                const cur = JSON.parse(savedCurrent);
-                const exists = users.find(u => String(u.id) === String(cur.id));
-                if(exists) currentUser = exists;
-            }
+        }
+        const savedCurrent = localStorage.getItem('qaztube_current');
+        if(savedCurrent) {
+            const cur = JSON.parse(savedCurrent);
+            const exists = users.find(u => String(u.id) === String(cur.id));
+            if(exists) currentUser = exists;
         }
     }
     
     function saveData() {
-        localStorage.setItem('qaz_data', JSON.stringify({
+        localStorage.setItem('qaztube_data', JSON.stringify({
             users, videos, likes, dislikes, subs, comments,
             viewsRecord: [...viewsRecord]
         }));
-        if(currentUser) localStorage.setItem('qaz_current', JSON.stringify(currentUser));
-        else localStorage.removeItem('qaz_current');
+        if(currentUser) localStorage.setItem('qaztube_current', JSON.stringify(currentUser));
+        else localStorage.removeItem('qaztube_current');
     }
     
     function getSubscriberCount(channelId) {
@@ -777,7 +766,6 @@
     }
     
     function completeRegistration() {
-        const t = translations[currentLang];
         if(!pendingRegistration || document.getElementById('regCode').value !== pendingRegistration.code) {
             toast("Қате код!"); return;
         }
@@ -792,7 +780,7 @@
         closeModal('register');
         updateUI();
         renderHomePage();
-        toast(t.registerSuccess);
+        toast(translations[currentLang].registerSuccess);
         pendingRegistration = null;
     }
     
@@ -812,7 +800,7 @@
     
     function logout() {
         currentUser = null;
-        localStorage.removeItem('qaz_current');
+        localStorage.removeItem('qaztube_current');
         updateUI();
         renderHomePage();
         toast(translations[currentLang].logoutBtn);
@@ -846,6 +834,9 @@
     
     function openUploadModal() {
         if(!currentUser) { toast(translations[currentLang].needLogin); return; }
+        document.getElementById('uploadTitle').value = '';
+        document.getElementById('uploadDesc').value = '';
+        document.getElementById('uploadFile').value = '';
         openModal('upload');
     }
     
@@ -855,16 +846,24 @@
         const file = document.getElementById('uploadFile').files[0];
         if(!title) { toast(t.enterTitle); return; }
         if(!file) { toast(t.selectFile); return; }
+        
         const reader = new FileReader();
         reader.onload = (e) => {
-            videos.push({
-                id: String(Date.now()), title: title, desc: document.getElementById('uploadDesc').value,
-                authorId: currentUser.id, authorName: currentUser.name || currentUser.login,
-                date: new Date().toISOString(), views: 0, src: e.target.result
-            });
+            const newVideo = {
+                id: String(Date.now()),
+                title: title,
+                desc: document.getElementById('uploadDesc').value,
+                authorId: currentUser.id,
+                authorName: currentUser.name || currentUser.login,
+                date: new Date().toISOString(),
+                views: 0,
+                src: e.target.result
+            };
+            videos.push(newVideo);
             saveData();
             closeModal('upload');
             renderHomePage();
+            if(currentPage === 'profile') showProfile();
             toast(t.videoUploaded);
         };
         reader.readAsDataURL(file);
@@ -928,7 +927,7 @@
         const userVideos = videos.filter(v => v.authorId === currentUser.id).reverse();
         const container = document.getElementById('profileVideosGrid');
         if(userVideos.length === 0) {
-            container.innerHTML = '<div style="text-align:center;padding:40px;">📭 Сізде әлі видео жоқ</div>';
+            container.innerHTML = '<div style="text-align:center;padding:40px;color:#8aa8dd;">📭 Сізде әлі видео жоқ. Жүктеңіз!</div>';
             return;
         }
         let html = '<div class="videos-grid">';
@@ -1038,7 +1037,8 @@
             video.views++;
             viewsRecord.add(viewKey);
             saveData();
-            document.getElementById('watchStats') && (document.getElementById('watchStats').innerHTML = `${video.views} ${t.views} • 👍 ${likeCount} • 👎 ${dislikeCount}`);
+            const statsEl = document.getElementById('watchStats');
+            if(statsEl) statsEl.innerHTML = `${video.views} ${t.views} • 👍 ${likeCount} • 👎 ${dislikeCount}`;
         }
         
         renderRecommendations(video.id);
@@ -1094,7 +1094,6 @@
     }
     
     function renderComments() {
-        const t = translations[currentLang];
         const videoComments = comments[currentVideoId] || [];
         document.getElementById('commentsCount').innerText = videoComments.length;
         const container = document.getElementById('commentsList');
@@ -1103,7 +1102,7 @@
             return;
         }
         let html = '';
-        for(let c of videoComments.reverse()) {
+        for(let c of [...videoComments].reverse()) {
             const author = users.find(u => u.id === c.userId) || { name: c.userName, avatar: c.userName[0].toUpperCase() };
             html += `<div class="comment-item">
                 <div class="comment-avatar-small">${author.avatar || author.name[0].toUpperCase()}</div>
@@ -1260,7 +1259,7 @@
 </script>
 
 <div class="footer">
-    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Қазақстанның видеохостингі | Лайк/дизлайк | Комментарийлер
+    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Жүктеу жұмыс істейді | Лайк/дизлайк | Комментарийлер
 </div>
 </body>
 </html>
