@@ -10,7 +10,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0f0f0f; color: #fff; }
         
-        /* Хедер */
         .header {
             background: #0f0f0f;
             padding: 8px 20px;
@@ -83,6 +82,30 @@
         }
         .hidden { display: none !important; }
         
+        /* Навигация */
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            padding: 0 20px;
+            border-bottom: 1px solid #272727;
+        }
+        .nav-link {
+            padding: 12px 0;
+            cursor: pointer;
+            font-weight: 500;
+            position: relative;
+        }
+        .nav-link.active { color: #f5b042; }
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #f5b042;
+        }
+        
         /* Главная страница */
         .home-container { max-width: 1600px; margin: 0 auto; padding: 20px; }
         .videos-grid {
@@ -117,6 +140,34 @@
         .video-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .channel-name { font-size: 13px; color: #aaa; margin-bottom: 3px; }
         .video-stats { font-size: 12px; color: #aaa; }
+        
+        /* Страница профиля */
+        .profile-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 30px;
+            background: #1a1a1a;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        .profile-big-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f5b042, #ffd966);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+            background-size: cover;
+        }
+        .profile-stats { display: flex; gap: 40px; margin-top: 15px; }
+        .profile-stat { text-align: center; }
+        .profile-stat-value { font-size: 24px; font-weight: bold; }
+        .profile-stat-label { font-size: 13px; color: #aaa; }
         
         /* Страница просмотра */
         .watch-container { display: flex; max-width: 1600px; margin: 0 auto; padding: 20px; gap: 30px; }
@@ -194,11 +245,10 @@
         }
         .channel-left { display: flex; align-items: center; gap: 12px; }
         .channel-avatar-big { width: 48px; height: 48px; border-radius: 50%; background: #f5b042; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; }
-        .channel-name-big { font-weight: 600; font-size: 16px; }
         .subscribe-btn { background: #f5b042; color: #0f0f0f; padding: 8px 20px; }
+        .subscribe-btn.disabled { background: #3a3a3a; color: #aaa; cursor: not-allowed; }
         .action-buttons { display: flex; gap: 20px; margin-top: 15px; }
         .action-btn { background: #272727; padding: 8px 16px; border-radius: 40px; font-size: 14px; cursor: pointer; transition: 0.2s; }
-        .action-btn:hover { background: #3a3a3a; }
         .action-btn.liked { background: #f5b042; color: #0f0f0f; }
         
         .recommendations-section { flex: 1; }
@@ -209,8 +259,6 @@
         .rec-thumb video { width: 100%; height: 100%; object-fit: cover; }
         .rec-info { flex: 1; }
         .rec-video-title { font-weight: 500; font-size: 14px; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .rec-channel-name { font-size: 12px; color: #aaa; margin-bottom: 3px; }
-        .rec-video-stats { font-size: 12px; color: #aaa; }
         
         /* Субтитры */
         .subtitles {
@@ -230,7 +278,6 @@
             border-radius: 8px;
             font-size: 18px;
             font-weight: 500;
-            text-shadow: 1px 1px 0 #000;
         }
         
         /* Модалки */
@@ -254,7 +301,7 @@
             max-width: 450px;
         }
         .modal-content h2 { margin-bottom: 20px; color: #f5b042; }
-        .modal-content input {
+        .modal-content input, .modal-content textarea {
             width: 100%;
             padding: 12px;
             margin-bottom: 12px;
@@ -262,6 +309,7 @@
             border: 1px solid #3a3a3a;
             background: #121212;
             color: white;
+            font-family: inherit;
         }
         .toast {
             position: fixed;
@@ -295,8 +343,8 @@
             <option value="ru">🇷🇺 Русский</option>
         </select>
         <div id="unauthButtons">
-            <button class="btn-outline" onclick="openModal('login')" data-lang-key="loginBtn">Кіру</button>
-            <button class="btn-primary" onclick="openModal('register')" data-lang-key="registerBtn">Тіркелу</button>
+            <button class="btn-outline" onclick="openModal('login')">Кіру</button>
+            <button class="btn-primary" onclick="openModal('register')">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
             <div class="user-info" onclick="openProfileMenu()">
@@ -307,24 +355,43 @@
     </div>
 </div>
 
-<!-- Профиль меню -->
-<div id="profileMenu" class="modal" style="justify-content: flex-end; align-items: flex-start; padding-top: 70px;">
-    <div class="modal-content" style="width: 280px; margin-right: 20px;">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div class="avatar" id="profileAvatar" style="width: 80px; height: 80px; margin: 0 auto 10px; font-size: 30px;"></div>
-            <h3 id="profileDisplayName"></h3>
-            <p style="color:#aaa; font-size:12px;">@<span id="profileLogin"></span></p>
-        </div>
-        <hr style="border-color:#3a3a3a; margin: 15px 0;">
-        <button class="btn-outline" onclick="openSettings()" style="width:100%; margin-bottom:8px;"><i class="fas fa-user-edit"></i> <span data-lang-key="editProfile">Профильді өңдеу</span></button>
-        <button class="btn-outline" onclick="uploadNewVideo()" style="width:100%; margin-bottom:8px;"><i class="fas fa-upload"></i> <span data-lang-key="uploadVideoBtn">Видео жүктеу</span></button>
-        <button class="btn-primary" onclick="logout()" style="width:100%;"><i class="fas fa-sign-out-alt"></i> <span data-lang-key="logoutBtn">Шығу</span></button>
-    </div>
+<!-- Навигация -->
+<div class="nav-links" id="navLinks" style="display: none;">
+    <div class="nav-link active" onclick="showHome()">🏠 Басты</div>
+    <div class="nav-link" onclick="showProfile()">👤 Менің каналым</div>
 </div>
 
 <!-- Главная страница -->
 <div id="homePage" class="home-container">
     <div class="videos-grid" id="homeVideosGrid"></div>
+</div>
+
+<!-- Страница профиля -->
+<div id="profilePage" class="profile-container" style="display: none;">
+    <div class="profile-header">
+        <div class="profile-big-avatar" id="profileBigAvatar"></div>
+        <div>
+            <h2 id="profileName"></h2>
+            <p style="color:#aaa;">@<span id="profileLoginName"></span></p>
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileSubsCount">0</div>
+                    <div class="profile-stat-label">жазылушы</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileVideosCount">0</div>
+                    <div class="profile-stat-label">видео</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="profileLikesCount">0</div>
+                    <div class="profile-stat-label">лайк</div>
+                </div>
+            </div>
+            <button class="btn-outline" onclick="openSettings()" style="margin-top: 15px;"><i class="fas fa-edit"></i> Профильді өңдеу</button>
+        </div>
+    </div>
+    <h3 style="margin-bottom: 20px;">📹 Менің видеоым</h3>
+    <div class="videos-grid" id="profileVideosGrid"></div>
 </div>
 
 <!-- Страница просмотра -->
@@ -355,7 +422,6 @@
                                     <button onclick="changeQuality('1080p')">1080p</button>
                                     <button onclick="changeQuality('720p')">720p</button>
                                     <button onclick="changeQuality('480p')">480p</button>
-                                    <button onclick="changeQuality('360p')">360p</button>
                                     <hr style="margin:5px 0; border-color:#3a3a3a;">
                                     <button onclick="changeSpeed(0.5)">0.5x</button>
                                     <button onclick="changeSpeed(0.75)">0.75x</button>
@@ -376,23 +442,33 @@
         <div class="video-info-section" id="watchInfoSection"></div>
     </div>
     <div class="recommendations-section">
-        <div class="rec-title" data-lang-key="recommendations">Ұсыныстар</div>
+        <div class="rec-title">Ұсыныстар</div>
         <div id="recommendationsList"></div>
     </div>
 </div>
 
-<!-- Модалки -->
+<!-- Модалка загрузки видео -->
+<div id="uploadModal" class="modal">
+    <div class="modal-content">
+        <h2><i class="fas fa-upload"></i> 📤 Видео жүктеу</h2>
+        <input type="text" id="uploadTitle" placeholder="Бейне атауы">
+        <textarea id="uploadDesc" placeholder="Сипаттама" rows="3"></textarea>
+        <input type="file" id="uploadFile" accept="video/mp4,video/webm">
+        <button class="btn-primary" onclick="confirmUpload()" style="width:100%; margin-top:10px;">✅ Жүктеу</button>
+        <button class="btn-outline" onclick="closeModal('upload')" style="width:100%; margin-top:10px;">Жабу</button>
+    </div>
+</div>
+
+<!-- Модалка регистрации -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
-        <h2>📝 <span data-lang-key="regTitle">Тіркелу</span></h2>
+        <h2>📝 Тіркелу</h2>
         <input type="email" id="regEmail" placeholder="Email (только @gmail.com, @mail.com)">
         <input type="text" id="regLogin" placeholder="Логин">
         <input type="password" id="regPass" placeholder="Пароль">
-        <div style="display:flex; gap:10px;">
-            <button class="btn-primary" onclick="sendVerificationCode()" style="flex:1">📧 Код жіберу</button>
-        </div>
-        <input type="text" id="regCode" placeholder="6 таңбалы код">
-        <div class="code-hint" id="codeHint" style="display:none; font-size:12px; text-align:center; margin-bottom:10px;"></div>
+        <button class="btn-primary" onclick="sendVerificationCode()" style="width:100%">📧 Код жіберу</button>
+        <input type="text" id="regCode" placeholder="6 таңбалы код" style="margin-top:10px;">
+        <div class="code-hint" id="codeHint" style="display:none; font-size:12px; text-align:center; margin:10px 0;"></div>
         <button class="btn-primary" onclick="completeRegistration()" style="width:100%; margin-top:10px;">✅ Тіркелу</button>
         <button class="btn-outline" onclick="closeModal('register')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
@@ -400,7 +476,7 @@
 
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <h2>🔐 <span data-lang-key="loginTitle">Кіру</span></h2>
+        <h2>🔐 Кіру</h2>
         <input type="text" id="loginInput" placeholder="Логин немесе Email">
         <input type="password" id="loginPass" placeholder="Пароль">
         <button class="btn-primary" onclick="login()" style="width:100%">Кіру</button>
@@ -410,7 +486,7 @@
 
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <h2>⚙️ <span data-lang-key="settingsTitle">Профиль</span></h2>
+        <h2>⚙️ Профиль</h2>
         <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:32px;background-size:cover;"></div>
         <input type="text" id="settingsName" placeholder="Жаңа есім">
         <input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL">
@@ -421,43 +497,7 @@
 
 <script>
     // ============ ПЕРЕВОД ============
-    const translations = {
-        kk: {
-            loginBtn: "Кіру", registerBtn: "Тіркелу", logoutBtn: "Шығу", editProfile: "Профильді өңдеу",
-            uploadVideoBtn: "Видео жүктеу", recommendations: "Ұсыныстар", regTitle: "Тіркелу",
-            loginTitle: "Кіру", settingsTitle: "Профиль", fillAll: "Барлық өрістерді толтырыңыз!",
-            invalidEmail: "Қате email! Тек @gmail.com, @mail.com", emailExists: "Бұл email тіркелген!",
-            loginExists: "Бұл логин алынған!", codeSent: "Код жіберілді!", wrongCode: "Қате код!",
-            registerSuccess: "Тіркелу сәтті!", wrongCredentials: "Қате логин немесе пароль!",
-            loginSuccess: "Қош келдіңіз!", logoutSuccess: "Шықтыңыз", needLogin: "Кіру қажет!",
-            enterTitle: "Атауын енгізіңіз!", selectFile: "Файл таңдаңыз!", videoUploaded: "Жүктелді!",
-            profileSaved: "Сақталды!", like: "лайк", subscribed: "Жазылдыңыз", subscribe: "Жазылу",
-            views: "көрсетілім", subscribers: "жазылушы"
-        },
-        ru: {
-            loginBtn: "Вход", registerBtn: "Регистрация", logoutBtn: "Выйти", editProfile: "Редактировать профиль",
-            uploadVideoBtn: "Загрузить видео", recommendations: "Рекомендации", regTitle: "Регистрация",
-            loginTitle: "Вход", settingsTitle: "Профиль", fillAll: "Заполните все поля!",
-            invalidEmail: "Неверный email! Только @gmail.com, @mail.com", emailExists: "Email уже зарегистрирован!",
-            loginExists: "Логин уже занят!", codeSent: "Код отправлен!", wrongCode: "Неверный код!",
-            registerSuccess: "Регистрация успешна!", wrongCredentials: "Неверный логин или пароль!",
-            loginSuccess: "Добро пожаловать!", logoutSuccess: "Вы вышли", needLogin: "Нужно войти!",
-            enterTitle: "Введите название!", selectFile: "Выберите файл!", videoUploaded: "Загружено!",
-            profileSaved: "Сохранено!", like: "лайков", subscribed: "Вы подписаны", subscribe: "Подписаться",
-            views: "просмотров", subscribers: "подписчиков"
-        }
-    };
-    
     let currentLang = localStorage.getItem('qaz_lang') || 'kk';
-    let viewIncrementLock = false; // Блокировка накрутки просмотров
-    
-    function applyTranslation() {
-        const t = translations[currentLang];
-        document.querySelectorAll('[data-lang-key]').forEach(el => {
-            const key = el.getAttribute('data-lang-key');
-            if (t[key]) el.innerText = t[key];
-        });
-    }
     
     // ============ ДАННЫЕ ============
     let users = [];
@@ -467,15 +507,14 @@
     let currentUser = null;
     let pendingRegistration = null;
     let currentPlayingVideo = null;
-    let viewRecorded = false; // Отслеживание просмотра для текущего видео
+    let viewedVideos = new Set(); // Хранит ID видео, которые уже получили просмотр
     
-    // AI субтитры (имитация генерации)
+    // AI субтитры
     let subtitlesEnabled = false;
     let currentSubtitles = [];
     let subtitleInterval = null;
     
     function generateAISubtitles(text) {
-        // ИИ генерирует субтитры на основе названия видео
         const words = text.split(' ');
         const subtitles = [];
         let time = 0;
@@ -493,6 +532,7 @@
         const savedLikes = localStorage.getItem('qaz_likes');
         const savedSubs = localStorage.getItem('qaz_subs');
         const savedCurrent = localStorage.getItem('qaz_current');
+        const savedViewed = localStorage.getItem('qaz_viewed');
         
         if(savedUsers) users = JSON.parse(savedUsers);
         if(savedVideos) videos = JSON.parse(savedVideos);
@@ -503,6 +543,7 @@
             const exists = users.find(u => String(u.id) === String(cur.id));
             if(exists) currentUser = exists;
         }
+        if(savedViewed) viewedVideos = new Set(JSON.parse(savedViewed));
     }
     
     function saveData() {
@@ -510,8 +551,28 @@
         localStorage.setItem('qaz_videos', JSON.stringify(videos));
         localStorage.setItem('qaz_likes', JSON.stringify(likes));
         localStorage.setItem('qaz_subs', JSON.stringify(subs));
+        localStorage.setItem('qaz_viewed', JSON.stringify([...viewedVideos]));
         if(currentUser) localStorage.setItem('qaz_current', JSON.stringify(currentUser));
         else localStorage.removeItem('qaz_current');
+    }
+    
+    // Подсчет подписчиков для канала
+    function getSubscriberCount(channelId) {
+        let count = 0;
+        for(let userId in subs) {
+            if(subs[userId] && subs[userId].includes(channelId)) count++;
+        }
+        return count;
+    }
+    
+    // Подсчет лайков на видео пользователя
+    function getUserLikesCount(userId) {
+        let total = 0;
+        const userVideos = videos.filter(v => v.authorId === userId);
+        for(let video of userVideos) {
+            total += likes[video.id] ? likes[video.id].length : 0;
+        }
+        return total;
     }
     
     function isValidEmail(email) {
@@ -521,28 +582,26 @@
     }
     
     function sendVerificationCode() {
-        const t = translations[currentLang];
         const email = document.getElementById('regEmail').value.trim();
         const login = document.getElementById('regLogin').value.trim();
         const password = document.getElementById('regPass').value;
         
-        if(!email || !login || !password) { toast(t.fillAll); return; }
-        if(!isValidEmail(email)) { toast(t.invalidEmail); return; }
-        if(users.find(u => u.email === email)) { toast(t.emailExists); return; }
-        if(users.find(u => u.login === login)) { toast(t.loginExists); return; }
+        if(!email || !login || !password) { toast("Барлық өрістерді толтырыңыз!"); return; }
+        if(!isValidEmail(email)) { toast("Қате email! Тек @gmail.com, @mail.com"); return; }
+        if(users.find(u => u.email === email)) { toast("Бұл email тіркелген!"); return; }
+        if(users.find(u => u.login === login)) { toast("Бұл логин алынған!"); return; }
         
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         pendingRegistration = { email, login, password, code };
         document.getElementById('codeHint').style.display = 'block';
-        document.getElementById('codeHint').innerHTML = `📧 ${t.codeSent} <strong>${code}</strong>`;
-        toast(`${t.codeSent} ${code}`);
+        document.getElementById('codeHint').innerHTML = `📧 Код жіберілді! <strong>${code}</strong>`;
+        toast(`Код: ${code}`);
     }
     
     function completeRegistration() {
-        const t = translations[currentLang];
         const enteredCode = document.getElementById('regCode').value.trim();
-        if(!pendingRegistration) { toast(t.fillAll); return; }
-        if(enteredCode !== pendingRegistration.code) { toast(t.wrongCode); return; }
+        if(!pendingRegistration) { toast("Алдымен код жіберіңіз!"); return; }
+        if(enteredCode !== pendingRegistration.code) { toast("Қате код!"); return; }
         
         const newUser = {
             id: String(Date.now()),
@@ -559,7 +618,7 @@
         closeModal('register');
         updateUI();
         renderHomePage();
-        toast(t.registerSuccess);
+        toast("Тіркелу сәтті! Қош келдіңіз!");
         clearRegForm();
         pendingRegistration = null;
     }
@@ -573,28 +632,26 @@
     }
     
     function login() {
-        const t = translations[currentLang];
         const input = document.getElementById('loginInput').value.trim();
         const pass = document.getElementById('loginPass').value;
         const user = users.find(u => (u.login === input || u.email === input) && u.password === pass);
-        if(!user) { toast(t.wrongCredentials); return; }
+        if(!user) { toast("Қате логин немесе пароль!"); return; }
         currentUser = user;
         saveData();
         closeModal('login');
         updateUI();
         renderHomePage();
-        toast(t.loginSuccess);
+        toast("Қош келдіңіз!");
         document.getElementById('loginInput').value = '';
         document.getElementById('loginPass').value = '';
     }
     
     function logout() {
-        const t = translations[currentLang];
         currentUser = null;
         localStorage.removeItem('qaz_current');
         updateUI();
         renderHomePage();
-        toast(t.logoutSuccess);
+        toast("Шықтыңыз");
         showHome();
     }
     
@@ -602,6 +659,7 @@
         if(currentUser) {
             document.getElementById('unauthButtons').classList.add('hidden');
             document.getElementById('authButtons').classList.remove('hidden');
+            document.getElementById('navLinks').style.display = 'flex';
             document.getElementById('userNameSpan').innerText = currentUser.name || currentUser.login;
             const av = document.getElementById('avatarSpan');
             if(currentUser.avatarUrl) {
@@ -616,49 +674,50 @@
         } else {
             document.getElementById('unauthButtons').classList.remove('hidden');
             document.getElementById('authButtons').classList.add('hidden');
+            document.getElementById('navLinks').style.display = 'none';
         }
     }
     
-    function uploadNewVideo() {
-        const t = translations[currentLang];
-        if(!currentUser) { toast(t.needLogin); return; }
+    function openUploadModal() {
+        if(!currentUser) { toast("Кіру қажет!"); return; }
+        document.getElementById('uploadTitle').value = '';
+        document.getElementById('uploadDesc').value = '';
+        document.getElementById('uploadFile').value = '';
+        openModal('upload');
+    }
+    
+    function confirmUpload() {
+        const title = document.getElementById('uploadTitle').value.trim();
+        const desc = document.getElementById('uploadDesc').value.trim();
+        const file = document.getElementById('uploadFile').files[0];
         
-        const title = prompt(t.enterTitle);
-        if(!title) return;
+        if(!title) { toast("Атауын енгізіңіз!"); return; }
+        if(!file) { toast("Файл таңдаңыз!"); return; }
         
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'video/mp4,video/webm';
-        input.onchange = (e) => {
-            const file = e.target.files[0];
-            if(!file) { toast(t.selectFile); return; }
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                const newVideo = {
-                    id: String(Date.now()),
-                    title: title,
-                    desc: "",
-                    authorId: currentUser.id,
-                    authorName: currentUser.name || currentUser.login,
-                    date: new Date().toISOString(),
-                    views: 0,
-                    src: ev.target.result,
-                    subtitles: generateAISubtitles(title)
-                };
-                videos.push(newVideo);
-                saveData();
-                renderHomePage();
-                toast(t.videoUploaded);
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            const newVideo = {
+                id: String(Date.now()),
+                title: title,
+                desc: desc,
+                authorId: currentUser.id,
+                authorName: currentUser.name || currentUser.login,
+                date: new Date().toISOString(),
+                views: 0,
+                src: ev.target.result,
+                subtitles: generateAISubtitles(title)
             };
-            reader.readAsDataURL(file);
+            videos.push(newVideo);
+            saveData();
+            closeModal('upload');
+            renderHomePage();
+            toast("Видео жүктелді!");
         };
-        input.click();
-        closeModal('profileMenu');
+        reader.readAsDataURL(file);
     }
     
     function renderHomePage() {
         const container = document.getElementById('homeVideosGrid');
-        const t = translations[currentLang];
         
         if(videos.length === 0) {
             container.innerHTML = '<div style="text-align:center;padding:60px;color:#aaa;"><i class="fas fa-video" style="font-size:50px;margin-bottom:15px;display:block;"></i>🎬 Видео жоқ. Бірінші болып жүктеңіз!</div>';
@@ -679,7 +738,7 @@
                         <div class="video-meta">
                             <div class="video-title">${escapeHtml(v.title)}</div>
                             <div class="channel-name">${escapeHtml(v.authorName)}</div>
-                            <div class="video-stats">${v.views} ${t.views} • ❤️ ${likeCount}</div>
+                            <div class="video-stats">${v.views} көрсетілім • ❤️ ${likeCount}</div>
                         </div>
                     </div>
                 </div>
@@ -693,38 +752,97 @@
         });
     }
     
+    function showProfile() {
+        if(!currentUser) { toast("Кіру қажет!"); return; }
+        
+        document.getElementById('homePage').style.display = 'none';
+        document.getElementById('watchPage').style.display = 'none';
+        document.getElementById('profilePage').style.display = 'block';
+        
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        document.querySelectorAll('.nav-link')[1].classList.add('active');
+        
+        // Заполняем профиль
+        const av = document.getElementById('profileBigAvatar');
+        if(currentUser.avatarUrl) {
+            av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
+            av.style.backgroundSize = 'cover';
+            av.innerText = '';
+        } else {
+            av.style.backgroundImage = 'none';
+            av.style.background = 'linear-gradient(135deg, #f5b042, #ffd966)';
+            av.innerText = currentUser.avatar || currentUser.login[0].toUpperCase();
+        }
+        document.getElementById('profileName').innerText = currentUser.name || currentUser.login;
+        document.getElementById('profileLoginName').innerText = currentUser.login;
+        document.getElementById('profileSubsCount').innerText = getSubscriberCount(currentUser.id);
+        document.getElementById('profileVideosCount').innerText = videos.filter(v => v.authorId === currentUser.id).length;
+        document.getElementById('profileLikesCount').innerText = getUserLikesCount(currentUser.id);
+        
+        // Свои видео
+        const userVideos = videos.filter(v => v.authorId === currentUser.id).reverse();
+        const container = document.getElementById('profileVideosGrid');
+        
+        if(userVideos.length === 0) {
+            container.innerHTML = '<div style="text-align:center;padding:40px;color:#aaa;">📭 Сізде әлі видео жоқ</div>';
+            return;
+        }
+        
+        let html = '<div class="videos-grid">';
+        for(let v of userVideos) {
+            const likeCount = likes[v.id] ? likes[v.id].length : 0;
+            html += `
+                <div class="video-card" onclick="openWatchPage('${v.id}')">
+                    <div class="thumbnail"><video src="${v.src}" style="width:100%;height:100%;object-fit:cover;"></video></div>
+                    <div class="video-details">
+                        <div class="video-channel-avatar">${v.authorName[0].toUpperCase()}</div>
+                        <div class="video-meta">
+                            <div class="video-title">${escapeHtml(v.title)}</div>
+                            <div class="video-stats">${v.views} көрсетілім • ❤️ ${likeCount}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        html += '</div>';
+        container.innerHTML = html;
+    }
+    
     function openWatchPage(videoId) {
         const video = videos.find(v => v.id === videoId);
         if(!video) return;
         
         currentPlayingVideo = video;
-        viewRecorded = false; // Сброс для нового видео
         
         document.getElementById('homePage').style.display = 'none';
+        document.getElementById('profilePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'flex';
+        
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        document.querySelectorAll('.nav-link')[0].classList.add('active');
         
         const mainVideo = document.getElementById('mainVideo');
         mainVideo.src = video.src;
         mainVideo.load();
         
-        const t = translations[currentLang];
         const likeCount = likes[video.id] ? likes[video.id].length : 0;
         const isLikedByUser = currentUser && likes[video.id] && likes[video.id].includes(currentUser.id);
         const isSubscribed = currentUser && subs[currentUser.id] && subs[currentUser.id].includes(video.authorId);
+        const isOwnChannel = currentUser && currentUser.id === video.authorId;
         
         document.getElementById('watchInfoSection').innerHTML = `
             <div class="watch-title">${escapeHtml(video.title)}</div>
-            <div class="watch-stats" id="watchStats">${video.views} ${t.views} • ${likeCount} ${t.like}</div>
+            <div class="watch-stats" id="watchStats">${video.views} көрсетілім • ${likeCount} лайк</div>
             <div class="channel-info">
                 <div class="channel-left">
                     <div class="channel-avatar-big">${video.authorName[0].toUpperCase()}</div>
                     <div>
                         <div class="channel-name-big">${escapeHtml(video.authorName)}</div>
-                        <div style="font-size:12px; color:#aaa;">0 ${t.subscribers}</div>
+                        <div style="font-size:12px; color:#aaa;">${getSubscriberCount(video.authorId)} жазылушы</div>
                     </div>
                 </div>
                 <div>
-                    <button class="subscribe-btn" onclick="subscribeFromWatch('${video.authorId}')">${isSubscribed ? t.subscribed : t.subscribe}</button>
+                    <button class="subscribe-btn ${isOwnChannel ? 'disabled' : ''}" onclick="subscribeFromWatch('${video.authorId}')" ${isOwnChannel ? 'disabled' : ''}>${isOwnChannel ? 'Бұл сізсіз' : (isSubscribed ? '✅ Жазылдыңыз' : '🔔 Жазылу')}</button>
                 </div>
             </div>
             <div class="action-buttons">
@@ -734,27 +852,22 @@
             </div>
         `;
         
-        // Сбрасываем субтитры
-        if(subtitleInterval) clearInterval(subtitleInterval);
-        currentSubtitles = video.subtitles || generateAISubtitles(video.title);
+        // Просмотр только один раз!
+        if(currentUser && currentUser.id !== video.authorId && !viewedVideos.has(video.id)) {
+            video.views++;
+            viewedVideos.add(video.id);
+            saveData();
+            const statsEl = document.getElementById('watchStats');
+            if(statsEl) statsEl.innerHTML = `${video.views} көрсетілім • ${likeCount} лайк`;
+        }
         
+        currentSubtitles = video.subtitles || generateAISubtitles(video.title);
         renderRecommendations(video.id);
         setupPlayer();
-        
-        // Запись просмотра ТОЛЬКО ОДИН РАЗ
-        if(!viewRecorded) {
-            video.views++;
-            viewRecorded = true;
-            saveData();
-            // Обновляем отображение просмотров
-            const statsEl = document.getElementById('watchStats');
-            if(statsEl) statsEl.innerHTML = `${video.views} ${t.views} • ${likeCount} ${t.like}`;
-        }
     }
     
     function renderRecommendations(currentVideoId) {
         const container = document.getElementById('recommendationsList');
-        const t = translations[currentLang];
         const otherVideos = videos.filter(v => v.id !== currentVideoId);
         
         if(otherVideos.length === 0) {
@@ -771,7 +884,7 @@
                     <div class="rec-info">
                         <div class="rec-video-title">${escapeHtml(v.title)}</div>
                         <div class="rec-channel-name">${escapeHtml(v.authorName)}</div>
-                        <div class="rec-video-stats">${v.views} ${t.views}</div>
+                        <div class="rec-video-stats">${v.views} көрсетілім</div>
                     </div>
                 </div>
             `;
@@ -780,8 +893,9 @@
     }
     
     function subscribeFromWatch(authorId) {
-        const t = translations[currentLang];
-        if(!currentUser) { toast(t.needLogin); return; }
+        if(!currentUser) { toast("Кіру қажет!"); return; }
+        if(currentUser.id === authorId) { toast("Өзіңізге жазыла алмайсыз!"); return; }
+        
         if(!subs[currentUser.id]) subs[currentUser.id] = [];
         const idx = subs[currentUser.id].indexOf(authorId);
         if(idx === -1) subs[currentUser.id].push(authorId);
@@ -792,8 +906,7 @@
     
     function likeFromWatch() {
         if(!currentPlayingVideo) return;
-        const t = translations[currentLang];
-        if(!currentUser) { toast(t.needLogin); return; }
+        if(!currentUser) { toast("Кіру қажет!"); return; }
         const videoId = currentPlayingVideo.id;
         if(!likes[videoId]) likes[videoId] = [];
         const idx = likes[videoId].indexOf(currentUser.id);
@@ -806,25 +919,17 @@
     function showHome() {
         document.getElementById('homePage').style.display = 'block';
         document.getElementById('watchPage').style.display = 'none';
+        document.getElementById('profilePage').style.display = 'none';
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        document.querySelectorAll('.nav-link')[0].classList.add('active');
         const video = document.getElementById('mainVideo');
         if(video) video.pause();
         renderHomePage();
     }
     
     // Настройки видео
-    function changeQuality(quality) {
-        const video = document.getElementById('mainVideo');
-        // В реальном плеере нужно менять src на разные качество, здесь имитация
-        toast(`Качество: ${quality}`);
-        document.getElementById('settingsMenu').classList.remove('show');
-    }
-    
-    function changeSpeed(speed) {
-        const video = document.getElementById('mainVideo');
-        video.playbackRate = speed;
-        toast(`Скорость: ${speed}x`);
-        document.getElementById('settingsMenu').classList.remove('show');
-    }
+    function changeQuality(quality) { toast(`Качество: ${quality}`); document.getElementById('settingsMenu').classList.remove('show'); }
+    function changeSpeed(speed) { document.getElementById('mainVideo').playbackRate = speed; toast(`Скорость: ${speed}x`); document.getElementById('settingsMenu').classList.remove('show'); }
     
     function toggleSubtitles() {
         subtitlesEnabled = !subtitlesEnabled;
@@ -832,7 +937,7 @@
         if(subtitlesEnabled && currentSubtitles.length > 0) {
             container.style.display = 'block';
             startSubtitleTracking();
-            toast('Субтитры (AI) включены');
+            toast('Субтитры включены');
         } else {
             container.style.display = 'none';
             if(subtitleInterval) clearInterval(subtitleInterval);
@@ -844,25 +949,18 @@
         if(subtitleInterval) clearInterval(subtitleInterval);
         const video = document.getElementById('mainVideo');
         const subtitleText = document.getElementById('subtitleText');
-        
         subtitleInterval = setInterval(() => {
             if(!subtitlesEnabled || !video || video.paused) return;
             const currentTime = video.currentTime;
             let activeSubtitle = null;
             for(let i = 0; i < currentSubtitles.length; i++) {
-                if(currentTime >= currentSubtitles[i].time) {
-                    activeSubtitle = currentSubtitles[i];
-                } else break;
+                if(currentTime >= currentSubtitles[i].time) activeSubtitle = currentSubtitles[i];
+                else break;
             }
-            if(activeSubtitle) {
-                subtitleText.textContent = activeSubtitle.text;
-            } else {
-                subtitleText.textContent = '';
-            }
+            subtitleText.textContent = activeSubtitle ? activeSubtitle.text : '';
         }, 200);
     }
     
-    // Плеер
     function setupPlayer() {
         const video = document.getElementById('mainVideo');
         const playPauseBtn = document.getElementById('playPauseBtn');
@@ -886,8 +984,7 @@
         function updateProgress() {
             if(video.duration) {
                 timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-                const percent = (video.currentTime / video.duration) * 100;
-                progressFill.style.width = percent + '%';
+                progressFill.style.width = (video.currentTime / video.duration) * 100 + '%';
             }
         }
         
@@ -924,14 +1021,8 @@
             else if(player.webkitRequestFullscreen) player.webkitRequestFullscreen();
         };
         
-        settingsBtn.onclick = (e) => {
-            e.stopPropagation();
-            settingsMenu.classList.toggle('show');
-        };
-        
-        document.addEventListener('click', (e) => {
-            if(!settingsBtn.contains(e.target)) settingsMenu.classList.remove('show');
-        });
+        settingsBtn.onclick = (e) => { e.stopPropagation(); settingsMenu.classList.toggle('show'); };
+        document.addEventListener('click', (e) => { if(!settingsBtn.contains(e.target)) settingsMenu.classList.remove('show'); });
         
         video.onended = () => playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
         video.play();
@@ -951,7 +1042,9 @@
         }
         document.getElementById('profileDisplayName').innerText = currentUser.name || currentUser.login;
         document.getElementById('profileLogin').innerText = currentUser.login;
-        document.getElementById('profileMenu').style.display = 'flex';
+        
+        // Создаем простое меню
+        alert(`👤 ${currentUser.name || currentUser.login}\n📹 Видео: ${videos.filter(v => v.authorId === currentUser.id).length}\n👥 Подписчиков: ${getSubscriberCount(currentUser.id)}\n❤️ Лайков: ${getUserLikesCount(currentUser.id)}`);
     }
     
     function openSettings() {
@@ -968,12 +1061,10 @@
             av.style.background = 'linear-gradient(135deg, #f5b042, #ffd966)';
             av.innerText = currentUser.avatar || currentUser.login[0].toUpperCase();
         }
-        closeModal('profileMenu');
         openModal('settings');
     }
     
     function saveSettings() {
-        const t = translations[currentLang];
         const newName = document.getElementById('settingsName').value.trim();
         const newAvatar = document.getElementById('settingsAvatarUrl').value.trim();
         if(newName) currentUser.name = newName;
@@ -984,7 +1075,7 @@
         saveData();
         updateUI();
         closeModal('settings');
-        toast(t.profileSaved);
+        toast("Профиль жаңартылды!");
         renderHomePage();
     }
     
@@ -1004,42 +1095,42 @@
         setTimeout(() => t.remove(), 3000);
     }
     
-    document.getElementById('langSelect').value = currentLang;
     document.getElementById('langSelect').onchange = () => {
         currentLang = document.getElementById('langSelect').value;
         localStorage.setItem('qaz_lang', currentLang);
-        applyTranslation();
-        renderHomePage();
-        if(currentPlayingVideo) {
-            // Обновляем страницу без накрутки просмотров
-            const video = currentPlayingVideo;
-            document.getElementById('watchInfoSection').innerHTML = `
-                <div class="watch-title">${escapeHtml(video.title)}</div>
-                <div class="watch-stats" id="watchStats">${video.views} ${translations[currentLang].views} • ${likes[video.id] ? likes[video.id].length : 0} ${translations[currentLang].like}</div>
-                <div class="channel-info">
-                    <div class="channel-left">
-                        <div class="channel-avatar-big">${video.authorName[0].toUpperCase()}</div>
-                        <div><div class="channel-name-big">${escapeHtml(video.authorName)}</div></div>
-                    </div>
-                    <div><button class="subscribe-btn">${translations[currentLang].subscribe}</button></div>
-                </div>
-                <div class="action-buttons"><div class="action-btn"><i class="fas fa-thumbs-up"></i> ${likes[video.id] ? likes[video.id].length : 0}</div></div>
-            `;
-        }
+        // Просто обновляем текст без накрутки просмотров
+        if(currentPlayingVideo) openWatchPage(currentPlayingVideo.id);
     };
     
-    window.onclick = (e) => {
-        if(e.target.classList.contains('modal')) e.target.style.display = 'none';
-    };
+    window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.style.display = 'none'; };
     
     loadData();
-    applyTranslation();
     updateUI();
     renderHomePage();
+    
+    // Переопределяем uploadNewVideo
+    window.uploadNewVideo = openUploadModal;
+    window.showProfile = showProfile;
+    window.showHome = showHome;
+    window.openWatchPage = openWatchPage;
+    window.subscribeFromWatch = subscribeFromWatch;
+    window.likeFromWatch = likeFromWatch;
+    window.openSettings = openSettings;
+    window.saveSettings = saveSettings;
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.sendVerificationCode = sendVerificationCode;
+    window.completeRegistration = completeRegistration;
+    window.login = login;
+    window.logout = logout;
+    window.confirmUpload = confirmUpload;
+    window.changeQuality = changeQuality;
+    window.changeSpeed = changeSpeed;
+    window.toggleSubtitles = toggleSubtitles;
 </script>
 
 <div class="footer">
-    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Качество, скорость, AI субтитры | Просмотры только один раз
+    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Просмотры только один раз | Нельзя подписаться на себя
 </div>
 </body>
 </html>
