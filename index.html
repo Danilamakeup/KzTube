@@ -244,15 +244,15 @@
             <option value="ru">Русский</option>
         </select>
         <div id="unauthButtons">
-            <button class="btn-outline" onclick="openModal('login')">Кіру</button>
-            <button class="btn-primary" onclick="openModal('register')">Тіркелу</button>
+            <button class="btn-outline" onclick="openModal('login')" id="loginBtn">Кіру</button>
+            <button class="btn-primary" onclick="openModal('register')" id="registerBtn">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
             <div class="user-info">
                 <span id="userNameSpan"></span>
                 <div class="avatar" id="avatarSpan"></div>
-                <button class="btn-outline" onclick="openSettings()">⚙️</button>
-                <button class="btn-outline" onclick="logout()">Шығу</button>
+                <button class="btn-outline" onclick="openSettings()" id="settingsBtn">⚙️</button>
+                <button class="btn-outline" onclick="logout()" id="logoutBtn">Шығу</button>
             </div>
         </div>
     </div>
@@ -260,11 +260,11 @@
 
 <div class="container">
     <div id="uploadSection" class="upload-area hidden">
-        <h4>📤 Жаңа бейне жүктеу</h4>
+        <h4 id="uploadTitle">📤 Жаңа бейне жүктеу</h4>
         <input type="text" id="videoTitle" placeholder="Бейне атауы">
         <textarea id="videoDesc" placeholder="Сипаттама" rows="2"></textarea>
         <input type="file" id="videoFile" accept="video/mp4,video/webm">
-        <button class="btn-primary" onclick="uploadVideo()">➕ Жүктеу</button>
+        <button class="btn-primary" onclick="uploadVideo()" id="uploadBtn">➕ Жүктеу</button>
     </div>
     <div id="videosContainer"></div>
 </div>
@@ -272,35 +272,35 @@
 <!-- Модалка регистрации -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
-        <h2>📝 Тіркелу</h2>
+        <h2 id="regTitle">📝 Тіркелу</h2>
         <input type="email" id="regEmail" placeholder="Email">
         <input type="text" id="regLogin" placeholder="Логин">
         <input type="password" id="regPass" placeholder="Құпия сөз">
-        <button class="btn-primary" onclick="register()" style="width:100%">Тіркелу</button>
-        <button class="btn-outline" onclick="closeModal('register')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="register()" id="regSubmitBtn" style="width:100%">Тіркелу</button>
+        <button class="btn-outline" onclick="closeModal('register')" id="regCloseBtn" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <!-- Модалка входа -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <h2>🔐 Кіру</h2>
+        <h2 id="loginTitle">🔐 Кіру</h2>
         <input type="text" id="loginInput" placeholder="Логин немесе Email">
         <input type="password" id="loginPass" placeholder="Құпия сөз">
-        <button class="btn-primary" onclick="login()" style="width:100%">Кіру</button>
-        <button class="btn-outline" onclick="closeModal('login')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="login()" id="loginSubmitBtn" style="width:100%">Кіру</button>
+        <button class="btn-outline" onclick="closeModal('login')" id="loginCloseBtn" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <!-- Модалка настроек -->
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <h2>⚙️ Профиль</h2>
+        <h2 id="settingsTitle">⚙️ Профиль</h2>
         <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;"></div>
-        <input type="text" id="settingsName" placeholder="Жаңа есім">
+        <input type="text" id="settingsName" id="settingsNameInput" placeholder="Жаңа есім">
         <input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL">
-        <button class="btn-primary" onclick="saveSettings()" style="width:100%">Сақтау</button>
-        <button class="btn-outline" onclick="closeModal('settings')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="saveSettings()" id="settingsSaveBtn" style="width:100%">Сақтау</button>
+        <button class="btn-outline" onclick="closeModal('settings')" id="settingsCloseBtn" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
@@ -311,33 +311,193 @@
 </div>
 
 <script>
-    // Данные
+    // ============ ПЕРЕВОД ============
+    const translations = {
+        kk: {
+            // кнопки
+            login: "Кіру",
+            register: "Тіркелу",
+            settings: "⚙️",
+            logout: "Шығу",
+            uploadTitle: "📤 Жаңа бейне жүктеу",
+            uploadBtn: "➕ Жүктеу",
+            videoTitlePlaceholder: "Бейне атауы",
+            videoDescPlaceholder: "Сипаттама",
+            // модалки
+            regTitle: "📝 Тіркелу",
+            regEmailPlaceholder: "Email",
+            regLoginPlaceholder: "Логин",
+            regPassPlaceholder: "Құпия сөз",
+            regSubmit: "Тіркелу",
+            regClose: "Жабу",
+            loginTitle: "🔐 Кіру",
+            loginInputPlaceholder: "Логин немесе Email",
+            loginPassPlaceholder: "Құпия сөз",
+            loginSubmit: "Кіру",
+            loginClose: "Жабу",
+            settingsTitle: "⚙️ Профиль",
+            settingsNamePlaceholder: "Жаңа есім",
+            settingsAvatarPlaceholder: "Аватарка URL",
+            settingsSave: "Сақтау",
+            settingsClose: "Жабу",
+            // сообщения
+            emptyVideos: "🎬 Бейнелер жоқ. Бірінші болып жүктеңіз!",
+            fillAll: "Барлық өрістерді толтырыңыз!",
+            emailExists: "Бұл email тіркелген!",
+            loginExists: "Бұл логин алынған!",
+            registerSuccess: "Тіркелу сәтті! Қош келдіңіз!",
+            wrongCredentials: "Қате логин/email немесе құпия сөз!",
+            loginSuccess: "Қош келдіңіз!",
+            logoutSuccess: "Сіз шықтыңыз",
+            needLogin: "Кіру қажет!",
+            enterTitle: "Бейне атауын енгізіңіз!",
+            selectFile: "Бейне файлды таңдаңыз!",
+            videoUploaded: "Бейне жүктелді!",
+            needLoginLike: "Лайк басу үшін кіріңіз!",
+            needLoginSubscribe: "Жазылу үшін кіріңіз!",
+            profileSaved: "Профиль жаңартылды!",
+            like: "лайк",
+            subscribed: "✅ Жазылдыңыз",
+            subscribe: "🔔 Жазылу"
+        },
+        ru: {
+            login: "Вход",
+            register: "Регистрация",
+            settings: "⚙️",
+            logout: "Выйти",
+            uploadTitle: "📤 Загрузить новое видео",
+            uploadBtn: "➕ Загрузить",
+            videoTitlePlaceholder: "Название видео",
+            videoDescPlaceholder: "Описание",
+            regTitle: "📝 Регистрация",
+            regEmailPlaceholder: "Email",
+            regLoginPlaceholder: "Логин",
+            regPassPlaceholder: "Пароль",
+            regSubmit: "Зарегистрироваться",
+            regClose: "Закрыть",
+            loginTitle: "🔐 Вход",
+            loginInputPlaceholder: "Логин или Email",
+            loginPassPlaceholder: "Пароль",
+            loginSubmit: "Войти",
+            loginClose: "Закрыть",
+            settingsTitle: "⚙️ Профиль",
+            settingsNamePlaceholder: "Новое имя",
+            settingsAvatarPlaceholder: "URL аватара",
+            settingsSave: "Сохранить",
+            settingsClose: "Закрыть",
+            emptyVideos: "🎬 Видео нет. Будьте первым!",
+            fillAll: "Заполните все поля!",
+            emailExists: "Этот email уже зарегистрирован!",
+            loginExists: "Этот логин уже занят!",
+            registerSuccess: "Регистрация успешна! Добро пожаловать!",
+            wrongCredentials: "Неверный логин/email или пароль!",
+            loginSuccess: "Добро пожаловать!",
+            logoutSuccess: "Вы вышли",
+            needLogin: "Нужно войти!",
+            enterTitle: "Введите название видео!",
+            selectFile: "Выберите видео файл!",
+            videoUploaded: "Видео загружено!",
+            needLoginLike: "Войдите чтобы поставить лайк!",
+            needLoginSubscribe: "Войдите чтобы подписаться!",
+            profileSaved: "Профиль обновлён!",
+            like: "лайков",
+            subscribed: "✅ Вы подписаны",
+            subscribe: "🔔 Подписаться"
+        }
+    };
+    
+    let currentLang = 'kk';
+    
+    function applyTranslation() {
+        const t = translations[currentLang];
+        
+        // Кнопки в шапке
+        document.getElementById('loginBtn').innerText = t.login;
+        document.getElementById('registerBtn').innerText = t.register;
+        if(document.getElementById('settingsBtn')) document.getElementById('settingsBtn').innerHTML = t.settings;
+        if(document.getElementById('logoutBtn')) document.getElementById('logoutBtn').innerText = t.logout;
+        
+        // Панель загрузки
+        const uploadTitle = document.getElementById('uploadTitle');
+        if(uploadTitle) uploadTitle.innerText = t.uploadTitle;
+        const uploadBtn = document.getElementById('uploadBtn');
+        if(uploadBtn) uploadBtn.innerText = t.uploadBtn;
+        const videoTitle = document.getElementById('videoTitle');
+        if(videoTitle) videoTitle.placeholder = t.videoTitlePlaceholder;
+        const videoDesc = document.getElementById('videoDesc');
+        if(videoDesc) videoDesc.placeholder = t.videoDescPlaceholder;
+        
+        // Модалка регистрации
+        const regTitle = document.getElementById('regTitle');
+        if(regTitle) regTitle.innerText = t.regTitle;
+        const regEmail = document.getElementById('regEmail');
+        if(regEmail) regEmail.placeholder = t.regEmailPlaceholder;
+        const regLogin = document.getElementById('regLogin');
+        if(regLogin) regLogin.placeholder = t.regLoginPlaceholder;
+        const regPass = document.getElementById('regPass');
+        if(regPass) regPass.placeholder = t.regPassPlaceholder;
+        const regSubmit = document.getElementById('regSubmitBtn');
+        if(regSubmit) regSubmit.innerText = t.regSubmit;
+        const regClose = document.getElementById('regCloseBtn');
+        if(regClose) regClose.innerText = t.regClose;
+        
+        // Модалка входа
+        const loginTitle = document.getElementById('loginTitle');
+        if(loginTitle) loginTitle.innerText = t.loginTitle;
+        const loginInput = document.getElementById('loginInput');
+        if(loginInput) loginInput.placeholder = t.loginInputPlaceholder;
+        const loginPass = document.getElementById('loginPass');
+        if(loginPass) loginPass.placeholder = t.loginPassPlaceholder;
+        const loginSubmit = document.getElementById('loginSubmitBtn');
+        if(loginSubmit) loginSubmit.innerText = t.loginSubmit;
+        const loginClose = document.getElementById('loginCloseBtn');
+        if(loginClose) loginClose.innerText = t.loginClose;
+        
+        // Модалка настроек
+        const settingsTitle = document.getElementById('settingsTitle');
+        if(settingsTitle) settingsTitle.innerText = t.settingsTitle;
+        const settingsName = document.getElementById('settingsName');
+        if(settingsName) settingsName.placeholder = t.settingsNamePlaceholder;
+        const settingsAvatar = document.getElementById('settingsAvatarUrl');
+        if(settingsAvatar) settingsAvatar.placeholder = t.settingsAvatarPlaceholder;
+        const settingsSave = document.getElementById('settingsSaveBtn');
+        if(settingsSave) settingsSave.innerText = t.settingsSave;
+        const settingsClose = document.getElementById('settingsCloseBtn');
+        if(settingsClose) settingsClose.innerText = t.settingsClose;
+    }
+    
+    // Смена языка
+    document.getElementById('langSelect').onchange = function() {
+        currentLang = this.value;
+        applyTranslation();
+        renderVideos(); // обновить кнопки в видео
+    };
+    
+    // ============ ДАННЫЕ ============
     let users = [];
     let videos = [];
     let likes = {};
     let subs = {};
     let currentUser = null;
     
-    // Загрузка сохраненных данных
     function loadData() {
-        let savedUsers = localStorage.getItem('qaz_users');
-        let savedVideos = localStorage.getItem('qaz_videos');
-        let savedLikes = localStorage.getItem('qaz_likes');
-        let savedSubs = localStorage.getItem('qaz_subs');
-        let savedCurrent = localStorage.getItem('qaz_current');
+        const savedUsers = localStorage.getItem('qaz_users');
+        const savedVideos = localStorage.getItem('qaz_videos');
+        const savedLikes = localStorage.getItem('qaz_likes');
+        const savedSubs = localStorage.getItem('qaz_subs');
+        const savedCurrent = localStorage.getItem('qaz_current');
         
         if(savedUsers) users = JSON.parse(savedUsers);
         if(savedVideos) videos = JSON.parse(savedVideos);
         if(savedLikes) likes = JSON.parse(savedLikes);
         if(savedSubs) subs = JSON.parse(savedSubs);
         if(savedCurrent) {
-            let cur = JSON.parse(savedCurrent);
-            let exists = users.find(u => u.id === cur.id);
+            const cur = JSON.parse(savedCurrent);
+            const exists = users.find(u => u.id === cur.id);
             if(exists) currentUser = exists;
         }
     }
     
-    // Сохранение данных
     function saveData() {
         localStorage.setItem('qaz_users', JSON.stringify(users));
         localStorage.setItem('qaz_videos', JSON.stringify(videos));
@@ -347,28 +507,29 @@
         else localStorage.removeItem('qaz_current');
     }
     
-    // Регистрация (без кода для простоты)
+    // Регистрация
     function register() {
-        let email = document.getElementById('regEmail').value.trim();
-        let login = document.getElementById('regLogin').value.trim();
-        let pass = document.getElementById('regPass').value;
+        const t = translations[currentLang];
+        const email = document.getElementById('regEmail').value.trim();
+        const login = document.getElementById('regLogin').value.trim();
+        const pass = document.getElementById('regPass').value;
         
         if(!email || !login || !pass) {
-            toast("Барлық өрістерді толтырыңыз!");
+            toast(t.fillAll);
             return;
         }
         
         if(users.find(u => u.email === email)) {
-            toast("Бұл email тіркелген!");
+            toast(t.emailExists);
             return;
         }
         
         if(users.find(u => u.login === login)) {
-            toast("Бұл логин алынған!");
+            toast(t.loginExists);
             return;
         }
         
-        let newUser = {
+        const newUser = {
             id: Date.now(),
             login: login,
             email: email,
@@ -384,7 +545,7 @@
         closeModal('register');
         updateUI();
         renderVideos();
-        toast("Тіркелу сәтті! Қош келдіңіз!");
+        toast(t.registerSuccess);
         
         document.getElementById('regEmail').value = '';
         document.getElementById('regLogin').value = '';
@@ -393,13 +554,14 @@
     
     // Вход
     function login() {
-        let input = document.getElementById('loginInput').value.trim();
-        let pass = document.getElementById('loginPass').value;
+        const t = translations[currentLang];
+        const input = document.getElementById('loginInput').value.trim();
+        const pass = document.getElementById('loginPass').value;
         
-        let user = users.find(u => (u.login === input || u.email === input) && u.password === pass);
+        const user = users.find(u => (u.login === input || u.email === input) && u.password === pass);
         
         if(!user) {
-            toast("Қате логин/email немесе құпия сөз!");
+            toast(t.wrongCredentials);
             return;
         }
         
@@ -408,7 +570,7 @@
         closeModal('login');
         updateUI();
         renderVideos();
-        toast(`Қош келдің, ${user.name || user.login}!`);
+        toast(t.loginSuccess);
         
         document.getElementById('loginInput').value = '';
         document.getElementById('loginPass').value = '';
@@ -416,11 +578,12 @@
     
     // Выход
     function logout() {
+        const t = translations[currentLang];
         currentUser = null;
         localStorage.removeItem('qaz_current');
         updateUI();
         renderVideos();
-        toast("Сіз шықтыңыз");
+        toast(t.logoutSuccess);
     }
     
     // Обновление интерфейса
@@ -431,7 +594,7 @@
             document.getElementById('uploadSection').classList.remove('hidden');
             document.getElementById('userNameSpan').innerText = currentUser.name || currentUser.login;
             
-            let av = document.getElementById('avatarSpan');
+            const av = document.getElementById('avatarSpan');
             if(currentUser.avatarUrl) {
                 av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
                 av.style.backgroundSize = 'cover';
@@ -450,28 +613,29 @@
     
     // Загрузка видео
     function uploadVideo() {
+        const t = translations[currentLang];
         if(!currentUser) {
-            toast("Кіру қажет!");
+            toast(t.needLogin);
             return;
         }
         
-        let title = document.getElementById('videoTitle').value.trim();
-        let desc = document.getElementById('videoDesc').value.trim();
-        let file = document.getElementById('videoFile').files[0];
+        const title = document.getElementById('videoTitle').value.trim();
+        const desc = document.getElementById('videoDesc').value.trim();
+        const file = document.getElementById('videoFile').files[0];
         
         if(!title) {
-            toast("Бейне атауын енгізіңіз!");
+            toast(t.enterTitle);
             return;
         }
         
         if(!file) {
-            toast("Бейне файлды таңдаңыз!");
+            toast(t.selectFile);
             return;
         }
         
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.onload = function(e) {
-            let newVideo = {
+            const newVideo = {
                 id: Date.now(),
                 title: title,
                 desc: desc,
@@ -489,20 +653,21 @@
             document.getElementById('videoFile').value = '';
             
             renderVideos();
-            toast("Бейне жүктелді!");
+            toast(t.videoUploaded);
         };
         reader.readAsDataURL(file);
     }
     
     // Лайк
     function likeVideo(videoId) {
+        const t = translations[currentLang];
         if(!currentUser) {
-            toast("Лайк басу үшін кіріңіз!");
+            toast(t.needLoginLike);
             return;
         }
         
         if(!likes[videoId]) likes[videoId] = [];
-        let index = likes[videoId].indexOf(currentUser.id);
+        const index = likes[videoId].indexOf(currentUser.id);
         
         if(index === -1) {
             likes[videoId].push(currentUser.id);
@@ -516,13 +681,14 @@
     
     // Подписка
     function subscribeTo(authorId) {
+        const t = translations[currentLang];
         if(!currentUser) {
-            toast("Жазылу үшін кіріңіз!");
+            toast(t.needLoginSubscribe);
             return;
         }
         
         if(!subs[currentUser.id]) subs[currentUser.id] = [];
-        let index = subs[currentUser.id].indexOf(authorId);
+        const index = subs[currentUser.id].indexOf(authorId);
         
         if(index === -1) {
             subs[currentUser.id].push(authorId);
@@ -534,13 +700,11 @@
         renderVideos();
     }
     
-    // Проверка лайка
     function isLiked(videoId) {
         if(!currentUser) return false;
         return likes[videoId] && likes[videoId].includes(currentUser.id);
     }
     
-    // Проверка подписки
     function isSubscribed(authorId) {
         if(!currentUser) return false;
         return subs[currentUser.id] && subs[currentUser.id].includes(authorId);
@@ -548,7 +712,7 @@
     
     // Просмотр видео
     function playVideo(video) {
-        let player = document.getElementById('playerVideo');
+        const player = document.getElementById('playerVideo');
         player.src = video.src;
         video.views++;
         saveData();
@@ -568,7 +732,7 @@
         document.getElementById('settingsName').value = currentUser.name || '';
         document.getElementById('settingsAvatarUrl').value = currentUser.avatarUrl || '';
         
-        let av = document.getElementById('settingsAvatar');
+        const av = document.getElementById('settingsAvatar');
         if(currentUser.avatarUrl) {
             av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
             av.style.backgroundSize = 'cover';
@@ -583,8 +747,9 @@
     }
     
     function saveSettings() {
-        let newName = document.getElementById('settingsName').value.trim();
-        let newAvatar = document.getElementById('settingsAvatarUrl').value.trim();
+        const t = translations[currentLang];
+        const newName = document.getElementById('settingsName').value.trim();
+        const newAvatar = document.getElementById('settingsAvatarUrl').value.trim();
         
         if(newName) currentUser.name = newName;
         if(newAvatar) {
@@ -593,31 +758,33 @@
             delete currentUser.avatarUrl;
         }
         
-        let index = users.findIndex(u => u.id === currentUser.id);
+        const index = users.findIndex(u => u.id === currentUser.id);
         if(index !== -1) users[index] = currentUser;
         saveData();
         updateUI();
         closeModal('settings');
         renderVideos();
-        toast("Профиль жаңартылды!");
+        toast(t.profileSaved);
     }
     
     // Рендер видео
     function renderVideos() {
-        let container = document.getElementById('videosContainer');
+        const t = translations[currentLang];
+        const container = document.getElementById('videosContainer');
         
         if(videos.length === 0) {
-            container.innerHTML = '<div style="text-align:center;padding:50px;">🎬 Бейнелер жоқ. Бірінші болып жүктеңіз!</div>';
+            container.innerHTML = `<div style="text-align:center;padding:50px;">${t.emptyVideos}</div>`;
             return;
         }
         
         let html = '<div class="videos-grid">';
         
         for(let i = videos.length - 1; i >= 0; i--) {
-            let v = videos[i];
-            let likeCount = likes[v.id] ? likes[v.id].length : 0;
-            let liked = isLiked(v.id);
-            let subscribed = isSubscribed(v.authorId);
+            const v = videos[i];
+            const likeCount = likes[v.id] ? likes[v.id].length : 0;
+            const liked = isLiked(v.id);
+            const subscribed = isSubscribed(v.authorId);
+            const likeText = currentLang === 'kk' ? 'лайк' : 'лайков';
             
             html += `
                 <div class="video-card">
@@ -628,12 +795,12 @@
                         <div class="video-title">${escapeHtml(v.title)}</div>
                         <div class="video-stats">
                             <span>👤 ${escapeHtml(v.authorName)}</span>
-                            <span>❤️ ${likeCount}</span>
+                            <span>❤️ ${likeCount} ${likeText}</span>
                             <span>👁️ ${v.views}</span>
                         </div>
                         <div class="video-actions">
                             <button class="${liked ? 'btn-primary' : 'btn-outline'}" onclick="likeVideo('${v.id}')">❤️ ${likeCount}</button>
-                            <button class="${subscribed ? 'btn-primary' : 'btn-outline'}" onclick="subscribeTo('${v.authorId}')">${subscribed ? '✅ Жазылдыңыз' : '🔔 Жазылу'}</button>
+                            <button class="${subscribed ? 'btn-primary' : 'btn-outline'}" onclick="subscribeTo('${v.authorId}')">${subscribed ? t.subscribed : t.subscribe}</button>
                         </div>
                     </div>
                 </div>
@@ -665,19 +832,12 @@
     
     // Тосты
     function toast(msg) {
-        let t = document.createElement('div');
+        const t = document.createElement('div');
         t.className = 'toast';
         t.innerText = msg;
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 3000);
     }
-    
-    // Перевод (простой)
-    let lang = 'kk';
-    document.getElementById('langSelect').onchange = function() {
-        lang = this.value;
-        // просто обновляем текст (можно расширить)
-    };
     
     // Закрытие модалок по клику вне
     window.onclick = function(e) {
@@ -691,6 +851,7 @@
     
     // Инициализация
     loadData();
+    applyTranslation();
     updateUI();
     renderVideos();
 </script>
