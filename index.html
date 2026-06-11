@@ -3,40 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>QazaqTube — Көк-сары стриминг | Регистрация с почтой</title>
+    <title>QazaqTube — Көк-сары видеохостинг</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: radial-gradient(circle at 10% 20%, #0a2463, #030c1f);
             color: #f0f4ff;
             min-height: 100vh;
-            scroll-behavior: smooth;
         }
-
-        /* анимация градиента */
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* кастом скролл */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0a2463; border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: #f5b042; border-radius: 10px; }
 
         .header {
-            background: rgba(3, 18, 43, 0.85);
+            background: rgba(3, 18, 43, 0.95);
             backdrop-filter: blur(16px);
-            padding: 1rem 2rem;
+            padding: 0.8rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -45,120 +30,118 @@
             top: 0;
             z-index: 200;
             flex-wrap: wrap;
-            gap: 1rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            gap: 0.8rem;
         }
-
         .logo {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #FFD966, #FFB347, #FFE6B3);
+            background: linear-gradient(135deg, #FFD966, #FFB347);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .logo i { font-size: 2rem; color: #f5b042; background: none; -webkit-background-clip: unset; }
-
-        .controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
+        .controls { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
         .lang-select {
             background: #0f2b6e;
             border: 1px solid #f5b042;
             color: #FFE6B3;
-            padding: 0.5rem 1.2rem;
+            padding: 0.4rem 1rem;
             border-radius: 40px;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.2s;
         }
-
         .btn {
-            padding: 0.5rem 1.5rem;
+            padding: 0.4rem 1.2rem;
             border-radius: 40px;
             border: none;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.25s;
-            font-size: 0.9rem;
+            transition: all 0.2s;
+            font-size: 0.85rem;
         }
-        .btn-primary {
-            background: linear-gradient(95deg, #f5b042, #FFD966);
-            color: #0a2463;
-            box-shadow: 0 4px 12px rgba(245,176,66,0.4);
-        }
-        .btn-outline {
-            background: rgba(255,255,240,0.1);
-            border: 1.5px solid #f5b042;
-            color: #FFE6B3;
-        }
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: rgba(255,255,200,0.08);
-            padding: 0.3rem 1rem 0.3rem 0.8rem;
-            border-radius: 60px;
-        }
+        .btn-primary { background: linear-gradient(95deg, #f5b042, #FFD966); color: #0a2463; }
+        .btn-outline { background: rgba(255,255,240,0.1); border: 1.5px solid #f5b042; color: #FFE6B3; }
+        .user-info { display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,200,0.08); padding: 0.2rem 0.8rem 0.2rem 0.5rem; border-radius: 60px; }
         .avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
+            width: 38px; height: 38px; border-radius: 50%;
             background: linear-gradient(135deg, #f5b042, #FFD966);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.3rem;
-            color: #0a2463;
-            box-shadow: 0 0 0 2px #ffdd99;
-            background-size: cover;
-            background-position: center;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.1rem; color: #0a2463;
+            background-size: cover; background-position: center;
+        }
+        /* компактная панель загрузки — выпадашка */
+        .upload-popup {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            background: #0a1b44;
+            border-radius: 24px;
+            padding: 1rem;
+            width: 300px;
+            border: 1px solid #f5b042;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 150;
+            backdrop-filter: blur(12px);
+            display: none;
+        }
+        .upload-popup.active { display: block; }
+        .upload-popup input, .upload-popup textarea, .upload-popup input[type="file"] {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 0.6rem;
+            border-radius: 20px;
+            background: #061b44;
+            border: 1px solid #3b5baa;
+            color: white;
         }
         .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
-
-        /* панель загрузки видео */
-        .upload-panel {
-            background: rgba(15, 43, 110, 0.6);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-            border: 1px solid #f5b042;
-        }
-
         .videos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
             margin-top: 1rem;
         }
         .video-card {
             background: rgba(6, 28, 78, 0.7);
             backdrop-filter: blur(8px);
-            border-radius: 28px;
+            border-radius: 24px;
             overflow: hidden;
             transition: 0.3s;
             border: 1px solid rgba(245,176,66,0.4);
+            cursor: pointer;
         }
-        .video-card:hover { transform: translateY(-6px); border-color: #f5b042; }
-
-        /* модалки */
+        .video-card:hover { transform: translateY(-5px); border-color: #f5b042; }
+        .video-thumb {
+            width: 100%;
+            height: 170px;
+            background: #071c47;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .video-thumb video, .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .video-info { padding: 1rem; }
+        .video-title { font-weight: 700; margin-bottom: 0.4rem; }
+        .video-stats { font-size: 0.75rem; color: #bbd4ff; display: flex; gap: 1rem; margin-bottom: 0.5rem; }
+        .video-actions { display: flex; gap: 0.8rem; margin-top: 0.5rem; }
+        .like-btn, .subscribe-btn {
+            background: rgba(255,255,210,0.1);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .like-btn.liked { background: #f5b042; color: #0a2463; }
+        .subscribe-btn.subscribed { background: #FFD966; color: #0a2463; }
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(2, 12, 35, 0.95);
             backdrop-filter: blur(8px);
             z-index: 1000;
@@ -168,234 +151,259 @@
         .modal.active { display: flex; }
         .modal-content {
             background: #0a1b44;
-            border-radius: 48px;
+            border-radius: 40px;
             padding: 2rem;
             width: 90%;
             max-width: 500px;
             border: 2px solid #f5b042;
-            box-shadow: 0 30px 40px rgba(0,0,0,0.5);
         }
-        .input-group {
-            margin-bottom: 1rem;
-        }
+        .input-group { margin-bottom: 1rem; }
         .input-group input, .input-group select {
             width: 100%;
-            padding: 0.9rem 1rem;
+            padding: 0.8rem 1rem;
             border-radius: 60px;
-            border: 1px solid #3b5baa;
             background: #061b44;
+            border: 1px solid #3b5baa;
             color: white;
-            font-size: 1rem;
-        }
-        .profile-avatar-preview {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
         }
         .avatar-preview {
-            width: 100px;
-            height: 100px;
+            width: 80px; height: 80px;
             border-radius: 50%;
             background: #f5b042;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
+            margin: 0 auto 1rem;
             background-size: cover;
-            background-position: center;
         }
-        .footer { text-align: center; padding: 2rem; color: #FFE6B3aa; border-top: 1px solid #f5b04233; margin-top: 2rem; }
+        .video-player-modal .modal-content { max-width: 800px; width: 90%; }
+        video { width: 100%; border-radius: 20px; }
         .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #f5b042;
-            color: #0a2463;
-            padding: 12px 24px;
-            border-radius: 60px;
-            font-weight: bold;
-            z-index: 1100;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #f5b042; color: #0a2463; padding: 10px 20px;
+            border-radius: 40px; font-weight: bold; z-index: 1100;
             animation: fadeOut 3s forwards;
         }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+        .upload-btn-icon { background: #f5b042; border-radius: 40px; padding: 0.4rem 1rem; cursor: pointer; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 <div class="header">
-    <div class="logo"><i class="fas fa-play-circle"></i> QAZAQ TUBE <span style="font-size:0.9rem;">💙💛 10x</span></div>
+    <div class="logo"><i class="fas fa-play-circle"></i> QAZAQ TUBE</div>
     <div class="controls">
         <select id="languageSelect" class="lang-select" onchange="changeLanguage()"><option value="kk">Қазақша</option><option value="ru">Русский</option></select>
-        <div class="auth-buttons" id="authButtons"><button class="btn btn-outline" id="loginBtn" onclick="openModal('loginModal')">Kіru</button><button class="btn btn-primary" id="registerBtn" onclick="openModal('registerModal')">Tirkeлу</button></div>
-        <div class="user-info" id="userInfo" style="display:none"><span id="userDisplayName"></span><div class="avatar" id="userAvatarElem"></div><button class="btn btn-outline" onclick="logout()" style="padding:0.3rem 1rem;">Shyǵu</button><button class="btn btn-primary" onclick="openSettings()" style="padding:0.3rem 1rem;"><i class="fas fa-cog"></i></button></div>
+        <div class="auth-buttons" id="authButtons">
+            <button class="btn btn-outline" onclick="openModal('loginModal')">Kіru</button>
+            <button class="btn btn-primary" onclick="openModal('registerModal')">Tirkeлу</button>
+        </div>
+        <div class="user-info" id="userInfo" style="display:none">
+            <span id="userDisplayName"></span>
+            <div class="avatar" id="userAvatarElem"></div>
+            <button class="btn btn-outline" onclick="toggleUploadPopup()"><i class="fas fa-upload"></i> Жүктеу</button>
+            <button class="btn btn-outline" onclick="openSettings()"><i class="fas fa-user-cog"></i></button>
+            <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
     </div>
 </div>
-<div class="container">
-    <div id="uploadPanel" class="upload-panel" style="display:none;"><h3>📤 Жаңа бейне жүктеу</h3><div class="upload-form"><input type="text" id="videoTitle" placeholder="Бейне атауы"><textarea id="videoDesc" placeholder="Сипаттама"></textarea><button class="btn btn-primary" onclick="uploadVideo()">➕ Бейне қосу</button></div></div>
-    <div id="videosContainer"><div class="empty-state" style="text-align:center; padding:3rem;"><h3>📭 Әзірге бейне жоқ</h3><p>Бірінші болып видео жүктеңіз!</p></div></div>
+<!-- компактная форма загрузки -->
+<div id="uploadPopup" class="upload-popup">
+    <h4 style="margin-bottom:8px;">📤 Жаңа бейне</h4>
+    <input type="text" id="videoTitleUpload" placeholder="Атауы">
+    <textarea id="videoDescUpload" placeholder="Сипаттама" rows="2"></textarea>
+    <input type="file" id="videoFileUpload" accept="video/mp4,video/webm,video/quicktime">
+    <button class="btn btn-primary" onclick="uploadVideoFile()" style="width:100%">➕ Жүктеу</button>
 </div>
 
-<!-- Модалка регистрации с почтой и кодом -->
-<div id="registerModal" class="modal"><div class="modal-content"><h2>📝 Тіркелу</h2><div class="input-group"><input type="email" id="regEmail" placeholder="Email (example@gmail.com)"></div><div class="input-group"><input type="text" id="regUsername" placeholder="Қолданушы аты (логин)"></div><div class="input-group"><input type="password" id="regPassword" placeholder="Құпия сөз"></div><div class="input-group"><input type="text" id="regCode" placeholder="6 таңбалы код"></div><button class="btn btn-primary" onclick="sendCode()">📧 Код жіберу</button><button class="btn btn-primary" onclick="completeRegister()" style="margin-top:10px;">✅ Тіркелу</button><button class="btn close-modal" onclick="closeModal('registerModal')">Жабу</button></div></div>
+<div class="container">
+    <div id="videosContainer"><div style="text-align:center;padding:3rem;">📭 Бейнелер жоқ, бірінші болып жүктеңіз!</div></div>
+</div>
 
-<!-- Модалка логина -->
+<!-- Модалка регистрации -->
+<div id="registerModal" class="modal"><div class="modal-content"><h2>📝 Тіркелу</h2><div class="input-group"><input type="email" id="regEmail" placeholder="Email (example@gmail.com)"></div><div class="input-group"><input type="text" id="regUsername" placeholder="Логин"></div><div class="input-group"><input type="password" id="regPassword" placeholder="Құпия сөз"></div><div class="input-group"><input type="text" id="regCode" placeholder="6 таңбалы код"></div><button class="btn btn-primary" onclick="sendCode()">📧 Код жіберу</button><button class="btn btn-primary" onclick="completeRegister()" style="margin-top:8px;">✅ Тіркелу</button><button class="btn close-modal" onclick="closeModal('registerModal')">Жабу</button></div></div>
+
 <div id="loginModal" class="modal"><div class="modal-content"><h2>🔐 Кіру</h2><div class="input-group"><input type="text" id="loginUsername" placeholder="Логин немесе Email"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Құпия сөз"></div><button class="btn btn-primary" onclick="login()">Кіру</button><button class="btn close-modal" onclick="closeModal('loginModal')">Жабу</button></div></div>
 
-<!-- Модалка настроек (смена ника и аватарки) -->
-<div id="settingsModal" class="modal"><div class="modal-content"><h2>⚙️ Профильді өңдеу</h2><div class="profile-avatar-preview"><div id="settingsAvatarPreview" class="avatar-preview" style="width:100px;height:100px;"></div></div><div class="input-group"><input type="text" id="settingsNickname" placeholder="Жаңа есім (ник)"></div><div class="input-group"><input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL (немесе эмодзи / инициал)"></div><button class="btn btn-primary" onclick="saveProfile()">Сақтау</button><button class="btn close-modal" onclick="closeModal('settingsModal')">Жабу</button></div></div>
+<div id="settingsModal" class="modal"><div class="modal-content"><h2>⚙️ Профиль</h2><div id="settingsAvatarPreview" class="avatar-preview"></div><div class="input-group"><input type="text" id="settingsNickname" placeholder="Жаңа есім (ник)"></div><div class="input-group"><input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL (немесе әріп)"></div><button class="btn btn-primary" onclick="saveProfile()">Сақтау</button><button class="btn close-modal" onclick="closeModal('settingsModal')">Жабу</button></div></div>
+
+<div id="videoPlayerModal" class="modal video-player-modal"><div class="modal-content"><video id="playerVideo" controls style="width:100%"></video><button class="btn close-modal" onclick="closeModal('videoPlayerModal')">Жабу</button></div></div>
 
 <script>
-    // ========== Тілдер ==========
-    let currentLang = "kk";
-    function changeLanguage() { currentLang = document.getElementById("languageSelect").value; applyLanguage(); renderAllVideos(); }
-    function applyLanguage() { /* можно дополнить */ }
-    
-    // ========== ДАННЫЕ ПОЛЬЗОВАТЕЛЕЙ ==========
-    let users = JSON.parse(localStorage.getItem('qaz_users_final')) || [];
-    let videos = JSON.parse(localStorage.getItem('qaz_videos_final')) || [];
-    let subscriptions = JSON.parse(localStorage.getItem('qaz_subs_final')) || {};
-    let likes = JSON.parse(localStorage.getItem('qaz_likes_final')) || {};
+    // ========== ДАННЫЕ ==========
+    let users = JSON.parse(localStorage.getItem('qaz_users_video')) || [];
+    let videos = JSON.parse(localStorage.getItem('qaz_videos_video')) || [];
+    let subscriptions = JSON.parse(localStorage.getItem('qaz_subs_video')) || {};
+    let likes = JSON.parse(localStorage.getItem('qaz_likes_video')) || {};
     let currentUser = null;
-    let pendingRegistration = null; // временные данные перед кодом
-    
-    function saveAll() { localStorage.setItem('qaz_users_final', JSON.stringify(users)); localStorage.setItem('qaz_videos_final', JSON.stringify(videos)); localStorage.setItem('qaz_subs_final', JSON.stringify(subscriptions)); localStorage.setItem('qaz_likes_final', JSON.stringify(likes)); }
-    
-    // Отправка кода (имитация)
+    let pendingReg = null;
+
+    function saveAll() {
+        localStorage.setItem('qaz_users_video', JSON.stringify(users));
+        localStorage.setItem('qaz_videos_video', JSON.stringify(videos));
+        localStorage.setItem('qaz_subs_video', JSON.stringify(subscriptions));
+        localStorage.setItem('qaz_likes_video', JSON.stringify(likes));
+    }
+
     function sendCode() {
         let email = document.getElementById('regEmail').value.trim();
         let username = document.getElementById('regUsername').value.trim();
         let password = document.getElementById('regPassword').value;
         if(!email || !username || !password) { showToast("Толтырыңыз!"); return; }
         let emailRegex = /^[^\s@]+@(gmail\.com|yandex\.com|mail\.com|yandex\.ru|inbox\.ru|list\.ru|bk\.ru)$/i;
-        if(!emailRegex.test(email)) { showToast("Тек қолдау көрсетілген пошталар: @gmail.com, @yandex.com, @mail.com"); return; }
-        if(users.find(u => u.email === email)) { showToast("Бұл email тіркелген!"); return; }
-        if(users.find(u => u.username === username)) { showToast("Логин алынған!"); return; }
-        let code = Math.floor(100000 + Math.random() * 900000).toString();
-        pendingRegistration = { email, username, password, code };
-        // Имитация отправки (в реальном проекте - API)
-        showToast(`📧 Код жіберілді: ${code} (сезімталдықпен)`);
-        console.log("Код подтверждения:", code);
+        if(!emailRegex.test(email)) { showToast("Тек @gmail.com, @yandex.com, @mail.com"); return; }
+        if(users.find(u=>u.email===email)) { showToast("Email тіркелген"); return; }
+        if(users.find(u=>u.username===username)) { showToast("Логин алынған"); return; }
+        let code = Math.floor(100000+Math.random()*900000).toString();
+        pendingReg = { email, username, password, code };
+        showToast(`📧 Код жіберілді: ${code}`);
+        console.log("Код:", code);
     }
-    
     function completeRegister() {
-        if(!pendingRegistration) { showToast("Алдымен код жіберіңіз!"); return; }
-        let enteredCode = document.getElementById('regCode').value.trim();
-        if(enteredCode !== pendingRegistration.code) { showToast("Қате код!"); return; }
+        if(!pendingReg) { showToast("Алдымен код жіберіңіз"); return; }
+        if(document.getElementById('regCode').value !== pendingReg.code) { showToast("Қате код"); return; }
         let newUser = {
-            id: Date.now() + Math.random(),
-            username: pendingRegistration.username,
-            email: pendingRegistration.email,
-            password: pendingRegistration.password,
-            displayName: pendingRegistration.username, // ник (отображаемое имя)
-            avatar: pendingRegistration.username[0].toUpperCase(),
-            avatarType: "text",
-            createdAt: new Date().toISOString()
+            id: Date.now()+Math.random(),
+            username: pendingReg.username,
+            email: pendingReg.email,
+            password: pendingReg.password,
+            displayName: pendingReg.username,
+            avatar: pendingReg.username[0].toUpperCase(),
+            avatarType: "text"
         };
-        users.push(newUser);
-        saveAll();
+        users.push(newUser); saveAll();
         currentUser = newUser;
-        localStorage.setItem('qaz_current_user_final', JSON.stringify(newUser));
+        localStorage.setItem('qaz_current_user_video', JSON.stringify(newUser));
         closeModal('registerModal');
         updateUIForAuth();
         renderAllVideos();
-        showToast("Тіркелу сәтті! Қош келдіңіз!");
-        document.getElementById('regEmail').value = ''; document.getElementById('regUsername').value = ''; document.getElementById('regPassword').value = ''; document.getElementById('regCode').value = '';
-        pendingRegistration = null;
+        showToast("Тіркелу сәтті!");
+        document.getElementById('regEmail').value=''; document.getElementById('regUsername').value=''; 
+        document.getElementById('regPassword').value=''; document.getElementById('regCode').value='';
+        pendingReg = null;
     }
-    
     function login() {
-        let loginInput = document.getElementById('loginUsername').value.trim();
-        let password = document.getElementById('loginPassword').value;
-        let user = users.find(u => (u.username === loginInput || u.email === loginInput) && u.password === password);
-        if(!user) { showToast("Қате логин/email немесе құпия сөз"); return; }
+        let val = document.getElementById('loginUsername').value.trim();
+        let pwd = document.getElementById('loginPassword').value;
+        let user = users.find(u=>(u.username===val||u.email===val) && u.password===pwd);
+        if(!user){ showToast("Қате логин немесе құпия сөз"); return; }
         currentUser = user;
-        localStorage.setItem('qaz_current_user_final', JSON.stringify(user));
+        localStorage.setItem('qaz_current_user_video', JSON.stringify(user));
         updateUIForAuth();
         closeModal('loginModal');
         renderAllVideos();
-        showToast(`Қайта келдіңіз, ${user.displayName || user.username}`);
+        showToast(`Қош келдің, ${user.displayName||user.username}`);
     }
-    
-    function logout() { currentUser = null; localStorage.removeItem('qaz_current_user_final'); updateUIForAuth(); renderAllVideos(); showToast("Шықтыңыз"); }
-    
+    function logout() { currentUser=null; localStorage.removeItem('qaz_current_user_video'); updateUIForAuth(); renderAllVideos(); showToast("Шықтыңыз"); }
     function updateUIForAuth() {
-        if(currentUser) {
-            document.getElementById('authButtons').style.display = 'none';
-            document.getElementById('userInfo').style.display = 'flex';
-            let display = currentUser.displayName || currentUser.username;
-            document.getElementById('userDisplayName').innerText = display;
-            let avatarElem = document.getElementById('userAvatarElem');
-            if(currentUser.avatar && currentUser.avatarType === 'url') avatarElem.style.backgroundImage = `url(${currentUser.avatar})`;
-            else { avatarElem.style.backgroundImage = ''; avatarElem.style.background = 'linear-gradient(135deg, #f5b042, #FFD966)'; avatarElem.innerText = currentUser.avatar || currentUser.username[0].toUpperCase(); }
-            document.getElementById('uploadPanel').style.display = 'block';
+        if(currentUser){
+            document.getElementById('authButtons').style.display='none';
+            document.getElementById('userInfo').style.display='flex';
+            document.getElementById('userDisplayName').innerText = currentUser.displayName || currentUser.username;
+            let av = document.getElementById('userAvatarElem');
+            if(currentUser.avatarType==='url' && currentUser.avatar) av.style.backgroundImage = `url(${currentUser.avatar})`;
+            else { av.style.backgroundImage=''; av.style.background='linear-gradient(135deg,#f5b042,#FFD966)'; av.innerText = currentUser.avatar || currentUser.username[0].toUpperCase(); }
         } else {
-            document.getElementById('authButtons').style.display = 'flex';
-            document.getElementById('userInfo').style.display = 'none';
-            document.getElementById('uploadPanel').style.display = 'none';
+            document.getElementById('authButtons').style.display='flex';
+            document.getElementById('userInfo').style.display='none';
         }
     }
-    
-    function openSettings() {
-        if(!currentUser) return;
-        document.getElementById('settingsNickname').value = currentUser.displayName || '';
-        document.getElementById('settingsAvatarUrl').value = (currentUser.avatarType === 'url' ? currentUser.avatar : '');
-        let previewDiv = document.getElementById('settingsAvatarPreview');
-        if(currentUser.avatar && currentUser.avatarType === 'url') previewDiv.style.backgroundImage = `url(${currentUser.avatar})`;
-        else { previewDiv.style.backgroundImage = ''; previewDiv.style.background = 'linear-gradient(135deg, #f5b042, #FFD966)'; previewDiv.innerText = currentUser.avatar || currentUser.username[0].toUpperCase(); previewDiv.style.display = 'flex'; previewDiv.style.alignItems = 'center'; previewDiv.style.justifyContent = 'center'; previewDiv.style.fontSize = '3rem'; }
-        openModal('settingsModal');
+    function toggleUploadPopup() { document.getElementById('uploadPopup').classList.toggle('active'); }
+    function uploadVideoFile() {
+        if(!currentUser){ showToast("Кіріңіз"); return; }
+        let title = document.getElementById('videoTitleUpload').value.trim();
+        let desc = document.getElementById('videoDescUpload').value.trim();
+        let fileInput = document.getElementById('videoFileUpload');
+        if(!title) { showToast("Атау керек"); return; }
+        if(!fileInput.files.length) { showToast("Бейне файлды таңдаңыз (mp4/webm)"); return; }
+        let file = fileInput.files[0];
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let videoData = e.target.result;
+            let newVideo = {
+                id: Date.now()+Math.random(),
+                title: title,
+                description: desc||"",
+                authorId: currentUser.id,
+                authorName: currentUser.displayName||currentUser.username,
+                createdAt: new Date().toISOString(),
+                views: 0,
+                videoSrc: videoData,
+                thumbnail: null
+            };
+            videos.push(newVideo);
+            saveAll();
+            document.getElementById('videoTitleUpload').value='';
+            document.getElementById('videoDescUpload').value='';
+            fileInput.value='';
+            document.getElementById('uploadPopup').classList.remove('active');
+            renderAllVideos();
+            showToast("Бейне жүктелді!");
+        };
+        reader.readAsDataURL(file);
     }
-    
-    function saveProfile() {
-        let newNick = document.getElementById('settingsNickname').value.trim();
-        let avatarInput = document.getElementById('settingsAvatarUrl').value.trim();
-        if(newNick) currentUser.displayName = newNick;
-        if(avatarInput) { currentUser.avatar = avatarInput; currentUser.avatarType = 'url'; }
-        else { currentUser.avatar = currentUser.username[0].toUpperCase(); currentUser.avatarType = 'text'; }
-        let index = users.findIndex(u => u.id === currentUser.id);
-        if(index !== -1) users[index] = currentUser;
+    function openVideo(video) { 
+        let player = document.getElementById('playerVideo');
+        player.src = video.videoSrc;
+        video.views++;
         saveAll();
-        localStorage.setItem('qaz_current_user_final', JSON.stringify(currentUser));
-        updateUIForAuth();
-        closeModal('settingsModal');
         renderAllVideos();
-        showToast("Профиль жаңартылды!");
+        openModal('videoPlayerModal');
     }
-    
-    // Видео функциялар
-    function uploadVideo() { if(!currentUser){showToast("Кіріңіз");return;} let title=document.getElementById('videoTitle').value.trim(); if(!title){showToast("Атау керек");return;} let newVideo={id:Date.now()+Math.random(), title, description:document.getElementById('videoDesc').value.trim()||"", authorId:currentUser.id, authorName:currentUser.displayName||currentUser.username, createdAt:new Date().toISOString(), views:0}; videos.push(newVideo); saveAll(); document.getElementById('videoTitle').value=''; document.getElementById('videoDesc').value=''; renderAllVideos(); showToast("Бейне қосылды!"); }
-    function toggleLike(vidId){ if(!currentUser){showToast("Лайк үшін кіріңіз");return;} if(!likes[vidId])likes[vidId]=[]; let idx=likes[vidId].indexOf(currentUser.id); idx===-1?likes[vidId].push(currentUser.id):likes[vidId].splice(idx,1); saveAll(); renderAllVideos(); }
-    function toggleSubscribe(chId){ if(!currentUser){showToast("Жазылу үшін кіріңіз");return;} if(!subscriptions[currentUser.id])subscriptions[currentUser.id]=[]; let arr=subscriptions[currentUser.id]; let idx=arr.indexOf(chId); idx===-1?arr.push(chId):arr.splice(idx,1); saveAll(); renderAllVideos(); return true; }
+    function toggleLike(vidId){ if(!currentUser){ showToast("Лайк үшін кіріңіз"); return; } if(!likes[vidId])likes[vidId]=[]; let idx=likes[vidId].indexOf(currentUser.id); idx===-1?likes[vidId].push(currentUser.id):likes[vidId].splice(idx,1); saveAll(); renderAllVideos(); }
+    function toggleSubscribe(chId){ if(!currentUser){ showToast("Жазылу үшін кіріңіз"); return; } if(!subscriptions[currentUser.id])subscriptions[currentUser.id]=[]; let arr=subscriptions[currentUser.id]; let idx=arr.indexOf(chId); idx===-1?arr.push(chId):arr.splice(idx,1); saveAll(); renderAllVideos(); }
     function isSubscribedTo(chId){ if(!currentUser)return false; return (subscriptions[currentUser.id]||[]).includes(chId); }
     function isLiked(vidId){ if(!currentUser)return false; return likes[vidId]&&likes[vidId].includes(currentUser.id); }
     function getLikeCount(vidId){ return likes[vidId]?likes[vidId].length:0; }
-    
     function renderAllVideos() {
         let container=document.getElementById('videosContainer');
-        if(!videos.length){ container.innerHTML=`<div style="text-align:center;padding:4rem;background:rgba(0,0,0,0.2);border-radius:48px;"><h3>📭 Бейне жоқ</h3><p>Алғашқы видеоны жүктеңіз!</p></div>`; return; }
+        if(!videos.length){ container.innerHTML=`<div style="text-align:center;padding:3rem;">🎬 Видео жоқ. Бірінші болып жүктеңіз!</div>`; return; }
         let sorted=[...videos].reverse();
         let html=`<div class="videos-grid">`;
         for(let v of sorted){
             let liked=isLiked(v.id);
             let subbed=isSubscribedTo(v.authorId);
             let subText=subbed?"✅ Жазылдыңыз":"🔔 Жазылу";
-            html+=`<div class="video-card"><div class="video-thumb" style="height:180px;background:radial-gradient(circle at 30% 20%, #1f489b, #071c47);display:flex;align-items:center;justify-content:center;"><i class="fas fa-video" style="font-size:3rem;color:#f5b042;"></i></div><div class="video-info"><div class="video-title">${escapeHtml(v.title)}</div><div class="video-stats"><span>👤 ${escapeHtml(v.authorName)}</span><span>❤️ ${getLikeCount(v.id)} лайк</span><span>👁️ ${v.views}</span></div><div class="video-actions"><button class="like-btn ${liked?'liked':''}" onclick="toggleLike('${v.id}')">❤️ ${getLikeCount(v.id)}</button><button class="subscribe-btn ${subbed?'subscribed':''}" onclick="toggleSubscribe('${v.authorId}')">${subText}</button></div><div style="font-size:0.7rem;margin-top:0.5rem;">📅 ${new Date(v.createdAt).toLocaleDateString()}</div></div></div>`;
+            html+=`<div class="video-card" onclick="event.stopPropagation();openVideo(${JSON.stringify(v).replace(/"/g, '&quot;')})">
+                <div class="video-thumb">${v.videoSrc ? `<video src="${v.videoSrc}" style="width:100%;height:100%;object-fit:cover;"></video>` : '<i class="fas fa-video" style="font-size:3rem;"></i>'}</div>
+                <div class="video-info"><div class="video-title">${escapeHtml(v.title)}</div>
+                <div class="video-stats"><span>👤 ${escapeHtml(v.authorName)}</span><span>❤️ ${getLikeCount(v.id)}</span><span>👁️ ${v.views}</span></div>
+                <div class="video-actions" onclick="event.stopPropagation()"><button class="like-btn ${liked?'liked':''}" onclick="toggleLike('${v.id}')">❤️ ${getLikeCount(v.id)}</button>
+                <button class="subscribe-btn ${subbed?'subscribed':''}" onclick="toggleSubscribe('${v.authorId}')">${subText}</button></div>
+                </div></div>`;
         }
-        html+=`</div>`;
-        container.innerHTML=html;
+        html+=`</div>`; container.innerHTML=html;
     }
-    function escapeHtml(str){ if(!str)return ''; return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    function openSettings() {
+        if(!currentUser) return;
+        document.getElementById('settingsNickname').value = currentUser.displayName||'';
+        document.getElementById('settingsAvatarUrl').value = (currentUser.avatarType==='url'?currentUser.avatar:'');
+        let preview = document.getElementById('settingsAvatarPreview');
+        if(currentUser.avatarType==='url' && currentUser.avatar) preview.style.backgroundImage = `url(${currentUser.avatar})`;
+        else { preview.style.backgroundImage = ''; preview.style.background = 'linear-gradient(135deg,#f5b042,#FFD966)'; preview.innerText = currentUser.avatar||currentUser.username[0].toUpperCase(); preview.style.display='flex'; preview.style.alignItems='center'; preview.style.justifyContent='center'; preview.style.fontSize='2rem'; }
+        openModal('settingsModal');
+    }
+    function saveProfile() {
+        let newNick = document.getElementById('settingsNickname').value.trim();
+        let avatarVal = document.getElementById('settingsAvatarUrl').value.trim();
+        if(newNick) currentUser.displayName = newNick;
+        if(avatarVal) { currentUser.avatar = avatarVal; currentUser.avatarType = 'url'; }
+        else { currentUser.avatar = currentUser.username[0].toUpperCase(); currentUser.avatarType = 'text'; }
+        let idx = users.findIndex(u=>u.id===currentUser.id);
+        if(idx!==-1) users[idx]=currentUser;
+        saveAll();
+        localStorage.setItem('qaz_current_user_video', JSON.stringify(currentUser));
+        updateUIForAuth();
+        closeModal('settingsModal');
+        renderAllVideos();
+        showToast("Профиль жаңартылды");
+    }
+    function escapeHtml(str){ if(!str)return ''; return str.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     function showToast(msg){ let t=document.createElement('div'); t.className='toast'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
     function openModal(id){ document.getElementById(id).classList.add('active'); }
-    function closeModal(id){ document.getElementById(id).classList.remove('active'); }
-    window.onclick=e=>{if(e.target.classList.contains('modal'))e.target.classList.remove('active');};
-    
-    // загрузка сессии
-    let savedUser=localStorage.getItem('qaz_current_user_final');
-    if(savedUser){ let u=JSON.parse(savedUser); let exists=users.find(x=>x.id===u.id); if(exists){ currentUser=exists; updateUIForAuth(); } else localStorage.removeItem('qaz_current_user_final'); }
+    function closeModal(id){ document.getElementById(id).classList.remove('active'); if(id==='videoPlayerModal') document.getElementById('playerVideo').pause(); }
+    window.onclick=e=>{ if(e.target.classList.contains('modal')) e.target.classList.remove('active'); if(e.target.classList.contains('modal')) document.getElementById('playerVideo')?.pause(); };
+    let saved=localStorage.getItem('qaz_current_user_video');
+    if(saved){ let u=JSON.parse(saved); let exists=users.find(x=>x.id===u.id); if(exists){ currentUser=exists; updateUIForAuth(); } else localStorage.removeItem('qaz_current_user_video'); }
     renderAllVideos();
-    applyLanguage();
-    document.getElementById("languageSelect").value=currentLang;
+    function changeLanguage(){} // заглушка
 </script>
-<div class="footer">💙💛 QazaqTube — поштамен растау, ник, аватарка. Барлық деректер жергілікті сақталады.</div>
+<div class="footer">💙💛 QazaqTube — видео жүктеу, профиль, лайктар, жазылулар</div>
 </body>
 </html>
