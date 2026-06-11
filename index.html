@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QazaqTube — AI Субтитры как в YouTube</title>
+    <title>QazaqTube</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -251,7 +251,6 @@
         .rec-info { flex: 1; }
         .rec-video-title { font-weight: 500; font-size: 14px; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* Субтитры как в YouTube */
         .subtitles-container {
             position: absolute;
             bottom: 80px;
@@ -270,14 +269,8 @@
             border-radius: 12px;
             font-size: 18px;
             font-weight: 500;
-            text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
             max-width: 85%;
             word-break: break-word;
-            animation: subtitleFade 0.2s ease;
-        }
-        @keyframes subtitleFade {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .modal {
@@ -346,8 +339,8 @@
             <option value="ru">🇷🇺 Русский</option>
         </select>
         <div id="unauthButtons">
-            <button class="btn-outline" id="loginBtn" onclick="openModal('login')">Кіру</button>
-            <button class="btn-primary" id="registerBtn" onclick="openModal('register')">Тіркелу</button>
+            <button class="btn-outline" onclick="openModal('login')">Кіру</button>
+            <button class="btn-primary" onclick="openModal('register')">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
             <div class="user-info" onclick="openProfileMenu()">
@@ -359,8 +352,8 @@
 </div>
 
 <div class="nav-links" id="navLinks" style="display: none;">
-    <div class="nav-link active" id="homeNav" onclick="showHome()">🏠 Басты</div>
-    <div class="nav-link" id="profileNav" onclick="showProfile()">👤 Менің каналым</div>
+    <div class="nav-link active" onclick="showHome()">🏠 Басты</div>
+    <div class="nav-link" onclick="showProfile()">👤 Менің каналым</div>
 </div>
 
 <div id="homePage" class="home-container">
@@ -374,15 +367,15 @@
             <h2 id="profileName"></h2>
             <p style="color:#aaa;">@<span id="profileLoginName"></span></p>
             <div class="profile-stats">
-                <div class="profile-stat"><div class="profile-stat-value" id="profileSubsCount">0</div><div class="profile-stat-label" id="subsLabel">жазылушы</div></div>
-                <div class="profile-stat"><div class="profile-stat-value" id="profileVideosCount">0</div><div class="profile-stat-label" id="videosLabel">видео</div></div>
-                <div class="profile-stat"><div class="profile-stat-value" id="profileLikesCount">0</div><div class="profile-stat-label" id="likesLabel">лайк</div></div>
+                <div class="profile-stat"><div class="profile-stat-value" id="profileSubsCount">0</div><div class="profile-stat-label">жазылушы</div></div>
+                <div class="profile-stat"><div class="profile-stat-value" id="profileVideosCount">0</div><div class="profile-stat-label">видео</div></div>
+                <div class="profile-stat"><div class="profile-stat-value" id="profileLikesCount">0</div><div class="profile-stat-label">лайк</div></div>
             </div>
-            <button class="btn-outline" id="editProfileBtn" onclick="openEditProfileModal()" style="margin-top: 15px;"><i class="fas fa-edit"></i> <span id="editProfileText">Профильді өңдеу</span></button>
-            <button class="btn-primary" id="uploadVideoBtn" onclick="openUploadModal()" style="margin-top: 15px; margin-left: 10px;"><i class="fas fa-upload"></i> <span id="uploadVideoText">Видео жүктеу</span></button>
+            <button class="btn-outline" onclick="openEditProfileModal()" style="margin-top: 15px;"><i class="fas fa-edit"></i> Профильді өңдеу</button>
+            <button class="btn-primary" onclick="openUploadModal()" style="margin-top: 15px; margin-left: 10px;"><i class="fas fa-upload"></i> Видео жүктеу</button>
         </div>
     </div>
-    <h3 id="myVideosTitle" style="margin-bottom: 20px;">📹 Менің видеоым</h3>
+    <h3 style="margin-bottom: 20px;">📹 Менің видеоым</h3>
     <div class="videos-grid" id="profileVideosGrid"></div>
 </div>
 
@@ -407,17 +400,17 @@
                             <div class="settings-btn">
                                 <button class="control-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
                                 <div class="settings-menu" id="settingsMenu">
-                                    <button id="qualityAuto" onclick="changeQuality('auto')">Авто качество</button>
-                                    <button id="quality1080" onclick="changeQuality('1080p')">1080p</button>
+                                    <button onclick="changeQuality('auto')">Авто качество</button>
+                                    <button onclick="changeQuality('1080p')">1080p</button>
                                     <hr style="margin:5px 0;">
-                                    <button id="speed05" onclick="changeSpeed(0.5)">0.5x</button>
-                                    <button id="speed075" onclick="changeSpeed(0.75)">0.75x</button>
-                                    <button id="speed1" onclick="changeSpeed(1)">1x</button>
-                                    <button id="speed125" onclick="changeSpeed(1.25)">1.25x</button>
-                                    <button id="speed15" onclick="changeSpeed(1.5)">1.5x</button>
-                                    <button id="speed2" onclick="changeSpeed(2)">2x</button>
+                                    <button onclick="changeSpeed(0.5)">0.5x</button>
+                                    <button onclick="changeSpeed(0.75)">0.75x</button>
+                                    <button onclick="changeSpeed(1)">1x</button>
+                                    <button onclick="changeSpeed(1.25)">1.25x</button>
+                                    <button onclick="changeSpeed(1.5)">1.5x</button>
+                                    <button onclick="changeSpeed(2)">2x</button>
                                     <hr style="margin:5px 0;">
-                                    <button id="subtitlesBtn" onclick="toggleSubtitles()">Субтитры (AI)</button>
+                                    <button onclick="toggleSubtitles()">Субтитры (AI)</button>
                                 </div>
                             </div>
                             <button class="control-btn" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
@@ -429,7 +422,7 @@
         <div class="video-info-section" id="watchInfoSection"></div>
     </div>
     <div class="recommendations-section">
-        <div class="rec-title" id="recommendationsTitle">Ұсыныстар</div>
+        <div class="rec-title">Ұсыныстар</div>
         <div id="recommendationsList"></div>
     </div>
 </div>
@@ -437,47 +430,47 @@
 <!-- Модалки -->
 <div id="uploadModal" class="modal">
     <div class="modal-content">
-        <h2 id="uploadModalTitle">📤 Видео жүктеу</h2>
-        <input type="text" id="uploadTitle" id="uploadTitleInput" placeholder="Бейне атауы *">
+        <h2>📤 Видео жүктеу</h2>
+        <input type="text" id="uploadTitle" placeholder="Бейне атауы *">
         <textarea id="uploadDesc" placeholder="Сипаттама" rows="3"></textarea>
         <input type="file" id="uploadFile" accept="video/mp4,video/webm">
-        <button class="btn-primary" id="uploadConfirmBtn" onclick="confirmUpload()" style="width:100%; margin-top:10px;">✅ Жүктеу</button>
-        <button class="btn-outline" id="uploadCloseBtn" onclick="closeModal('upload')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="confirmUpload()" style="width:100%; margin-top:10px;">✅ Жүктеу</button>
+        <button class="btn-outline" onclick="closeModal('upload')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <div id="editProfileModal" class="modal">
     <div class="modal-content">
-        <h2 id="editProfileModalTitle">✏️ Профильді өңдеу</h2>
+        <h2>✏️ Профильді өңдеу</h2>
         <div id="editAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:32px;background-size:cover;"></div>
-        <input type="text" id="editName" id="editNameInput" placeholder="Жаңа есім (ник)">
+        <input type="text" id="editName" placeholder="Жаңа есім (ник)">
         <input type="text" id="editAvatarUrl" placeholder="Аватарка URL">
-        <button class="btn-primary" id="saveProfileBtn" onclick="saveProfileEdit()" style="width:100%">💾 Сақтау</button>
-        <button class="btn-outline" id="closeProfileBtn" onclick="closeModal('editProfile')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="saveProfileEdit()" style="width:100%">💾 Сақтау</button>
+        <button class="btn-outline" onclick="closeModal('editProfile')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <div id="registerModal" class="modal">
     <div class="modal-content">
-        <h2 id="regTitle">📝 Тіркелу</h2>
-        <input type="email" id="regEmail" id="regEmailInput" placeholder="Email (@gmail.com, @mail.com)">
+        <h2>📝 Тіркелу</h2>
+        <input type="email" id="regEmail" placeholder="Email (@gmail.com, @mail.com)">
         <input type="text" id="regLogin" placeholder="Логин">
         <input type="password" id="regPass" placeholder="Пароль">
-        <button class="btn-primary" id="sendCodeBtn" onclick="sendVerificationCode()" style="width:100%">📧 Код жіберу</button>
+        <button class="btn-primary" onclick="sendVerificationCode()" style="width:100%">📧 Код жіберу</button>
         <input type="text" id="regCode" placeholder="6 таңбалы код" style="margin-top:10px;">
         <div id="codeHint" style="display:none; font-size:12px; text-align:center; margin:10px 0;"></div>
-        <button class="btn-primary" id="completeRegBtn" onclick="completeRegistration()" style="width:100%; margin-top:10px;">✅ Тіркелу</button>
-        <button class="btn-outline" id="closeRegBtn" onclick="closeModal('register')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="completeRegistration()" style="width:100%; margin-top:10px;">✅ Тіркелу</button>
+        <button class="btn-outline" onclick="closeModal('register')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <h2 id="loginTitle">🔐 Кіру</h2>
+        <h2>🔐 Кіру</h2>
         <input type="text" id="loginInput" placeholder="Логин немесе Email">
         <input type="password" id="loginPass" placeholder="Пароль">
-        <button class="btn-primary" id="loginSubmitBtn" onclick="login()" style="width:100%">Кіру</button>
-        <button class="btn-outline" id="loginCloseBtn" onclick="closeModal('login')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="login()" style="width:100%">Кіру</button>
+        <button class="btn-outline" onclick="closeModal('login')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
@@ -490,10 +483,10 @@
             myVideosTitle: "📹 Менің видеоым", recommendationsTitle: "Ұсыныстар",
             subsLabel: "жазылушы", videosLabel: "видео", likesLabel: "лайк",
             homeNav: "🏠 Басты", profileNav: "👤 Менің каналым",
-            uploadModalTitle: "📤 Видео жүктеу", uploadConfirmBtn: "✅ Жүктеу", uploadCloseBtn: "Жабу",
-            editProfileModalTitle: "✏️ Профильді өңдеу", saveProfileBtn: "💾 Сақтау", closeProfileBtn: "Жабу",
-            regTitle: "📝 Тіркелу", sendCodeBtn: "📧 Код жіберу", completeRegBtn: "✅ Тіркелу", closeRegBtn: "Жабу",
-            loginTitle: "🔐 Кіру", loginSubmitBtn: "Кіру", loginCloseBtn: "Жабу",
+            uploadModalTitle: "📤 Видео жүктеу", uploadConfirm: "✅ Жүктеу", uploadClose: "Жабу",
+            editProfileTitle: "✏️ Профильді өңдеу", saveProfile: "💾 Сақтау", closeProfile: "Жабу",
+            regTitle: "📝 Тіркелу", sendCode: "📧 Код жіберу", completeReg: "✅ Тіркелу", closeReg: "Жабу",
+            loginTitle: "🔐 Кіру", loginSubmit: "Кіру", loginClose: "Жабу",
             qualityAuto: "Авто качество", quality1080: "1080p", subtitlesBtn: "Субтитры (AI)",
             speed05: "0.5x", speed075: "0.75x", speed1: "1x", speed125: "1.25x", speed15: "1.5x", speed2: "2x",
             fillAll: "Барлық өрістерді толтырыңыз!", invalidEmail: "Қате email! Тек @gmail.com, @mail.com, @yandex.com",
@@ -504,7 +497,7 @@
             selectFile: "Файл таңдаңыз!", videoUploaded: "Видео жүктелді!", profileSaved: "Профиль жаңартылды!",
             cantSubscribe: "Өзіңізге жазыла алмайсыз!", subscribed: "Жазылдыңыз ✅", unsubscribed: "Жазылымнан шықтыңыз ❌",
             needLoginSubscribe: "Кіру қажет!", needLoginLike: "Кіру қажет!",
-            views: "көрсетілім", like: "лайк", subscribers: "жазылушы"
+            views: "көрсетілім", like: "лайк", subscribers: "жазылушы", subscribe: "Жазылу", subscribedText: "Жазылдыңыз"
         },
         ru: {
             loginBtn: "Вход", registerBtn: "Регистрация", logoutBtn: "Выйти",
@@ -512,10 +505,10 @@
             myVideosTitle: "📹 Мои видео", recommendationsTitle: "Рекомендации",
             subsLabel: "подписчиков", videosLabel: "видео", likesLabel: "лайков",
             homeNav: "🏠 Главная", profileNav: "👤 Мой канал",
-            uploadModalTitle: "📤 Загрузить видео", uploadConfirmBtn: "✅ Загрузить", uploadCloseBtn: "Закрыть",
-            editProfileModalTitle: "✏️ Редактировать профиль", saveProfileBtn: "💾 Сохранить", closeProfileBtn: "Закрыть",
-            regTitle: "📝 Регистрация", sendCodeBtn: "📧 Отправить код", completeRegBtn: "✅ Зарегистрироваться", closeRegBtn: "Закрыть",
-            loginTitle: "🔐 Вход", loginSubmitBtn: "Войти", loginCloseBtn: "Закрыть",
+            uploadModalTitle: "📤 Загрузить видео", uploadConfirm: "✅ Загрузить", uploadClose: "Закрыть",
+            editProfileTitle: "✏️ Редактировать профиль", saveProfile: "💾 Сохранить", closeProfile: "Закрыть",
+            regTitle: "📝 Регистрация", sendCode: "📧 Отправить код", completeReg: "✅ Зарегистрироваться", closeReg: "Закрыть",
+            loginTitle: "🔐 Вход", loginSubmit: "Войти", loginClose: "Закрыть",
             qualityAuto: "Авто качество", quality1080: "1080p", subtitlesBtn: "Субтитры (AI)",
             speed05: "0.5x", speed075: "0.75x", speed1: "1x", speed125: "1.25x", speed15: "1.5x", speed2: "2x",
             fillAll: "Заполните все поля!", invalidEmail: "Неверный email! Только @gmail.com, @mail.com, @yandex.com",
@@ -526,76 +519,18 @@
             selectFile: "Выберите файл!", videoUploaded: "Видео загружено!", profileSaved: "Профиль обновлён!",
             cantSubscribe: "Нельзя подписаться на себя!", subscribed: "Вы подписались ✅", unsubscribed: "Вы отписались ❌",
             needLoginSubscribe: "Нужно войти!", needLoginLike: "Нужно войти!",
-            views: "просмотров", like: "лайков", subscribers: "подписчиков"
+            views: "просмотров", like: "лайков", subscribers: "подписчиков", subscribe: "Подписаться", subscribedText: "Подписан"
         }
     };
     
     let currentLang = localStorage.getItem('qaz_lang') || 'kk';
-    
-    function applyTranslation() {
-        const t = translations[currentLang];
-        document.getElementById('loginBtn') && (document.getElementById('loginBtn').innerText = t.loginBtn);
-        document.getElementById('registerBtn') && (document.getElementById('registerBtn').innerText = t.registerBtn);
-        document.getElementById('editProfileText') && (document.getElementById('editProfileText').innerText = t.editProfileText);
-        document.getElementById('uploadVideoText') && (document.getElementById('uploadVideoText').innerText = t.uploadVideoText);
-        document.getElementById('myVideosTitle') && (document.getElementById('myVideosTitle').innerText = t.myVideosTitle);
-        document.getElementById('recommendationsTitle') && (document.getElementById('recommendationsTitle').innerText = t.recommendationsTitle);
-        document.getElementById('subsLabel') && (document.getElementById('subsLabel').innerText = t.subsLabel);
-        document.getElementById('videosLabel') && (document.getElementById('videosLabel').innerText = t.videosLabel);
-        document.getElementById('likesLabel') && (document.getElementById('likesLabel').innerText = t.likesLabel);
-        document.getElementById('homeNav') && (document.getElementById('homeNav').innerHTML = t.homeNav);
-        document.getElementById('profileNav') && (document.getElementById('profileNav').innerHTML = t.profileNav);
-        document.getElementById('uploadModalTitle') && (document.getElementById('uploadModalTitle').innerHTML = t.uploadModalTitle);
-        document.getElementById('uploadConfirmBtn') && (document.getElementById('uploadConfirmBtn').innerText = t.uploadConfirmBtn);
-        document.getElementById('uploadCloseBtn') && (document.getElementById('uploadCloseBtn').innerText = t.uploadCloseBtn);
-        document.getElementById('editProfileModalTitle') && (document.getElementById('editProfileModalTitle').innerHTML = t.editProfileModalTitle);
-        document.getElementById('saveProfileBtn') && (document.getElementById('saveProfileBtn').innerText = t.saveProfileBtn);
-        document.getElementById('closeProfileBtn') && (document.getElementById('closeProfileBtn').innerText = t.closeProfileBtn);
-        document.getElementById('regTitle') && (document.getElementById('regTitle').innerHTML = t.regTitle);
-        document.getElementById('sendCodeBtn') && (document.getElementById('sendCodeBtn').innerText = t.sendCodeBtn);
-        document.getElementById('completeRegBtn') && (document.getElementById('completeRegBtn').innerText = t.completeRegBtn);
-        document.getElementById('closeRegBtn') && (document.getElementById('closeRegBtn').innerText = t.closeRegBtn);
-        document.getElementById('loginTitle') && (document.getElementById('loginTitle').innerHTML = t.loginTitle);
-        document.getElementById('loginSubmitBtn') && (document.getElementById('loginSubmitBtn').innerText = t.loginSubmitBtn);
-        document.getElementById('loginCloseBtn') && (document.getElementById('loginCloseBtn').innerText = t.loginCloseBtn);
-        document.getElementById('qualityAuto') && (document.getElementById('qualityAuto').innerText = t.qualityAuto);
-        document.getElementById('quality1080') && (document.getElementById('quality1080').innerText = t.quality1080);
-        document.getElementById('subtitlesBtn') && (document.getElementById('subtitlesBtn').innerText = t.subtitlesBtn);
-        document.getElementById('speed05') && (document.getElementById('speed05').innerText = t.speed05);
-        document.getElementById('speed075') && (document.getElementById('speed075').innerText = t.speed075);
-        document.getElementById('speed1') && (document.getElementById('speed1').innerText = t.speed1);
-        document.getElementById('speed125') && (document.getElementById('speed125').innerText = t.speed125);
-        document.getElementById('speed15') && (document.getElementById('speed15').innerText = t.speed15);
-        document.getElementById('speed2') && (document.getElementById('speed2').innerText = t.speed2);
-        document.getElementById('uploadTitleInput') && (document.getElementById('uploadTitleInput').placeholder = t.enterTitle);
-        document.getElementById('editNameInput') && (document.getElementById('editNameInput').placeholder = t.editProfileText);
-        document.getElementById('regEmailInput') && (document.getElementById('regEmailInput').placeholder = "Email (@gmail.com, @mail.com)");
-    }
-    
-    document.getElementById('langSelect').value = currentLang;
-    document.getElementById('langSelect').onchange = () => {
-        currentLang = document.getElementById('langSelect').value;
-        localStorage.setItem('qaz_lang', currentLang);
-        applyTranslation();
-        if(currentPlayingVideo) openWatchPage(currentPlayingVideo.id);
-        if(document.getElementById('profilePage').style.display === 'block') showProfile();
-        renderHomePage();
-    };
-    
-    // ============ ДАННЫЕ ============
-    let users = [];
-    let videos = [];
-    let likes = {};
-    let subs = {};
-    let currentUser = null;
-    let pendingRegistration = null;
-    let currentPlayingVideo = null;
+    let currentPage = 'home';
+    let currentVideoId = null;
     let subtitleInterval = null;
     let subtitlesEnabled = false;
     let currentSubtitles = [];
-    let viewsRecord = new Set();
     
-    // РАСШИРЕННЫЕ AI СУБТИТРЫ (реальные фразы, а не просто название)
+    // Фразы для AI субтитров
     const subtitlePhrases = {
         kk: [
             "Сәлеметсіз бе достар!", "Бүгінгі видеода біз...", "Маңызды тақырыпты қарастырамыз",
@@ -613,26 +548,52 @@
         ]
     };
     
-    function generateRealAISubtitles(duration) {
+    function generateAISubtitles(duration) {
         const phrases = subtitlePhrases[currentLang] || subtitlePhrases.kk;
         const subtitles = [];
-        const interval = 4; // фраза каждые 4 секунды
-        let time = 1;
-        while(time < duration) {
-            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-            subtitles.push({ time: time, text: randomPhrase });
-            time += interval;
+        let time = 2;
+        while(time < (duration || 60)) {
+            const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+            subtitles.push({ time: time, text: phrase });
+            time += 4 + Math.random() * 3;
         }
         return subtitles;
     }
     
+    function applyTranslation() {
+        const t = translations[currentLang];
+        document.getElementById('loginBtn') && (document.getElementById('loginBtn').innerText = t.loginBtn);
+        document.getElementById('registerBtn') && (document.getElementById('registerBtn').innerText = t.registerBtn);
+        document.querySelectorAll('.nav-link')[0] && (document.querySelectorAll('.nav-link')[0].innerHTML = t.homeNav);
+        document.querySelectorAll('.nav-link')[1] && (document.querySelectorAll('.nav-link')[1].innerHTML = t.profileNav);
+        document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label') && (document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label').innerText = t.subsLabel);
+        document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label') && (document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label').innerText = t.videosLabel);
+        document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label') && (document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label').innerText = t.likesLabel);
+        document.querySelector('#profilePage h3') && (document.querySelector('#profilePage h3').innerText = t.myVideosTitle);
+        document.querySelector('.recommendations-section .rec-title') && (document.querySelector('.recommendations-section .rec-title').innerText = t.recommendationsTitle);
+        
+        // Обновляем текущую страницу без перезагрузки
+        if(currentPage === 'home') renderHomePage();
+        else if(currentPage === 'profile') showProfile();
+        else if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
+    }
+    
+    // ============ ДАННЫЕ ============
+    let users = [];
+    let videos = [];
+    let likes = {};
+    let subs = {};
+    let currentUser = null;
+    let pendingRegistration = null;
+    let viewsRecord = new Set();
+    
     function loadData() {
-        const savedUsers = localStorage.getItem('qaz_users_final2');
-        const savedVideos = localStorage.getItem('qaz_videos_final2');
-        const savedLikes = localStorage.getItem('qaz_likes_final2');
-        const savedSubs = localStorage.getItem('qaz_subs_final2');
-        const savedCurrent = localStorage.getItem('qaz_current_final2');
-        const savedViews = localStorage.getItem('qaz_views_final2');
+        const savedUsers = localStorage.getItem('qaz_users_final3');
+        const savedVideos = localStorage.getItem('qaz_videos_final3');
+        const savedLikes = localStorage.getItem('qaz_likes_final3');
+        const savedSubs = localStorage.getItem('qaz_subs_final3');
+        const savedCurrent = localStorage.getItem('qaz_current_final3');
+        const savedViews = localStorage.getItem('qaz_views_final3');
         
         if(savedUsers) users = JSON.parse(savedUsers);
         if(savedVideos) videos = JSON.parse(savedVideos);
@@ -647,13 +608,13 @@
     }
     
     function saveData() {
-        localStorage.setItem('qaz_users_final2', JSON.stringify(users));
-        localStorage.setItem('qaz_videos_final2', JSON.stringify(videos));
-        localStorage.setItem('qaz_likes_final2', JSON.stringify(likes));
-        localStorage.setItem('qaz_subs_final2', JSON.stringify(subs));
-        localStorage.setItem('qaz_views_final2', JSON.stringify([...viewsRecord]));
-        if(currentUser) localStorage.setItem('qaz_current_final2', JSON.stringify(currentUser));
-        else localStorage.removeItem('qaz_current_final2');
+        localStorage.setItem('qaz_users_final3', JSON.stringify(users));
+        localStorage.setItem('qaz_videos_final3', JSON.stringify(videos));
+        localStorage.setItem('qaz_likes_final3', JSON.stringify(likes));
+        localStorage.setItem('qaz_subs_final3', JSON.stringify(subs));
+        localStorage.setItem('qaz_views_final3', JSON.stringify([...viewsRecord]));
+        if(currentUser) localStorage.setItem('qaz_current_final3', JSON.stringify(currentUser));
+        else localStorage.removeItem('qaz_current_final3');
     }
     
     function getSubscriberCount(channelId) {
@@ -745,7 +706,7 @@
     function logout() {
         const t = translations[currentLang];
         currentUser = null;
-        localStorage.removeItem('qaz_current_final2');
+        localStorage.removeItem('qaz_current_final3');
         updateUI();
         renderHomePage();
         toast(t.logoutSuccess);
@@ -779,16 +740,12 @@
     function openUploadModal() {
         const t = translations[currentLang];
         if(!currentUser) { toast(t.needLogin); return; }
-        document.getElementById('uploadTitle').value = '';
-        document.getElementById('uploadDesc').value = '';
-        document.getElementById('uploadFile').value = '';
         openModal('upload');
     }
     
     function confirmUpload() {
         const t = translations[currentLang];
         const title = document.getElementById('uploadTitle').value.trim();
-        const desc = document.getElementById('uploadDesc').value.trim();
         const file = document.getElementById('uploadFile').files[0];
         
         if(!title) { toast(t.enterTitle); return; }
@@ -799,13 +756,12 @@
             const newVideo = {
                 id: String(Date.now()),
                 title: title,
-                desc: desc,
+                desc: document.getElementById('uploadDesc').value.trim(),
                 authorId: currentUser.id,
                 authorName: currentUser.name || currentUser.login,
                 date: new Date().toISOString(),
                 views: 0,
-                src: ev.target.result,
-                duration: 30 // будет обновлено при загрузке
+                src: ev.target.result
             };
             videos.push(newVideo);
             saveData();
@@ -851,6 +807,7 @@
     function showProfile() {
         const t = translations[currentLang];
         if(!currentUser) { toast(t.needLogin); return; }
+        currentPage = 'profile';
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'none';
         document.getElementById('profilePage').style.display = 'block';
@@ -929,16 +886,17 @@
         updateUI();
         closeModal('editProfile');
         toast(t.profileSaved);
-        if(document.getElementById('profilePage').style.display === 'block') showProfile();
+        if(currentPage === 'profile') showProfile();
         renderHomePage();
     }
     
-    function openWatchPage(videoId) {
+    function openWatchPage(videoId, isLanguageChange = false) {
         const t = translations[currentLang];
         const video = videos.find(v => v.id === videoId);
         if(!video) return;
         
-        currentPlayingVideo = video;
+        currentPage = 'watch';
+        currentVideoId = videoId;
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('profilePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'flex';
@@ -949,13 +907,13 @@
         mainVideo.src = video.src;
         mainVideo.load();
         
-        // Получаем длительность видео для генерации субтитров
         mainVideo.onloadedmetadata = () => {
-            if(!video.subtitles || video.subtitles.length === 0) {
-                video.subtitles = generateRealAISubtitles(mainVideo.duration || 60);
+            if(!video.subtitles || video.subtitles.length === 0 || isLanguageChange) {
+                video.subtitles = generateAISubtitles(mainVideo.duration || 60);
                 saveData();
             }
             currentSubtitles = video.subtitles;
+            if(subtitlesEnabled && currentSubtitles.length) restartSubtitles();
         };
         
         const likeCount = likes[video.id] ? likes[video.id].length : 0;
@@ -974,16 +932,16 @@
                         <div style="font-size:12px;">${getSubscriberCount(video.authorId)} ${t.subscribers}</div>
                     </div>
                 </div>
-                <button class="subscribe-btn ${isOwn ? 'disabled' : ''}" onclick="subscribeAction('${video.authorId}')" ${isOwn ? 'disabled' : ''}>${isOwn ? 'Бұл сізсіз' : (isSubscribed ? '✅ ' + t.subscribed : '🔔 ' + t.subscribe)}</button>
+                <button class="subscribe-btn ${isOwn ? 'disabled' : ''}" onclick="subscribeAction('${video.authorId}')" ${isOwn ? 'disabled' : ''}>${isOwn ? 'Бұл сізсіз' : (isSubscribed ? '✅ ' + t.subscribedText : '🔔 ' + t.subscribe)}</button>
             </div>
             <div class="action-buttons">
                 <div class="action-btn ${isLiked ? 'liked' : ''}" onclick="likeAction()"><i class="fas fa-thumbs-up"></i> <span id="likeCountDisplay">${likeCount}</span></div>
             </div>
         `;
         
-        // Просмотр только один раз
+        // Просмотр только один раз (не при смене языка)
         const viewKey = `${currentUser ? currentUser.id : 'guest'}_${video.id}`;
-        if(!viewsRecord.has(viewKey) && (!currentUser || currentUser.id !== video.authorId)) {
+        if(!isLanguageChange && !viewsRecord.has(viewKey) && (!currentUser || currentUser.id !== video.authorId)) {
             video.views++;
             viewsRecord.add(viewKey);
             saveData();
@@ -993,6 +951,22 @@
         
         renderRecommendations(video.id);
         setupPlayer();
+    }
+    
+    function restartSubtitles() {
+        if(subtitleInterval) clearInterval(subtitleInterval);
+        const video = document.getElementById('mainVideo');
+        const subtitleText = document.getElementById('subtitleText');
+        subtitleInterval = setInterval(() => {
+            if(!subtitlesEnabled || !video || video.paused) return;
+            const ct = video.currentTime;
+            let active = null;
+            for(let s of currentSubtitles) {
+                if(ct >= s.time) active = s;
+                else break;
+            }
+            subtitleText.textContent = active ? active.text : '';
+        }, 200);
     }
     
     function renderRecommendations(currentId) {
@@ -1030,22 +1004,23 @@
             toast(t.unsubscribed);
         }
         saveData();
-        if(currentPlayingVideo) openWatchPage(currentPlayingVideo.id);
+        if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
     }
     
     function likeAction() {
         const t = translations[currentLang];
-        if(!currentPlayingVideo) return;
+        if(!currentVideoId) return;
         if(!currentUser) { toast(t.needLoginLike); return; }
-        if(!likes[currentPlayingVideo.id]) likes[currentPlayingVideo.id] = [];
-        const idx = likes[currentPlayingVideo.id].indexOf(currentUser.id);
-        if(idx === -1) likes[currentPlayingVideo.id].push(currentUser.id);
-        else likes[currentPlayingVideo.id].splice(idx, 1);
+        if(!likes[currentVideoId]) likes[currentVideoId] = [];
+        const idx = likes[currentVideoId].indexOf(currentUser.id);
+        if(idx === -1) likes[currentVideoId].push(currentUser.id);
+        else likes[currentVideoId].splice(idx, 1);
         saveData();
-        openWatchPage(currentPlayingVideo.id);
+        openWatchPage(currentVideoId, true);
     }
     
     function showHome() {
+        currentPage = 'home';
         document.getElementById('homePage').style.display = 'block';
         document.getElementById('watchPage').style.display = 'none';
         document.getElementById('profilePage').style.display = 'none';
@@ -1056,17 +1031,8 @@
         renderHomePage();
     }
     
-    function changeQuality(q) { 
-        const t = translations[currentLang];
-        toast(`${t.qualityAuto}: ${q}`); 
-        document.getElementById('settingsMenu').classList.remove('show'); 
-    }
-    function changeSpeed(s) { 
-        document.getElementById('mainVideo').playbackRate = s; 
-        const t = translations[currentLang];
-        toast(`${t.speed1}: ${s}x`); 
-        document.getElementById('settingsMenu').classList.remove('show'); 
-    }
+    function changeQuality(q) { toast(`${translations[currentLang].qualityAuto}: ${q}`); document.getElementById('settingsMenu').classList.remove('show'); }
+    function changeSpeed(s) { document.getElementById('mainVideo').playbackRate = s; toast(`${translations[currentLang].speed1}: ${s}x`); document.getElementById('settingsMenu').classList.remove('show'); }
     
     function toggleSubtitles() {
         const t = translations[currentLang];
@@ -1074,20 +1040,7 @@
         const container = document.getElementById('subtitlesContainer');
         if(subtitlesEnabled && currentSubtitles && currentSubtitles.length) {
             container.style.display = 'block';
-            if(subtitleInterval) clearInterval(subtitleInterval);
-            const video = document.getElementById('mainVideo');
-            const subtitleText = document.getElementById('subtitleText');
-            subtitleInterval = setInterval(() => {
-                if(!subtitlesEnabled || !video || video.paused) return;
-                const ct = video.currentTime;
-                let active = null;
-                for(let s of currentSubtitles) {
-                    if(ct >= s.time) active = s;
-                    else break;
-                }
-                if(active) subtitleText.textContent = active.text;
-                else subtitleText.textContent = '';
-            }, 200);
+            restartSubtitles();
             toast(t.subtitlesBtn + ' ✅');
         } else {
             container.style.display = 'none';
@@ -1163,6 +1116,18 @@
         setTimeout(() => t.remove(), 3000);
     }
     
+    // Смена языка без переключения страницы
+    document.getElementById('langSelect').value = currentLang;
+    document.getElementById('langSelect').onchange = () => {
+        currentLang = document.getElementById('langSelect').value;
+        localStorage.setItem('qaz_lang', currentLang);
+        applyTranslation();
+        // Обновляем текущую страницу на том же месте
+        if(currentPage === 'home') renderHomePage();
+        else if(currentPage === 'profile') showProfile();
+        else if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
+    };
+    
     window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.style.display = 'none'; };
     
     loadData();
@@ -1192,7 +1157,7 @@
 </script>
 
 <div class="footer">
-    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — AI субтитры как в YouTube | Просмотры только 1 раз
+    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — AI субтитры | Просмотры 1 раз | Смена языка без переключения
 </div>
 </body>
 </html>
