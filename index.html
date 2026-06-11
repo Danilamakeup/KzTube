@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QazaqTube — Көк-сары видеохостинг</title>
+    <title>QazaqTube — Как YouTube</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -15,32 +15,18 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a2463 0%, #061845 50%, #030c1f 100%);
-            color: #ffffff;
-            min-height: 100vh;
+            background: #0f0f0f;
+            color: #fff;
         }
 
-        /* Анимация градиента */
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Стилизация скролла */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #061845; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #f5b042, #ffd966); border-radius: 10px; }
-
-        /* Хедер */
+        /* Хедер как в YouTube */
         .header {
-            background: rgba(3, 18, 43, 0.85);
-            backdrop-filter: blur(20px);
-            padding: 12px 30px;
+            background: #0f0f0f;
+            padding: 8px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(245, 176, 66, 0.3);
+            border-bottom: 1px solid #272727;
             position: sticky;
             top: 0;
             z-index: 200;
@@ -49,20 +35,20 @@
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #f5b042, #ffd966, #fff5e0);
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f5b042, #ffd966);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            cursor: pointer;
         }
 
         .logo i {
             background: none;
-            -webkit-background-clip: unset;
             color: #f5b042;
         }
 
@@ -70,348 +56,101 @@
             display: flex;
             gap: 12px;
             align-items: center;
-            flex-wrap: wrap;
         }
 
         .lang-select {
-            background: rgba(15, 43, 110, 0.8);
-            border: 1px solid rgba(245, 176, 66, 0.5);
+            background: #272727;
+            border: none;
             color: #f5b042;
             padding: 8px 16px;
-            border-radius: 40px;
+            border-radius: 20px;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .lang-select:hover {
-            background: #f5b042;
-            color: #0a2463;
-            border-color: #fff;
+            font-weight: 500;
+            font-size: 13px;
         }
 
         button {
-            padding: 8px 20px;
+            padding: 8px 18px;
             border: none;
-            border-radius: 40px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.2s;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            color: #0a2463;
-            box-shadow: 0 4px 15px rgba(245, 176, 66, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(245, 176, 66, 0.5);
+            background: #f5b042;
+            color: #0f0f0f;
         }
 
         .btn-outline {
-            background: rgba(255, 255, 240, 0.08);
-            border: 1px solid rgba(245, 176, 66, 0.6);
-            color: #ffd966;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-outline:hover {
-            background: rgba(245, 176, 66, 0.2);
-            border-color: #f5b042;
-            transform: scale(1.02);
+            background: #272727;
+            color: #fff;
         }
 
         .user-info {
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(255, 255, 200, 0.08);
-            padding: 5px 18px 5px 12px;
-            border-radius: 60px;
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(245, 176, 66, 0.3);
+            background: #272727;
+            padding: 5px 15px 5px 10px;
+            border-radius: 30px;
+            cursor: pointer;
         }
 
         .avatar {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: linear-gradient(135deg, #f5b042, #ffd966);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 16px;
-            color: #0a2463;
+            font-size: 14px;
+            color: #0f0f0f;
             background-size: cover;
             background-position: center;
-            transition: all 0.3s;
         }
 
-        /* Контейнер */
-        .container {
-            max-width: 1400px;
+        .hidden { display: none !important; }
+
+        /* Главный контейнер */
+        .main-container {
+            display: flex;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 30px;
-        }
-
-        /* Панель загрузки */
-        .upload-area {
-            background: rgba(10, 27, 68, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(245, 176, 66, 0.4);
-            border-radius: 24px;
             padding: 20px;
-            margin-bottom: 30px;
-            transition: all 0.3s;
+            gap: 30px;
         }
 
-        .upload-area:hover {
-            border-color: #f5b042;
-            box-shadow: 0 8px 25px rgba(245, 176, 66, 0.15);
+        /* Видео плеер секция */
+        .video-section {
+            flex: 2.5;
         }
 
-        .upload-area h4 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #ffd966;
-        }
-
-        .upload-area input, .upload-area textarea {
-            width: 100%;
-            padding: 12px 16px;
-            margin-bottom: 12px;
-            border-radius: 16px;
-            border: 1px solid rgba(245, 176, 66, 0.3);
-            background: rgba(6, 27, 68, 0.8);
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .upload-area input:focus, .upload-area textarea:focus {
-            outline: none;
-            border-color: #f5b042;
-            box-shadow: 0 0 0 3px rgba(245, 176, 66, 0.2);
-        }
-
-        /* Сетка видео */
-        .videos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 20px;
-        }
-
-        .video-card {
-            background: rgba(6, 28, 78, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid rgba(245, 176, 66, 0.3);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-
-        .video-card:hover {
-            transform: translateY(-8px);
-            border-color: #f5b042;
-            box-shadow: 0 20px 35px -12px rgba(245, 176, 66, 0.3);
-        }
-
-        .video-thumb {
-            width: 100%;
-            height: 170px;
-            background: linear-gradient(135deg, #071c47, #0a2463);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .video-wrapper {
             position: relative;
-            overflow: hidden;
-        }
-
-        .video-thumb video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
-        }
-
-        .video-card:hover .video-thumb video {
-            transform: scale(1.05);
-        }
-
-        .video-thumb::after {
-            content: "▶";
-            position: absolute;
-            font-size: 40px;
-            color: rgba(245, 176, 66, 0.8);
-            background: rgba(0,0,0,0.5);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .video-card:hover .video-thumb::after {
-            opacity: 1;
-        }
-
-        .video-info {
-            padding: 15px;
-        }
-
-        .video-title {
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 8px;
-            line-height: 1.3;
-        }
-
-        .video-stats {
-            font-size: 12px;
-            color: #bbd4ff;
-            display: flex;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
-
-        .video-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .video-actions button {
-            padding: 6px 14px;
-            font-size: 12px;
-        }
-
-        /* Модалки */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 12, 35, 0.95);
-            backdrop-filter: blur(12px);
-            z-index: 300;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #0e2360, #0a1b44);
-            padding: 30px;
-            border-radius: 32px;
-            width: 90%;
-            max-width: 450px;
-            border: 1px solid rgba(245, 176, 66, 0.5);
-            box-shadow: 0 30px 50px rgba(0,0,0,0.5);
-            animation: modalFadeIn 0.3s ease;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-size: 28px;
-        }
-
-        .modal-content input {
-            width: 100%;
-            padding: 12px 16px;
-            margin-bottom: 12px;
-            border-radius: 16px;
-            border: 1px solid rgba(245, 176, 66, 0.3);
-            background: rgba(6, 27, 68, 0.8);
-            color: white;
-            font-size: 14px;
-        }
-
-        .modal-content input:focus {
-            outline: none;
-            border-color: #f5b042;
-        }
-
-        .inline-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .code-hint {
-            font-size: 12px;
-            color: #ffd966;
-            margin-bottom: 15px;
-            text-align: center;
-            padding: 8px;
-            background: rgba(245, 176, 66, 0.1);
-            border-radius: 12px;
-        }
-
-        /* КАСТОМНЫЙ ВИДЕОПЛЕЕР */
-        .video-player {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.96);
-            z-index: 400;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
-        }
-
-        .player-container {
-            position: relative;
-            width: 90%;
-            max-width: 1100px;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            animation: playerFadeIn 0.3s ease;
-        }
-
-        @keyframes playerFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .player-video {
             width: 100%;
             background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .video-wrapper video {
+            width: 100%;
             display: block;
+        }
+
+        /* КАСТОМНЫЙ ПЛЕЕР КАК В YOUTUBE */
+        .custom-player {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-player video {
+            width: 100%;
         }
 
         .player-controls {
@@ -419,32 +158,29 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 20px 20px 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+            padding: 16px 20px 12px;
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .player-container:hover .player-controls {
+        .custom-player:hover .player-controls {
             opacity: 1;
         }
 
-        .progress-bar {
+        .progress-container {
             width: 100%;
-            height: 5px;
+            height: 4px;
             background: rgba(255,255,255,0.2);
-            border-radius: 5px;
+            border-radius: 2px;
             cursor: pointer;
-            position: relative;
+            margin-bottom: 12px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #f5b042, #ffd966);
-            border-radius: 5px;
+            background: #f5b042;
+            border-radius: 2px;
             width: 0%;
             position: relative;
         }
@@ -459,13 +195,18 @@
             height: 12px;
             background: #f5b042;
             border-radius: 50%;
-            box-shadow: 0 0 8px #f5b042;
+            opacity: 0;
+            transition: opacity 0.2s;
         }
 
-        .controls-buttons {
+        .progress-container:hover .progress-fill::after {
+            opacity: 1;
+        }
+
+        .controls-row {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 18px;
         }
 
         .control-btn {
@@ -476,19 +217,23 @@
             cursor: pointer;
             padding: 5px;
             transition: all 0.2s;
-            width: auto;
         }
 
         .control-btn:hover {
             color: #f5b042;
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
         .time-display {
             color: white;
             font-size: 13px;
             font-family: monospace;
-            margin-left: auto;
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .volume-slider {
@@ -496,8 +241,7 @@
             height: 4px;
             -webkit-appearance: none;
             background: rgba(255,255,255,0.2);
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 2px;
         }
 
         .volume-slider::-webkit-slider-thumb {
@@ -509,78 +253,195 @@
             cursor: pointer;
         }
 
-        .close-player {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 32px;
-            cursor: pointer;
-            color: white;
-            background: rgba(0,0,0,0.5);
-            width: 50px;
-            height: 50px;
+        .right-controls {
+            margin-left: auto;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Информация о видео */
+        .video-info-section {
+            margin-top: 20px;
+        }
+
+        .video-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .video-stats {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 15px;
+        }
+
+        .channel-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-top: 1px solid #272727;
+            border-bottom: 1px solid #272727;
+        }
+
+        .channel-avatar {
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
+            background: #f5b042;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
-            z-index: 5;
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 12px;
         }
 
-        .close-player:hover {
+        .channel-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .subscribe-btn {
             background: #f5b042;
-            color: #0a2463;
-            transform: rotate(90deg);
+            color: #0f0f0f;
+            padding: 8px 20px;
         }
 
-        /* Тосты */
+        /* Рекомендации */
+        .recommendations-section {
+            flex: 1;
+        }
+
+        .recommendation-card {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 12px;
+            transition: background 0.2s;
+        }
+
+        .recommendation-card:hover {
+            background: #272727;
+        }
+
+        .rec-thumb {
+            width: 168px;
+            height: 94px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .rec-thumb video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .rec-info {
+            flex: 1;
+        }
+
+        .rec-title {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .rec-channel {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 3px;
+        }
+
+        .rec-stats {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* Модалки */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 300;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #202020;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: #f5b042;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border: 1px solid #3a3a3a;
+            background: #121212;
+            color: white;
+        }
+
         .toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            color: #0a2463;
-            padding: 12px 28px;
-            border-radius: 60px;
-            font-weight: 700;
-            z-index: 500;
-            animation: toastFadeOut 3s forwards;
-            box-shadow: 0 8px 25px rgba(245, 176, 66, 0.4);
+            background: #f5b042;
+            color: #0f0f0f;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            z-index: 400;
+            animation: fadeOut 3s forwards;
         }
 
-        @keyframes toastFadeOut {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
             70% { opacity: 1; }
-            100% { opacity: 0; transform: translateX(-50%) translateY(20px); visibility: hidden; }
+            100% { opacity: 0; visibility: hidden; }
         }
 
         .footer {
             text-align: center;
-            padding: 30px;
-            color: rgba(245, 176, 66, 0.6);
-            border-top: 1px solid rgba(245, 176, 66, 0.2);
-            margin-top: 40px;
-            font-size: 13px;
+            padding: 20px;
+            color: #5a5a5a;
+            border-top: 1px solid #272727;
+            margin-top: 30px;
         }
 
-        .hidden {
-            display: none !important;
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 15px; }
-            .header { padding: 12px 15px; }
-            .controls { gap: 8px; }
-            button { padding: 6px 14px; font-size: 12px; }
-            .logo { font-size: 20px; }
+        @media (max-width: 1000px) {
+            .main-container { flex-direction: column; }
+            .recommendations-section { margin-top: 30px; }
         }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div class="logo"><i class="fas fa-play-circle"></i> QAZAQ TUBE</div>
+    <div class="logo" onclick="goHome()"><i class="fab fa-youtube"></i> QazaqTube</div>
     <div class="controls">
         <select id="langSelect" class="lang-select">
             <option value="kk">🇰🇿 Қазақша</option>
@@ -591,83 +452,102 @@
             <button class="btn-primary" onclick="openModal('register')" data-lang-key="registerBtn">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
-            <div class="user-info">
+            <div class="user-info" onclick="openProfileMenu()">
                 <span id="userNameSpan"></span>
                 <div class="avatar" id="avatarSpan"></div>
-                <button class="btn-outline" onclick="openSettings()"><i class="fas fa-cog"></i></button>
-                <button class="btn-outline" onclick="logout()" data-lang-key="logoutBtn">Шығу</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <div id="uploadSection" class="upload-area hidden">
-        <h4 data-lang-key="uploadTitle"><i class="fas fa-cloud-upload-alt"></i> 📤 Жаңа бейне жүктеу</h4>
-        <input type="text" id="videoTitle" data-lang-placeholder="videoTitlePlaceholder" placeholder="Бейне атауы">
-        <textarea id="videoDesc" data-lang-placeholder="videoDescPlaceholder" placeholder="Сипаттама" rows="2"></textarea>
-        <input type="file" id="videoFile" accept="video/mp4,video/webm">
-        <button class="btn-primary" onclick="uploadVideo()" data-lang-key="uploadBtn"><i class="fas fa-upload"></i> ➕ Жүктеу</button>
+<!-- Профиль меню -->
+<div id="profileMenu" class="modal" style="justify-content: flex-end; align-items: flex-start; padding-top: 70px;">
+    <div class="modal-content" style="width: 280px; margin-right: 20px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <div class="avatar" id="profileAvatar" style="width: 80px; height: 80px; margin: 0 auto 10px; font-size: 30px;"></div>
+            <h3 id="profileDisplayName"></h3>
+            <p style="color:#aaa; font-size:12px;">@<span id="profileLogin"></span></p>
+        </div>
+        <hr style="border-color:#3a3a3a; margin: 15px 0;">
+        <button class="btn-outline" onclick="openSettings()" style="width:100%; margin-bottom:8px;"><i class="fas fa-user-edit"></i> <span data-lang-key="editProfile">Профильді өңдеу</span></button>
+        <button class="btn-outline" onclick="openUploadSection()" style="width:100%; margin-bottom:8px;"><i class="fas fa-upload"></i> <span data-lang-key="uploadVideoBtn">Видео жүктеу</span></button>
+        <button class="btn-primary" onclick="logout()" style="width:100%;"><i class="fas fa-sign-out-alt"></i> <span data-lang-key="logoutBtn">Шығу</span></button>
     </div>
-    <div id="videosContainer"></div>
+</div>
+
+<!-- Главный контент -->
+<div class="main-container" id="mainContainer">
+    <div class="video-section" id="videoSection">
+        <div class="video-wrapper">
+            <div class="custom-player" id="customPlayer">
+                <video id="mainVideo" src=""></video>
+                <div class="player-controls">
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="controls-row">
+                        <button class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
+                        <div class="volume-container">
+                            <button class="control-btn" id="muteBtn"><i class="fas fa-volume-up"></i></button>
+                            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                        </div>
+                        <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
+                        <div class="right-controls">
+                            <button class="control-btn" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="video-info-section" id="videoInfoSection">
+            <div class="video-title" id="videoTitleDisplay"></div>
+            <div class="video-stats" id="videoStatsDisplay"></div>
+            <div class="channel-info" id="channelInfoDisplay"></div>
+        </div>
+    </div>
+    <div class="recommendations-section">
+        <h3 style="margin-bottom: 15px; font-size: 18px;" data-lang-key="recommendations">Ұсыныстар</h3>
+        <div id="recommendationsList"></div>
+    </div>
 </div>
 
 <!-- Модалка регистрации -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
-        <h2><i class="fas fa-user-plus"></i> 📝 <span data-lang-key="regTitle">Тіркелу</span></h2>
-        <input type="email" id="regEmail" data-lang-placeholder="regEmailPlaceholder" placeholder="Email (только @gmail.com, @mail.com, @yandex.com)">
-        <input type="text" id="regLogin" data-lang-placeholder="regLoginPlaceholder" placeholder="Логин">
-        <input type="password" id="regPass" data-lang-placeholder="regPassPlaceholder" placeholder="Құпия сөз">
-        <div class="inline-buttons">
-            <button class="btn-primary" onclick="sendVerificationCode()" style="flex:1" data-lang-key="sendCodeBtn"><i class="fas fa-envelope"></i> 📧 Код жіберу</button>
+        <h2>📝 <span data-lang-key="regTitle">Тіркелу</span></h2>
+        <input type="email" id="regEmail" placeholder="Email (только @gmail.com, @mail.com)">
+        <input type="text" id="regLogin" placeholder="Логин">
+        <input type="password" id="regPass" placeholder="Пароль">
+        <div class="inline-buttons" style="display:flex; gap:10px;">
+            <button class="btn-primary" onclick="sendVerificationCode()" style="flex:1">📧 Код жіберу</button>
         </div>
-        <input type="text" id="regCode" data-lang-placeholder="regCodePlaceholder" placeholder="6 таңбалы код">
-        <div class="code-hint" id="codeHint" style="display:none;"></div>
-        <button class="btn-primary" onclick="completeRegistration()" data-lang-key="regSubmit" style="width:100%; margin-top:10px;"><i class="fas fa-check-circle"></i> ✅ Тіркелу</button>
-        <button class="btn-outline" onclick="closeModal('register')" data-lang-key="regClose" style="width:100%; margin-top:10px;">Жабу</button>
+        <input type="text" id="regCode" placeholder="6 таңбалы код">
+        <div class="code-hint" id="codeHint" style="display:none; font-size:12px; margin-bottom:10px; text-align:center;"></div>
+        <button class="btn-primary" onclick="completeRegistration()" style="width:100%; margin-top:10px;">✅ Тіркелу</button>
+        <button class="btn-outline" onclick="closeModal('register')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <!-- Модалка входа -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <h2><i class="fas fa-sign-in-alt"></i> 🔐 <span data-lang-key="loginTitle">Кіру</span></h2>
-        <input type="text" id="loginInput" data-lang-placeholder="loginInputPlaceholder" placeholder="Логин немесе Email">
-        <input type="password" id="loginPass" data-lang-placeholder="loginPassPlaceholder" placeholder="Құпия сөз">
-        <button class="btn-primary" onclick="login()" data-lang-key="loginSubmit" style="width:100%">Кіру</button>
-        <button class="btn-outline" onclick="closeModal('login')" data-lang-key="loginClose" style="width:100%; margin-top:10px;">Жабу</button>
+        <h2>🔐 <span data-lang-key="loginTitle">Кіру</span></h2>
+        <input type="text" id="loginInput" placeholder="Логин немесе Email">
+        <input type="password" id="loginPass" placeholder="Пароль">
+        <button class="btn-primary" onclick="login()" style="width:100%">Кіру</button>
+        <button class="btn-outline" onclick="closeModal('login')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <!-- Модалка настроек -->
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <h2><i class="fas fa-sliders-h"></i> ⚙️ <span data-lang-key="settingsTitle">Профиль</span></h2>
-        <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#f5b042,#ffd966);margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:bold;background-size:cover;background-position:center;"></div>
-        <input type="text" id="settingsName" data-lang-placeholder="settingsNamePlaceholder" placeholder="Жаңа есім">
-        <input type="text" id="settingsAvatarUrl" data-lang-placeholder="settingsAvatarPlaceholder" placeholder="Аватарка URL">
-        <button class="btn-primary" onclick="saveSettings()" data-lang-key="settingsSave" style="width:100%">Сақтау</button>
-        <button class="btn-outline" onclick="closeModal('settings')" data-lang-key="settingsClose" style="width:100%; margin-top:10px;">Жабу</button>
-    </div>
-</div>
-
-<!-- КАСТОМНЫЙ ВИДЕОПЛЕЕР -->
-<div id="videoPlayer" class="video-player">
-    <div class="close-player" onclick="closePlayer()">✕</div>
-    <div class="player-container">
-        <video id="playerVideo" class="player-video"></video>
-        <div class="player-controls">
-            <div class="progress-bar" id="progressBar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="controls-buttons">
-                <button class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
-                <button class="control-btn" id="muteBtn"><i class="fas fa-volume-up"></i></button>
-                <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
-                <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
-            </div>
-        </div>
+        <h2>⚙️ <span data-lang-key="settingsTitle">Профиль</span></h2>
+        <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:32px;background-size:cover;"></div>
+        <input type="text" id="settingsName" placeholder="Жаңа есім">
+        <input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL">
+        <button class="btn-primary" onclick="saveSettings()" style="width:100%">Сақтау</button>
+        <button class="btn-outline" onclick="closeModal('settings')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
@@ -675,48 +555,28 @@
     // ============ ПЕРЕВОД ============
     const translations = {
         kk: {
-            loginBtn: "Кіру", registerBtn: "Тіркелу", logoutBtn: "Шығу",
-            uploadTitle: "📤 Жаңа бейне жүктеу", uploadBtn: "➕ Жүктеу",
-            videoTitlePlaceholder: "Бейне атауы", videoDescPlaceholder: "Сипаттама",
-            regTitle: "Тіркелу", regEmailPlaceholder: "Email (тек @gmail.com, @mail.com, @yandex.com)",
-            regLoginPlaceholder: "Логин", regPassPlaceholder: "Құпия сөз", regCodePlaceholder: "6 таңбалы код",
-            sendCodeBtn: "📧 Код жіберу", regSubmit: "✅ Тіркелу", regClose: "Жабу",
-            loginTitle: "Кіру", loginInputPlaceholder: "Логин немесе Email", loginPassPlaceholder: "Құпия сөз",
-            loginSubmit: "Кіру", loginClose: "Жабу",
-            settingsTitle: "Профиль", settingsNamePlaceholder: "Жаңа есім", settingsAvatarPlaceholder: "Аватарка URL",
-            settingsSave: "Сақтау", settingsClose: "Жабу",
-            emptyVideos: "🎬 Бейнелер жоқ. Бірінші болып жүктеңіз!",
-            fillAll: "Барлық өрістерді толтырыңыз!", invalidEmail: "Қате email! Тек @gmail.com, @mail.com, @yandex.com",
-            emailExists: "Бұл email тіркелген!", loginExists: "Бұл логин алынған!",
-            codeSent: "Код жіберілді! Тексеріңіз: ", wrongCode: "Қате код!",
-            registerSuccess: "Тіркелу сәтті! Қош келдіңіз!", wrongCredentials: "Қате логин/email немесе құпия сөз!",
-            loginSuccess: "Қош келдіңіз!", logoutSuccess: "Сіз шықтыңыз", needLogin: "Кіру қажет!",
-            enterTitle: "Бейне атауын енгізіңіз!", selectFile: "Бейне файлды таңдаңыз!",
-            videoUploaded: "Бейне жүктелді!", needLoginLike: "Лайк басу үшін кіріңіз!",
-            needLoginSubscribe: "Жазылу үшін кіріңіз!", profileSaved: "Профиль жаңартылды!",
-            like: "лайк", subscribed: "✅ Жазылдыңыз", subscribe: "🔔 Жазылу"
+            loginBtn: "Кіру", registerBtn: "Тіркелу", logoutBtn: "Шығу", editProfile: "Профильді өңдеу",
+            uploadVideoBtn: "Видео жүктеу", recommendations: "Ұсыныстар", regTitle: "Тіркелу",
+            loginTitle: "Кіру", settingsTitle: "Профиль", fillAll: "Барлық өрістерді толтырыңыз!",
+            invalidEmail: "Қате email! Тек @gmail.com, @mail.com", emailExists: "Бұл email тіркелген!",
+            loginExists: "Бұл логин алынған!", codeSent: "Код жіберілді!", wrongCode: "Қате код!",
+            registerSuccess: "Тіркелу сәтті!", wrongCredentials: "Қате логин немесе пароль!",
+            loginSuccess: "Қош келдіңіз!", logoutSuccess: "Шықтыңыз", needLogin: "Кіру қажет!",
+            enterTitle: "Атауын енгізіңіз!", selectFile: "Файл таңдаңыз!", videoUploaded: "Жүктелді!",
+            profileSaved: "Сақталды!", like: "лайк", subscribed: "Жазылдыңыз", subscribe: "Жазылу",
+            views: "көрсетілім"
         },
         ru: {
-            loginBtn: "Вход", registerBtn: "Регистрация", logoutBtn: "Выйти",
-            uploadTitle: "📤 Загрузить новое видео", uploadBtn: "➕ Загрузить",
-            videoTitlePlaceholder: "Название видео", videoDescPlaceholder: "Описание",
-            regTitle: "Регистрация", regEmailPlaceholder: "Email (только @gmail.com, @mail.com, @yandex.com)",
-            regLoginPlaceholder: "Логин", regPassPlaceholder: "Пароль", regCodePlaceholder: "6-значный код",
-            sendCodeBtn: "📧 Отправить код", regSubmit: "✅ Зарегистрироваться", regClose: "Закрыть",
-            loginTitle: "Вход", loginInputPlaceholder: "Логин или Email", loginPassPlaceholder: "Пароль",
-            loginSubmit: "Войти", loginClose: "Закрыть",
-            settingsTitle: "Профиль", settingsNamePlaceholder: "Новое имя", settingsAvatarPlaceholder: "URL аватара",
-            settingsSave: "Сохранить", settingsClose: "Закрыть",
-            emptyVideos: "🎬 Видео нет. Будьте первым!", fillAll: "Заполните все поля!",
-            invalidEmail: "Неверный email! Только @gmail.com, @mail.com, @yandex.com",
-            emailExists: "Этот email уже зарегистрирован!", loginExists: "Этот логин уже занят!",
-            codeSent: "Код отправлен! Проверьте: ", wrongCode: "Неверный код!",
-            registerSuccess: "Регистрация успешна! Добро пожаловать!", wrongCredentials: "Неверный логин/email или пароль!",
+            loginBtn: "Вход", registerBtn: "Регистрация", logoutBtn: "Выйти", editProfile: "Редактировать профиль",
+            uploadVideoBtn: "Загрузить видео", recommendations: "Рекомендации", regTitle: "Регистрация",
+            loginTitle: "Вход", settingsTitle: "Профиль", fillAll: "Заполните все поля!",
+            invalidEmail: "Неверный email! Только @gmail.com, @mail.com", emailExists: "Email уже зарегистрирован!",
+            loginExists: "Логин уже занят!", codeSent: "Код отправлен!", wrongCode: "Неверный код!",
+            registerSuccess: "Регистрация успешна!", wrongCredentials: "Неверный логин или пароль!",
             loginSuccess: "Добро пожаловать!", logoutSuccess: "Вы вышли", needLogin: "Нужно войти!",
-            enterTitle: "Введите название видео!", selectFile: "Выберите видео файл!",
-            videoUploaded: "Видео загружено!", needLoginLike: "Войдите чтобы поставить лайк!",
-            needLoginSubscribe: "Войдите чтобы подписаться!", profileSaved: "Профиль обновлён!",
-            like: "лайков", subscribed: "✅ Вы подписаны", subscribe: "🔔 Подписаться"
+            enterTitle: "Введите название!", selectFile: "Выберите файл!", videoUploaded: "Загружено!",
+            profileSaved: "Сохранено!", like: "лайков", subscribed: "Вы подписаны", subscribe: "Подписаться",
+            views: "просмотров"
         }
     };
     
@@ -726,27 +586,17 @@
         const t = translations[currentLang];
         document.querySelectorAll('[data-lang-key]').forEach(el => {
             const key = el.getAttribute('data-lang-key');
-            if (t[key]) {
-                if (el.innerHTML.includes('<i')) {
-                    const icon = el.querySelector('i');
-                    if (icon) el.innerHTML = icon.outerHTML + ' ' + t[key];
-                    else el.innerText = t[key];
-                } else el.innerText = t[key];
-            }
+            if (t[key]) el.innerText = t[key];
         });
         document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
             const key = el.getAttribute('data-lang-placeholder');
             if (t[key]) el.placeholder = t[key];
         });
+        document.querySelectorAll('[data-lang-html]').forEach(el => {
+            const key = el.getAttribute('data-lang-html');
+            if (t[key]) el.innerHTML = t[key];
+        });
     }
-    
-    document.getElementById('langSelect').value = currentLang;
-    document.getElementById('langSelect').onchange = function() {
-        currentLang = this.value;
-        localStorage.setItem('qaz_lang', currentLang);
-        applyTranslation();
-        renderVideos(); 
-    };
     
     // ============ ДАННЫЕ ============
     let users = [];
@@ -755,6 +605,7 @@
     let subs = {};
     let currentUser = null;
     let pendingRegistration = null;
+    let currentPlayingVideo = null;
     
     function loadData() {
         const savedUsers = localStorage.getItem('qaz_users');
@@ -784,9 +635,9 @@
     }
     
     function isValidEmail(email) {
-        const allowedDomains = ['gmail.com', 'mail.com', 'yandex.com', 'yandex.kz', 'mail.ru', 'bk.ru', 'list.ru'];
+        const allowed = ['gmail.com', 'mail.com', 'yandex.com', 'yandex.kz', 'mail.ru', 'bk.ru'];
         const domain = email.split('@')[1];
-        return email.includes('@') && domain && allowedDomains.some(d => domain.toLowerCase() === d);
+        return email.includes('@') && domain && allowed.some(d => domain.toLowerCase() === d);
     }
     
     function sendVerificationCode() {
@@ -802,18 +653,14 @@
         
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         pendingRegistration = { email, login, password, code };
-        
-        const hintDiv = document.getElementById('codeHint');
-        hintDiv.style.display = 'block';
-        hintDiv.innerHTML = `📧 ${t.codeSent} <strong style="font-size:18px;">${code}</strong>`;
+        document.getElementById('codeHint').style.display = 'block';
+        document.getElementById('codeHint').innerHTML = `📧 ${t.codeSent} <strong>${code}</strong>`;
         toast(`${t.codeSent} ${code}`);
-        console.log("Код подтверждения:", code);
     }
     
     function completeRegistration() {
         const t = translations[currentLang];
         const enteredCode = document.getElementById('regCode').value.trim();
-        
         if(!pendingRegistration) { toast(t.fillAll); return; }
         if(enteredCode !== pendingRegistration.code) { toast(t.wrongCode); return; }
         
@@ -824,24 +671,25 @@
             password: pendingRegistration.password,
             name: pendingRegistration.login,
             avatar: pendingRegistration.login[0].toUpperCase(),
-            avatarType: 'text'
+            avatarUrl: null
         };
-        
         users.push(newUser);
         currentUser = newUser;
         saveData();
-        
         closeModal('register');
         updateUI();
-        renderVideos();
+        renderRecommendations();
         toast(t.registerSuccess);
-        
+        clearRegForm();
+        pendingRegistration = null;
+    }
+    
+    function clearRegForm() {
         document.getElementById('regEmail').value = '';
         document.getElementById('regLogin').value = '';
         document.getElementById('regPass').value = '';
         document.getElementById('regCode').value = '';
         document.getElementById('codeHint').style.display = 'none';
-        pendingRegistration = null;
     }
     
     function login() {
@@ -849,16 +697,13 @@
         const input = document.getElementById('loginInput').value.trim();
         const pass = document.getElementById('loginPass').value;
         const user = users.find(u => (u.login === input || u.email === input) && u.password === pass);
-        
         if(!user) { toast(t.wrongCredentials); return; }
-        
         currentUser = user;
         saveData();
         closeModal('login');
         updateUI();
-        renderVideos();
+        renderRecommendations();
         toast(t.loginSuccess);
-        
         document.getElementById('loginInput').value = '';
         document.getElementById('loginPass').value = '';
     }
@@ -868,17 +713,16 @@
         currentUser = null;
         localStorage.removeItem('qaz_current');
         updateUI();
-        renderVideos();
+        renderRecommendations();
         toast(t.logoutSuccess);
+        goHome();
     }
     
     function updateUI() {
         if(currentUser) {
             document.getElementById('unauthButtons').classList.add('hidden');
             document.getElementById('authButtons').classList.remove('hidden');
-            document.getElementById('uploadSection').classList.remove('hidden');
             document.getElementById('userNameSpan').innerText = currentUser.name || currentUser.login;
-            
             const av = document.getElementById('avatarSpan');
             if(currentUser.avatarUrl) {
                 av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
@@ -892,123 +736,148 @@
         } else {
             document.getElementById('unauthButtons').classList.remove('hidden');
             document.getElementById('authButtons').classList.add('hidden');
-            document.getElementById('uploadSection').classList.add('hidden');
         }
     }
     
-    function uploadVideo() {
+    // Загрузка видео
+    function uploadNewVideo() {
         const t = translations[currentLang];
         if(!currentUser) { toast(t.needLogin); return; }
         
-        const title = document.getElementById('videoTitle').value.trim();
-        const desc = document.getElementById('videoDesc').value.trim();
-        const file = document.getElementById('videoFile').files[0];
+        const title = prompt(t.enterTitle);
+        if(!title) return;
         
-        if(!title) { toast(t.enterTitle); return; }
-        if(!file) { toast(t.selectFile); return; }
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const newVideo = {
-                id: String(Date.now()),
-                title: title,
-                desc: desc,
-                authorId: currentUser.id,
-                authorName: currentUser.name || currentUser.login,
-                date: new Date().toISOString(),
-                views: 0,
-                src: e.target.result
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'video/mp4,video/webm';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if(!file) { toast(t.selectFile); return; }
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const newVideo = {
+                    id: String(Date.now()),
+                    title: title,
+                    desc: "",
+                    authorId: currentUser.id,
+                    authorName: currentUser.name || currentUser.login,
+                    date: new Date().toISOString(),
+                    views: 0,
+                    src: ev.target.result
+                };
+                videos.push(newVideo);
+                saveData();
+                renderRecommendations();
+                toast(t.videoUploaded);
+                playVideo(newVideo);
             };
-            videos.push(newVideo);
-            saveData();
-            
-            document.getElementById('videoTitle').value = '';
-            document.getElementById('videoDesc').value = '';
-            document.getElementById('videoFile').value = '';
-            
-            renderVideos();
-            toast(t.videoUploaded);
+            reader.readAsDataURL(file);
         };
-        reader.readAsDataURL(file);
+        input.click();
     }
     
-    function likeVideo(videoId) {
-        videoId = String(videoId);
+    function openUploadSection() {
+        uploadNewVideo();
+        closeModal('profileMenu');
+    }
+    
+    function playVideo(video) {
+        currentPlayingVideo = video;
+        const mainVideo = document.getElementById('mainVideo');
+        mainVideo.src = video.src;
+        mainVideo.load();
+        mainVideo.play();
+        
+        document.getElementById('videoTitleDisplay').innerText = video.title;
         const t = translations[currentLang];
-        if(!currentUser) { toast(t.needLoginLike); return; }
+        document.getElementById('videoStatsDisplay').innerHTML = `<i class="fas fa-eye"></i> ${video.views} ${t.views} • <i class="fas fa-heart"></i> ${likes[video.id] ? likes[video.id].length : 0} ${t.like}`;
         
-        if(!likes[videoId]) likes[videoId] = [];
-        const index = likes[videoId].indexOf(currentUser.id);
-        if(index === -1) likes[videoId].push(currentUser.id);
-        else likes[videoId].splice(index, 1);
-        
-        saveData();
-        renderVideos();
-    }
-    
-    function subscribeTo(authorId) {
-        authorId = String(authorId);
-        const t = translations[currentLang];
-        if(!currentUser) { toast(t.needLoginSubscribe); return; }
-        
-        if(!subs[currentUser.id]) subs[currentUser.id] = [];
-        const index = subs[currentUser.id].indexOf(authorId);
-        if(index === -1) subs[currentUser.id].push(authorId);
-        else subs[currentUser.id].splice(index, 1);
-        
-        saveData();
-        renderVideos();
-    }
-    
-    function isLiked(videoId) {
-        if(!currentUser) return false;
-        return likes[videoId] && likes[videoId].includes(currentUser.id);
-    }
-    
-    function isSubscribed(authorId) {
-        if(!currentUser) return false;
-        return subs[currentUser.id] && subs[currentUser.id].includes(authorId);
-    }
-    
-    // КАСТОМНЫЙ ПЛЕЕР
-    let currentVideoObj = null;
-    
-    function playVideoById(videoId) {
-        const video = videos.find(v => String(v.id) === String(videoId));
-        if(!video) return;
-        
-        currentVideoObj = video;
-        const playerVideo = document.getElementById('playerVideo');
-        playerVideo.src = video.src;
+        const isSubbed = currentUser && subs[currentUser.id] && subs[currentUser.id].includes(video.authorId);
+        document.getElementById('channelInfoDisplay').innerHTML = `
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div class="channel-avatar">${video.authorName[0].toUpperCase()}</div>
+                <div>
+                    <div class="channel-name">${escapeHtml(video.authorName)}</div>
+                    <div style="font-size:12px; color:#aaa;">${video.authorName}</div>
+                </div>
+            </div>
+            <button class="subscribe-btn" onclick="event.stopPropagation(); subscribeToChannel('${video.authorId}'); playVideo(currentPlayingVideo);">${isSubbed ? t.subscribed : t.subscribe}</button>
+        `;
         
         video.views++;
         saveData();
-        renderVideos();
-        
-        document.getElementById('videoPlayer').style.display = 'flex';
-        
-        // Настройка кастомного плеера
-        setupCustomPlayer();
+        renderRecommendations();
+        setupPlayer();
     }
     
-    function setupCustomPlayer() {
-        const video = document.getElementById('playerVideo');
+    function subscribeToChannel(authorId) {
+        const t = translations[currentLang];
+        if(!currentUser) { toast(t.needLogin); return; }
+        if(!subs[currentUser.id]) subs[currentUser.id] = [];
+        const idx = subs[currentUser.id].indexOf(authorId);
+        if(idx === -1) subs[currentUser.id].push(authorId);
+        else subs[currentUser.id].splice(idx, 1);
+        saveData();
+        if(currentPlayingVideo) playVideo(currentPlayingVideo);
+        renderRecommendations();
+    }
+    
+    function likeCurrentVideo() {
+        if(!currentPlayingVideo) return;
+        const t = translations[currentLang];
+        if(!currentUser) { toast(t.needLogin); return; }
+        const videoId = currentPlayingVideo.id;
+        if(!likes[videoId]) likes[videoId] = [];
+        const idx = likes[videoId].indexOf(currentUser.id);
+        if(idx === -1) likes[videoId].push(currentUser.id);
+        else likes[videoId].splice(idx, 1);
+        saveData();
+        playVideo(currentPlayingVideo);
+    }
+    
+    function renderRecommendations() {
+        const container = document.getElementById('recommendationsList');
+        if(videos.length === 0) {
+            container.innerHTML = '<div style="color:#aaa;">🎬 Видео жоқ</div>';
+            return;
+        }
+        let html = '';
+        const otherVideos = currentPlayingVideo ? videos.filter(v => v.id !== currentPlayingVideo.id) : videos;
+        for(let v of otherVideos.slice().reverse()) {
+            const likeCount = likes[v.id] ? likes[v.id].length : 0;
+            html += `
+                <div class="recommendation-card" onclick="playVideo(${JSON.stringify(v).replace(/"/g, '&quot;')})">
+                    <div class="rec-thumb"><video src="${v.src}" style="width:100%;height:100%;object-fit:cover;"></video></div>
+                    <div class="rec-info">
+                        <div class="rec-title">${escapeHtml(v.title)}</div>
+                        <div class="rec-channel">${escapeHtml(v.authorName)}</div>
+                        <div class="rec-stats">${v.views} views • ❤️ ${likeCount}</div>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    }
+    
+    // КАСТОМНЫЙ ПЛЕЕР КАК В ЮТУБЕ
+    function setupPlayer() {
+        const video = document.getElementById('mainVideo');
         const playPauseBtn = document.getElementById('playPauseBtn');
-        const progressBar = document.getElementById('progressBar');
+        const progressContainer = document.getElementById('progressContainer');
         const progressFill = document.getElementById('progressFill');
         const muteBtn = document.getElementById('muteBtn');
         const volumeSlider = document.getElementById('volumeSlider');
         const timeDisplay = document.getElementById('timeDisplay');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const player = document.getElementById('customPlayer');
         
-        // Функция форматирования времени
-        function formatTime(seconds) {
-            const mins = Math.floor(seconds / 60);
-            const secs = Math.floor(seconds % 60);
+        function formatTime(sec) {
+            const mins = Math.floor(sec / 60);
+            const secs = Math.floor(sec % 60);
             return `${mins}:${secs < 10 ? '0' + secs : secs}`;
         }
         
-        // Обновление времени
-        function updateTime() {
+        function updateProgress() {
             if(video.duration) {
                 timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
                 const percent = (video.currentTime / video.duration) * 100;
@@ -1016,40 +885,26 @@
             }
         }
         
-        video.addEventListener('timeupdate', updateTime);
-        video.addEventListener('loadedmetadata', updateTime);
+        video.addEventListener('timeupdate', updateProgress);
+        video.addEventListener('loadedmetadata', updateProgress);
         
-        // Play/Pause
         playPauseBtn.onclick = () => {
-            if(video.paused) {
-                video.play();
-                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                video.pause();
-                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            }
+            if(video.paused) { video.play(); playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>'; }
+            else { video.pause(); playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; }
         };
-        
         video.onplay = () => playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
         video.onpause = () => playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
         
-        // Прогресс бар
-        progressBar.onclick = (e) => {
-            const rect = progressBar.getBoundingClientRect();
+        progressContainer.onclick = (e) => {
+            const rect = progressContainer.getBoundingClientRect();
             const pos = (e.clientX - rect.left) / rect.width;
             video.currentTime = pos * video.duration;
         };
         
-        // Громкость
         muteBtn.onclick = () => {
-            if(video.muted) {
-                video.muted = false;
-                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                volumeSlider.value = video.volume;
-            } else {
-                video.muted = true;
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-            }
+            video.muted = !video.muted;
+            muteBtn.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            volumeSlider.value = video.muted ? 0 : video.volume;
         };
         
         volumeSlider.oninput = (e) => {
@@ -1058,23 +913,35 @@
             muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
         };
         
-        video.onended = () => {
-            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        fullscreenBtn.onclick = () => {
+            if(player.requestFullscreen) player.requestFullscreen();
+            else if(player.webkitRequestFullscreen) player.webkitRequestFullscreen();
         };
+        
+        video.onended = () => playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     }
     
-    function closePlayer() {
-        const video = document.getElementById('playerVideo');
-        video.pause();
-        video.src = '';
-        document.getElementById('videoPlayer').style.display = 'none';
+    function openProfileMenu() {
+        if(!currentUser) return;
+        const av = document.getElementById('profileAvatar');
+        if(currentUser.avatarUrl) {
+            av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
+            av.style.backgroundSize = 'cover';
+            av.innerText = '';
+        } else {
+            av.style.backgroundImage = 'none';
+            av.style.background = 'linear-gradient(135deg, #f5b042, #ffd966)';
+            av.innerText = currentUser.avatar || currentUser.login[0].toUpperCase();
+        }
+        document.getElementById('profileDisplayName').innerText = currentUser.name || currentUser.login;
+        document.getElementById('profileLogin').innerText = currentUser.login;
+        document.getElementById('profileMenu').style.display = 'flex';
     }
     
     function openSettings() {
         if(!currentUser) return;
         document.getElementById('settingsName').value = currentUser.name || '';
         document.getElementById('settingsAvatarUrl').value = currentUser.avatarUrl || '';
-        
         const av = document.getElementById('settingsAvatar');
         if(currentUser.avatarUrl) {
             av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
@@ -1085,6 +952,7 @@
             av.style.background = 'linear-gradient(135deg, #f5b042, #ffd966)';
             av.innerText = currentUser.avatar || currentUser.login[0].toUpperCase();
         }
+        closeModal('profileMenu');
         openModal('settings');
     }
     
@@ -1092,58 +960,26 @@
         const t = translations[currentLang];
         const newName = document.getElementById('settingsName').value.trim();
         const newAvatar = document.getElementById('settingsAvatarUrl').value.trim();
-        
         if(newName) currentUser.name = newName;
-        if(newAvatar) { currentUser.avatarUrl = newAvatar; }
-        else { delete currentUser.avatarUrl; }
-        
-        const index = users.findIndex(u => String(u.id) === String(currentUser.id));
-        if(index !== -1) users[index] = currentUser;
+        if(newAvatar) currentUser.avatarUrl = newAvatar;
+        else delete currentUser.avatarUrl;
+        const idx = users.findIndex(u => u.id === currentUser.id);
+        if(idx !== -1) users[idx] = currentUser;
         saveData();
         updateUI();
         closeModal('settings');
-        renderVideos();
         toast(t.profileSaved);
+        if(currentPlayingVideo) playVideo(currentPlayingVideo);
     }
     
-    function renderVideos() {
-        const t = translations[currentLang];
-        const container = document.getElementById('videosContainer');
-        
-        if(videos.length === 0) {
-            container.innerHTML = `<div style="text-align:center;padding:60px;background:rgba(255,255,255,0.03);border-radius:40px;"><i class="fas fa-video" style="font-size:60px;color:#f5b042;margin-bottom:20px;display:block;"></i>${t.emptyVideos}</div>`;
-            return;
+    function goHome() {
+        if(videos.length > 0) playVideo(videos[videos.length - 1]);
+        else {
+            document.getElementById('videoTitleDisplay').innerText = 'Видео жоқ';
+            document.getElementById('videoStatsDisplay').innerHTML = '';
+            document.getElementById('channelInfoDisplay').innerHTML = '';
+            document.getElementById('mainVideo').src = '';
         }
-        
-        let html = '<div class="videos-grid">';
-        for(let i = videos.length - 1; i >= 0; i--) {
-            const v = videos[i];
-            const likeCount = likes[v.id] ? likes[v.id].length : 0;
-            const liked = isLiked(v.id);
-            const subscribed = isSubscribed(v.authorId);
-            
-            html += `
-                <div class="video-card">
-                    <div class="video-thumb" onclick="playVideoById('${v.id}')">
-                        <video src="${v.src}" style="width:100%;height:100%;object-fit:cover;"></video>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-title">${escapeHtml(v.title)}</div>
-                        <div class="video-stats">
-                            <span><i class="fas fa-user"></i> ${escapeHtml(v.authorName)}</span>
-                            <span><i class="fas fa-heart"></i> ${likeCount} ${t.like}</span>
-                            <span><i class="fas fa-eye"></i> ${v.views}</span>
-                        </div>
-                        <div class="video-actions">
-                            <button class="${liked ? 'btn-primary' : 'btn-outline'}" onclick="event.stopPropagation(); likeVideo('${v.id}')"><i class="fas fa-heart"></i> ${likeCount}</button>
-                            <button class="${subscribed ? 'btn-primary' : 'btn-outline'}" onclick="event.stopPropagation(); subscribeTo('${v.authorId}')">${subscribed ? '<i class="fas fa-check"></i> ' + t.subscribed : '<i class="fas fa-bell"></i> ' + t.subscribe}</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-        html += '</div>';
-        container.innerHTML = html;
     }
     
     function escapeHtml(str) {
@@ -1157,24 +993,33 @@
     function toast(msg) {
         const t = document.createElement('div');
         t.className = 'toast';
-        t.innerHTML = msg;
+        t.innerText = msg;
         document.body.appendChild(t);
         setTimeout(() => t.remove(), 3000);
     }
     
-    window.onclick = function(e) {
+    document.getElementById('langSelect').value = currentLang;
+    document.getElementById('langSelect').onchange = () => {
+        currentLang = document.getElementById('langSelect').value;
+        localStorage.setItem('qaz_lang', currentLang);
+        applyTranslation();
+        if(currentPlayingVideo) playVideo(currentPlayingVideo);
+        renderRecommendations();
+    };
+    
+    window.onclick = (e) => {
         if(e.target.classList.contains('modal')) e.target.style.display = 'none';
-        if(e.target.classList.contains('video-player')) closePlayer();
     };
     
     loadData();
     applyTranslation();
     updateUI();
-    renderVideos();
+    if(videos.length > 0) playVideo(videos[videos.length - 1]);
+    else renderRecommendations();
 </script>
 
 <div class="footer">
-    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Көк-сары видеохостинг | Барлық деректер браузерде сақталада
+    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Как YouTube | Все данные в браузере
 </div>
 </body>
 </html>
