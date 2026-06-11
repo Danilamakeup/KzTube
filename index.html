@@ -34,6 +34,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            flex-wrap: wrap;
         }
         button {
             padding: 8px 16px;
@@ -70,6 +71,8 @@
             justify-content: center;
             font-weight: bold;
             color: #0a2463;
+            background-size: cover;
+            background-position: center;
         }
         .container {
             max-width: 1200px;
@@ -107,6 +110,7 @@
             overflow: hidden;
             cursor: pointer;
             border: 1px solid rgba(245,176,66,0.3);
+            transition: transform 0.2s;
         }
         .video-card:hover {
             transform: translateY(-3px);
@@ -138,10 +142,12 @@
             display: flex;
             gap: 10px;
             margin-bottom: 8px;
+            flex-wrap: wrap;
         }
         .video-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         .video-actions button {
             padding: 5px 12px;
@@ -167,7 +173,7 @@
             max-width: 400px;
             border: 2px solid #f5b042;
         }
-        .modal-content input {
+        .modal-content input, .modal-content select {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -179,6 +185,12 @@
         .modal-content h2 {
             margin-bottom: 15px;
             color: #f5b042;
+        }
+        .code-hint {
+            font-size: 12px;
+            color: #f5b042;
+            margin-bottom: 10px;
+            text-align: center;
         }
         .video-player {
             position: fixed;
@@ -195,6 +207,7 @@
         .video-player video {
             max-width: 90%;
             max-height: 80%;
+            border-radius: 10px;
         }
         .close-video {
             position: absolute;
@@ -232,6 +245,10 @@
         .hidden {
             display: none !important;
         }
+        .inline-buttons {
+            display: flex;
+            gap: 8px;
+        }
     </style>
 </head>
 <body>
@@ -244,15 +261,15 @@
             <option value="ru">Русский</option>
         </select>
         <div id="unauthButtons">
-            <button class="btn-outline" onclick="openModal('login')" data-lang-key="login">Кіру</button>
-            <button class="btn-primary" onclick="openModal('register')" data-lang-key="register">Тіркелу</button>
+            <button class="btn-outline" onclick="openModal('login')" data-lang-key="loginBtn">Кіру</button>
+            <button class="btn-primary" onclick="openModal('register')" data-lang-key="registerBtn">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
             <div class="user-info">
                 <span id="userNameSpan"></span>
                 <div class="avatar" id="avatarSpan"></div>
                 <button class="btn-outline" onclick="openSettings()">⚙️</button>
-                <button class="btn-outline" onclick="logout()" data-lang-key="logout">Шығу</button>
+                <button class="btn-outline" onclick="logout()" data-lang-key="logoutBtn">Шығу</button>
             </div>
         </div>
     </div>
@@ -269,17 +286,24 @@
     <div id="videosContainer"></div>
 </div>
 
+<!-- Модалка регистрации с кодом -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
         <h2 data-lang-key="regTitle">📝 Тіркелу</h2>
-        <input type="email" id="regEmail" data-lang-placeholder="regEmailPlaceholder" placeholder="Email">
+        <input type="email" id="regEmail" data-lang-placeholder="regEmailPlaceholder" placeholder="Email (только @gmail.com, @mail.com, @yandex.com)">
         <input type="text" id="regLogin" data-lang-placeholder="regLoginPlaceholder" placeholder="Логин">
         <input type="password" id="regPass" data-lang-placeholder="regPassPlaceholder" placeholder="Құпия сөз">
-        <button class="btn-primary" onclick="register()" data-lang-key="regSubmit" style="width:100%">Тіркелу</button>
+        <div class="inline-buttons">
+            <button class="btn-primary" onclick="sendVerificationCode()" style="flex:1" data-lang-key="sendCodeBtn">📧 Код жіберу</button>
+        </div>
+        <input type="text" id="regCode" data-lang-placeholder="regCodePlaceholder" placeholder="6 таңбалы код">
+        <div class="code-hint" id="codeHint" style="display:none;"></div>
+        <button class="btn-primary" onclick="completeRegistration()" data-lang-key="regSubmit" style="width:100%; margin-top:10px;">✅ Тіркелу</button>
         <button class="btn-outline" onclick="closeModal('register')" data-lang-key="regClose" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
+<!-- Модалка входа -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <h2 data-lang-key="loginTitle">🔐 Кіру</h2>
@@ -290,10 +314,11 @@
     </div>
 </div>
 
+<!-- Модалка настроек -->
 <div id="settingsModal" class="modal">
     <div class="modal-content">
         <h2 data-lang-key="settingsTitle">⚙️ Профиль</h2>
-        <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;"></div>
+        <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;background-size:cover;background-position:center;"></div>
         <input type="text" id="settingsName" data-lang-placeholder="settingsNamePlaceholder" placeholder="Жаңа есім">
         <input type="text" id="settingsAvatarUrl" data-lang-placeholder="settingsAvatarPlaceholder" placeholder="Аватарка URL">
         <button class="btn-primary" onclick="saveSettings()" data-lang-key="settingsSave" style="width:100%">Сақтау</button>
@@ -310,18 +335,20 @@
     // ============ ПЕРЕВОД ============
     const translations = {
         kk: {
-            login: "Кіру",
-            register: "Тіркелу",
-            logout: "Шығу",
+            loginBtn: "Кіру",
+            registerBtn: "Тіркелу",
+            logoutBtn: "Шығу",
             uploadTitle: "📤 Жаңа бейне жүктеу",
             uploadBtn: "➕ Жүктеу",
             videoTitlePlaceholder: "Бейне атауы",
             videoDescPlaceholder: "Сипаттама",
             regTitle: "📝 Тіркелу",
-            regEmailPlaceholder: "Email",
+            regEmailPlaceholder: "Email (тек @gmail.com, @mail.com, @yandex.com)",
             regLoginPlaceholder: "Логин",
             regPassPlaceholder: "Құпия сөз",
-            regSubmit: "Тіркелу",
+            regCodePlaceholder: "6 таңбалы код",
+            sendCodeBtn: "📧 Код жіберу",
+            regSubmit: "✅ Тіркелу",
             regClose: "Жабу",
             loginTitle: "🔐 Кіру",
             loginInputPlaceholder: "Логин немесе Email",
@@ -335,8 +362,11 @@
             settingsClose: "Жабу",
             emptyVideos: "🎬 Бейнелер жоқ. Бірінші болып жүктеңіз!",
             fillAll: "Барлық өрістерді толтырыңыз!",
+            invalidEmail: "Қате email! Тек @gmail.com, @mail.com, @yandex.com рұқсат етіледі",
             emailExists: "Бұл email тіркелген!",
             loginExists: "Бұл логин алынған!",
+            codeSent: "Код жіберілді! Тексеріңіз: ",
+            wrongCode: "Қате код!",
             registerSuccess: "Тіркелу сәтті! Қош келдіңіз!",
             wrongCredentials: "Қате логин/email немесе құпия сөз!",
             loginSuccess: "Қош келдіңіз!",
@@ -353,18 +383,20 @@
             subscribe: "🔔 Жазылу"
         },
         ru: {
-            login: "Вход",
-            register: "Регистрация",
-            logout: "Выйти",
+            loginBtn: "Вход",
+            registerBtn: "Регистрация",
+            logoutBtn: "Выйти",
             uploadTitle: "📤 Загрузить новое видео",
             uploadBtn: "➕ Загрузить",
             videoTitlePlaceholder: "Название видео",
             videoDescPlaceholder: "Описание",
             regTitle: "📝 Регистрация",
-            regEmailPlaceholder: "Email",
+            regEmailPlaceholder: "Email (только @gmail.com, @mail.com, @yandex.com)",
             regLoginPlaceholder: "Логин",
             regPassPlaceholder: "Пароль",
-            regSubmit: "Зарегистрироваться",
+            regCodePlaceholder: "6-значный код",
+            sendCodeBtn: "📧 Отправить код",
+            regSubmit: "✅ Зарегистрироваться",
             regClose: "Закрыть",
             loginTitle: "🔐 Вход",
             loginInputPlaceholder: "Логин или Email",
@@ -377,9 +409,12 @@
             settingsSave: "Сохранить",
             settingsClose: "Закрыть",
             emptyVideos: "🎬 Видео нет. Будьте первым!",
-            fillAll: "Заполни все поля!",
+            fillAll: "Заполните все поля!",
+            invalidEmail: "Неверный email! Только @gmail.com, @mail.com, @yandex.com",
             emailExists: "Этот email уже зарегистрирован!",
             loginExists: "Этот логин уже занят!",
+            codeSent: "Код отправлен! Проверьте: ",
+            wrongCode: "Неверный код!",
             registerSuccess: "Регистрация успешна! Добро пожаловать!",
             wrongCredentials: "Неверный логин/email или пароль!",
             loginSuccess: "Добро пожаловать!",
@@ -401,14 +436,10 @@
     
     function applyTranslation() {
         const t = translations[currentLang];
-        
-        // Перевод обычного текста по дата-атрибутам
         document.querySelectorAll('[data-lang-key]').forEach(el => {
             const key = el.getAttribute('data-lang-key');
             if (t[key]) el.innerText = t[key];
         });
-
-        // Перевод подсказок (placeholder)
         document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
             const key = el.getAttribute('data-lang-placeholder');
             if (t[key]) el.placeholder = t[key];
@@ -429,6 +460,7 @@
     let likes = {};
     let subs = {};
     let currentUser = null;
+    let pendingRegistration = null;
     
     function loadData() {
         const savedUsers = localStorage.getItem('qaz_users');
@@ -457,14 +489,27 @@
         else localStorage.removeItem('qaz_current');
     }
     
-    function register() {
+    // Валидация email
+    function isValidEmail(email) {
+        const allowedDomains = ['gmail.com', 'mail.com', 'yandex.com', 'yandex.kz', 'mail.ru', 'bk.ru', 'list.ru'];
+        const domain = email.split('@')[1];
+        return email.includes('@') && domain && allowedDomains.some(d => domain.toLowerCase() === d);
+    }
+    
+    // Отправка кода (имитация)
+    function sendVerificationCode() {
         const t = translations[currentLang];
         const email = document.getElementById('regEmail').value.trim();
         const login = document.getElementById('regLogin').value.trim();
-        const pass = document.getElementById('regPass').value;
+        const password = document.getElementById('regPass').value;
         
-        if(!email || !login || !pass) {
+        if(!email || !login || !password) {
             toast(t.fillAll);
+            return;
+        }
+        
+        if(!isValidEmail(email)) {
+            toast(t.invalidEmail);
             return;
         }
         
@@ -478,13 +523,42 @@
             return;
         }
         
+        // Генерация 6-значного кода
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+        pendingRegistration = { email, login, password, code };
+        
+        // Показываем код пользователю (имитация отправки на почту)
+        const hintDiv = document.getElementById('codeHint');
+        hintDiv.style.display = 'block';
+        hintDiv.innerHTML = `📧 ${t.codeSent} <strong>${code}</strong>`;
+        
+        toast(`${t.codeSent} ${code}`);
+        console.log("Код подтверждения:", code);
+    }
+    
+    // Завершение регистрации с кодом
+    function completeRegistration() {
+        const t = translations[currentLang];
+        const enteredCode = document.getElementById('regCode').value.trim();
+        
+        if(!pendingRegistration) {
+            toast(t.fillAll);
+            return;
+        }
+        
+        if(enteredCode !== pendingRegistration.code) {
+            toast(t.wrongCode);
+            return;
+        }
+        
         const newUser = {
             id: String(Date.now()),
-            login: login,
-            email: email,
-            password: pass,
-            name: login,
-            avatar: login[0].toUpperCase()
+            login: pendingRegistration.login,
+            email: pendingRegistration.email,
+            password: pendingRegistration.password,
+            name: pendingRegistration.login,
+            avatar: pendingRegistration.login[0].toUpperCase(),
+            avatarType: 'text'
         };
         
         users.push(newUser);
@@ -496,9 +570,13 @@
         renderVideos();
         toast(t.registerSuccess);
         
+        // Очистка формы
         document.getElementById('regEmail').value = '';
         document.getElementById('regLogin').value = '';
         document.getElementById('regPass').value = '';
+        document.getElementById('regCode').value = '';
+        document.getElementById('codeHint').style.display = 'none';
+        pendingRegistration = null;
     }
     
     function login() {
@@ -729,7 +807,6 @@
             const likeCount = likes[v.id] ? likes[v.id].length : 0;
             const liked = isLiked(v.id);
             const subscribed = isSubscribed(v.authorId);
-            const likeText = t.like;
             
             html += `
                 <div class="video-card">
@@ -740,7 +817,7 @@
                         <div class="video-title">${escapeHtml(v.title)}</div>
                         <div class="video-stats">
                             <span>👤 ${escapeHtml(v.authorName)}</span>
-                            <span>❤️ ${likeCount} ${likeText}</span>
+                            <span>❤️ ${likeCount} ${t.like}</span>
                             <span>👁️ ${v.views}</span>
                         </div>
                         <div class="video-actions">
