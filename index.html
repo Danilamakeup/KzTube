@@ -4,36 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QazaqTube — Қазақстан видеохостингі</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a2463 0%, #0a1b44 50%, #061845 100%);
+            /* Настоящий сочный голубой/бирюзовый дизайн */
+            background: linear-gradient(135deg, #005c8a 0%, #003b5c 50%, #002238 100%);
             color: #fff;
             min-height: 100vh;
         }
         
-        /* Желто-голубой дизайн */
         .header {
-            background: rgba(10, 36, 99, 0.95);
+            background: rgba(0, 59, 92, 0.9);
             backdrop-filter: blur(20px);
-            padding: 10px 24px;
+            padding: 15px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #f5b042;
+            border-bottom: 3px solid #ffd700; /* Ярко-жёлтый */
             position: sticky;
             top: 0;
             z-index: 200;
-            flex-wrap: wrap;
             gap: 15px;
         }
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
-            background: linear-gradient(135deg, #f5b042, #ffd966, #fff5e0);
+            background: linear-gradient(135deg, #ffd700, #fff200);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -42,48 +41,54 @@
             gap: 8px;
             cursor: pointer;
         }
-        .logo i { background: none; color: #f5b042; }
+        .logo i { background: none; color: #ffd700; }
         .controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        
         .search-bar {
             display: flex;
             align-items: center;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(245,176,66,0.4);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.4);
             border-radius: 40px;
             overflow: hidden;
             transition: all 0.3s;
         }
-        .search-bar:focus-within { border-color: #f5b042; box-shadow: 0 0 10px rgba(245,176,66,0.3); }
+        .search-bar:focus-within { border-color: #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
         .search-bar input {
             background: none;
             border: none;
-            padding: 10px 16px;
+            padding: 10px 20px;
             color: white;
             font-size: 14px;
-            width: 200px;
+            width: 240px;
             outline: none;
         }
-        .search-bar input::placeholder { color: #8aa8dd; }
+        .search-bar input::placeholder { color: #aad5ff; }
         .search-bar button {
             background: none;
             border: none;
-            color: #f5b042;
-            padding: 10px 16px;
+            color: #ffd700;
+            padding: 10px 18px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
+            transition: transform 0.2s;
         }
+        .search-bar button:hover { transform: scale(1.1); }
+        
         .lang-select {
-            background: #0f2b6e;
-            border: 1px solid #f5b042;
-            color: #f5b042;
+            background: #004b75;
+            border: 1px solid #ffd700;
+            color: #ffd700;
             padding: 8px 16px;
             border-radius: 40px;
             cursor: pointer;
             font-weight: 600;
             font-size: 13px;
+            outline: none;
         }
+        
         button {
-            padding: 8px 18px;
+            padding: 10px 22px;
             border: none;
             border-radius: 40px;
             cursor: pointer;
@@ -91,393 +96,187 @@
             font-weight: 600;
             transition: all 0.2s;
         }
-        .btn-primary { background: linear-gradient(135deg, #f5b042, #ffd966); color: #0a2463; box-shadow: 0 2px 10px rgba(245,176,66,0.3); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(245,176,66,0.5); }
-        .btn-outline { background: rgba(255,255,240,0.1); border: 1px solid #f5b042; color: #ffd966; }
-        .btn-outline:hover { background: rgba(245,176,66,0.2); }
+        .btn-primary { background: linear-gradient(135deg, #ffd700, #ffea00); color: #002238; box-shadow: 0 2px 10px rgba(255,215,0,0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255,215,0,0.5); }
+        .btn-outline { background: rgba(255,255,255,0.05); border: 1px solid #ffd700; color: #ffd700; }
+        .btn-outline:hover { background: rgba(255, 215, 0, 0.15); }
+        .btn-danger { background: #ff4444; color: white; }
+        .btn-danger:hover { background: #cc0000; }
+
         .user-info {
             display: flex;
             align-items: center;
             gap: 12px;
-            background: rgba(255,255,200,0.08);
-            padding: 5px 15px 5px 10px;
+            background: rgba(255,255,255,0.08);
+            padding: 6px 18px 6px 8px;
             border-radius: 60px;
             cursor: pointer;
-            border: 1px solid rgba(245,176,66,0.3);
-            transition: all 0.2s;
+            border: 1px solid rgba(255,215,0,0.3);
         }
-        .user-info:hover { background: rgba(245,176,66,0.2); border-color: #f5b042; }
+        .user-info:hover { border-color: #ffd700; background: rgba(255,215,0,0.1); }
         .avatar {
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #f5b042, #ffd966);
+            background: linear-gradient(135deg, #ffd700, #fff200);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 14px;
-            color: #0a2463;
-            background-size: cover;
-            background-position: center;
+            color: #002238;
         }
         .hidden { display: none !important; }
         
         .nav-links {
             display: flex;
             gap: 30px;
-            padding: 0 20px;
-            border-bottom: 1px solid rgba(245,176,66,0.3);
+            padding: 0 24px;
+            background: rgba(0, 34, 56, 0.5);
+            border-bottom: 1px solid rgba(255,215,0,0.2);
         }
         .nav-link {
-            padding: 12px 0;
+            padding: 14px 0;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            color: #82c0e0;
             position: relative;
-            color: #bbd4ff;
         }
-        .nav-link.active { color: #f5b042; }
+        .nav-link.active { color: #ffd700; }
         .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #f5b042;
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 3px; background: #ffd700;
         }
         
-        .home-container { max-width: 1600px; margin: 0 auto; padding: 20px; }
+        .home-container { max-width: 1600px; margin: 0 auto; padding: 25px; }
         .videos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            gap: 30px;
         }
         .video-card {
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            background: rgba(10, 27, 68, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
+            background: rgba(0, 59, 92, 0.4);
+            border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(245,176,66,0.25);
+            border: 1px solid rgba(255,215,0,0.15);
+            transition: all 0.3s;
         }
-        .video-card:hover { transform: translateY(-5px); border-color: #f5b042; box-shadow: 0 10px 25px rgba(245,176,66,0.2); }
-        .thumbnail {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: linear-gradient(135deg, #0a2463, #071c47);
-            overflow: hidden;
-            position: relative;
-        }
-        .thumbnail video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-        .video-card:hover .thumbnail video { transform: scale(1.05); }
-        .video-details { display: flex; gap: 12px; padding: 12px; }
+        .video-card:hover { transform: translateY(-5px); border-color: #ffd700; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .thumbnail { width: 100%; aspect-ratio: 16/9; background: #001a2b; position: relative; }
+        .thumbnail video { width: 100%; height: 100%; object-fit: cover; }
+        .video-details { display: flex; gap: 12px; padding: 15px; }
         .video-channel-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-            color: #0a2463;
+            width: 38px; height: 38px; border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700, #ffea00);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: #002238; flex-shrink: 0;
         }
-        .video-meta { flex: 1; }
-        .video-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
-        .channel-name { font-size: 13px; color: #bbd4ff; margin-bottom: 3px; }
-        .video-stats { font-size: 12px; color: #8aa8dd; }
+        .video-meta { flex: 1; overflow: hidden; }
+        .video-title { font-weight: 600; font-size: 15px; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .channel-name { font-size: 13px; color: #82c0e0; margin-bottom: 3px; }
+        .video-stats { font-size: 12px; color: #6baecf; }
         
-        .profile-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .profile-container { max-width: 1200px; margin: 0 auto; padding: 25px; }
         .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            padding: 30px;
-            background: rgba(10, 27, 68, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 28px;
-            margin-bottom: 30px;
-            border: 1px solid rgba(245,176,66,0.3);
-            flex-wrap: wrap;
+            display: flex; align-items: center; gap: 35px; padding: 35px;
+            background: rgba(0, 59, 92, 0.5); border-radius: 24px;
+            margin-bottom: 35px; border: 1px solid rgba(255,215,0,0.25);
         }
         .profile-big-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            font-weight: bold;
-            color: #0a2463;
-            background-size: cover;
+            width: 110px; height: 110px; border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700, #ffea00);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 45px; font-weight: bold; color: #002238;
         }
-        .profile-stats { display: flex; gap: 40px; margin-top: 15px; flex-wrap: wrap; }
-        .profile-stat { text-align: center; }
-        .profile-stat-value { font-size: 24px; font-weight: bold; color: #f5b042; }
-        .profile-stat-label { font-size: 13px; color: #bbd4ff; }
+        .profile-stats { display: flex; gap: 40px; margin-top: 15px; }
+        .profile-stat-value { font-size: 24px; font-weight: 700; color: #ffd700; }
+        .profile-stat-label { font-size: 13px; color: #82c0e0; }
         
-        .watch-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 30px; flex-wrap: wrap; }
-        .video-section { flex: 2.5; min-width: 280px; }
-        .video-wrapper { position: relative; width: 100%; background: #000; border-radius: 20px; overflow: hidden; }
+        .watch-container { display: flex; max-width: 1500px; margin: 0 auto; padding: 25px; gap: 30px; }
+        .video-section { flex: 2.5; }
+        .video-wrapper { width: 100%; background: #000; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,215,0,0.2); }
         .custom-player { position: relative; width: 100%; }
-        .custom-player video { width: 100%; display: block; }
+        .custom-player video { width: 100%; display: block; aspect-ratio: 16/9; }
+        
         .player-controls {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            padding: 16px 20px 12px;
-            opacity: 0;
-            transition: opacity 0.3s;
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            padding: 20px; opacity: 0; transition: opacity 0.3s;
         }
         .custom-player:hover .player-controls { opacity: 1; }
-        .progress-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            cursor: pointer;
-            margin-bottom: 12px;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f5b042, #ffd966);
-            border-radius: 2px;
-            width: 0%;
-        }
-        .controls-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-        .control-btn { background: none; border: none; color: white; font-size: 18px; cursor: pointer; padding: 5px; }
-        .control-btn:hover { color: #f5b042; }
-        .time-display { color: white; font-size: 13px; font-family: monospace; }
-        .volume-container { display: flex; align-items: center; gap: 8px; }
-        .volume-slider { width: 80px; height: 4px; -webkit-appearance: none; background: rgba(255,255,255,0.2); border-radius: 2px; }
-        .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #f5b042; border-radius: 50%; cursor: pointer; }
-        .right-controls { margin-left: auto; display: flex; gap: 15px; align-items: center; }
-        .settings-btn { position: relative; }
-        .settings-menu {
-            position: absolute;
-            bottom: 40px;
-            right: 0;
-            background: #1a1a2e;
-            border-radius: 12px;
-            padding: 10px;
-            width: 180px;
-            display: none;
-            z-index: 300;
-            border: 1px solid #f5b042;
-        }
-        .settings-menu.show { display: block; }
-        .settings-menu button { background: none; color: white; padding: 8px 12px; width: 100%; text-align: left; border-radius: 8px; }
-        .settings-menu button:hover { background: #f5b042; color: #0a2463; }
+        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; cursor: pointer; margin-bottom: 15px; }
+        .progress-fill { height: 100%; background: #ffd700; width: 0%; border-radius: 3px; }
+        .controls-row { display: flex; align-items: center; gap: 20px; }
+        .control-btn { background: none; border: none; color: white; font-size: 18px; cursor: pointer; }
+        .control-btn:hover { color: #ffd700; }
+        .volume-container { display: flex; align-items: center; gap: 10px; }
+        .volume-slider { width: 90px; }
+        .right-controls { margin-left: auto; display: flex; gap: 20px; position: relative; }
         
-        .video-info-section { margin-top: 20px; }
-        .watch-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
-        .watch-stats { font-size: 14px; color: #bbd4ff; margin-bottom: 15px; }
+        .video-info-section { margin-top: 20px; background: rgba(0, 59, 92, 0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,215,0,0.1); }
+        .watch-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; color: #fff; }
+        .watch-stats { font-size: 14px; color: #82c0e0; margin-bottom: 20px; }
+        
         .channel-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-top: 1px solid rgba(245,176,66,0.3);
-            border-bottom: 1px solid rgba(245,176,66,0.3);
-            flex-wrap: wrap;
-            gap: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .channel-left { display: flex; align-items: center; gap: 12px; }
-        .channel-avatar-big { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #f5b042, #ffd966); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: #0a2463; }
-        .subscribe-btn { background: #f5b042; color: #0a2463; padding: 8px 20px; }
-        .subscribe-btn.disabled { background: #3a3a5a; color: #aaa; cursor: not-allowed; }
-        .action-buttons { display: flex; gap: 20px; margin-top: 15px; }
+        .channel-left { display: flex; align-items: center; gap: 15px; }
+        .channel-avatar-big { width: 48px; height: 48px; border-radius: 50%; background: #ffd700; color: #002238; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; }
+        
+        .action-buttons { display: flex; gap: 15px; margin-top: 20px; }
         .action-btn {
-            background: rgba(255,255,240,0.08);
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid rgba(245,176,66,0.3);
-            transition: all 0.2s;
+            background: rgba(255,255,255,0.07); padding: 10px 20px; border-radius: 40px;
+            font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+            border: 1px solid rgba(255,215,0,0.2); transition: all 0.2s;
         }
-        .action-btn:hover { background: rgba(245,176,66,0.2); }
-        .action-btn.liked { background: #f5b042; color: #0a2463; border-color: #f5b042; }
-        .action-btn.disliked { background: #3a3a5a; color: #ff8888; border-color: #ff6666; }
+        .action-btn:hover { background: rgba(255,215,0,0.15); border-color: #ffd700; }
+        .action-btn.active-like { background: #ffd700; color: #002238; border-color: #ffd700; }
+        .action-btn.active-dislike { background: #ff4444; color: white; border-color: #ff4444; }
         
-        .comments-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(10, 27, 68, 0.5);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            border: 1px solid rgba(245,176,66,0.2);
-        }
-        .comments-title { font-size: 18px; margin-bottom: 20px; color: #f5b042; }
-        .comment-input-area {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            align-items: flex-start;
-        }
-        .comment-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-            color: #0a2463;
-        }
+        .comments-section { margin-top: 30px; background: rgba(0, 34, 56, 0.4); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,215,0,0.15); }
+        .comment-input-area { display: flex; gap: 15px; margin-top: 20px; margin-bottom: 25px; }
         .comment-input {
-            flex: 1;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(245,176,66,0.3);
-            border-radius: 24px;
-            padding: 10px 16px;
-            color: white;
-            font-family: inherit;
-            resize: vertical;
+            flex: 1; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 12px; padding: 12px; color: white; font-family: inherit; resize: none; outline: none;
         }
-        .comment-input:focus { outline: none; border-color: #f5b042; }
-        .comment-post-btn { padding: 8px 20px; background: #f5b042; color: #0a2463; border-radius: 40px; cursor: pointer; font-weight: 600; border: none; }
-        .comments-list { max-height: 400px; overflow-y: auto; }
-        .comment-item {
-            display: flex;
-            gap: 12px;
-            padding: 12px;
-            border-bottom: 1px solid rgba(245,176,66,0.15);
-        }
-        .comment-avatar-small {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 12px;
-            flex-shrink: 0;
-            color: #0a2463;
-        }
-        .comment-content { flex: 1; }
-        .comment-author { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #f5b042; }
-        .comment-text { font-size: 14px; line-height: 1.4; }
-        .comment-date { font-size: 11px; color: #8aa8dd; margin-top: 4px; }
+        .comment-input:focus { border-color: #ffd700; }
         
-        .recommendations-section { flex: 1; min-width: 280px; }
-        .rec-title { font-size: 18px; margin-bottom: 15px; color: #f5b042; }
-        .recommendation-card {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 12px;
-            transition: background 0.2s;
-        }
-        .recommendation-card:hover { background: rgba(245,176,66,0.1); }
-        .rec-thumb { width: 168px; height: 94px; background: #0a1b44; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+        .comments-list { display: flex; flex-direction: column; gap: 15px; }
+        .comment-item { display: flex; gap: 15px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 12px; }
+        .comment-author { font-weight: 700; color: #ffd700; margin-bottom: 5px; font-size: 14px; }
+        
+        .recommendations-section { flex: 1; }
+        .recommendation-card { display: flex; gap: 12px; margin-bottom: 15px; cursor: pointer; background: rgba(0,0,0,0.1); padding: 8px; border-radius: 12px; }
+        .recommendation-card:hover { background: rgba(255,215,0,0.1); }
+        .rec-thumb { width: 140px; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; }
         .rec-thumb video { width: 100%; height: 100%; object-fit: cover; }
-        .rec-info { flex: 1; }
-        .rec-video-title { font-weight: 500; font-size: 14px; margin-bottom: 5px; }
-        .rec-channel-name { font-size: 12px; color: #bbd4ff; margin-bottom: 3px; }
-        
-        .subtitles-container {
-            position: absolute;
-            bottom: 80px;
-            left: 0;
-            right: 0;
-            text-align: center;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .subtitle-text {
-            display: inline-block;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(8px);
-            color: #f5b042;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
-        }
         
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 12, 35, 0.95);
-            backdrop-filter: blur(12px);
-            z-index: 300;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 22, 38, 0.9); backdrop-filter: blur(10px); z-index: 300;
+            justify-content: center; align-items: center;
         }
         .modal-content {
-            background: linear-gradient(135deg, #0e2360, #0a1b44);
-            padding: 30px;
-            border-radius: 32px;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid #f5b042;
+            background: #003b5c; padding: 35px; border-radius: 24px; width: 90%; max-width: 450px;
+            border: 2px solid #ffd700; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .modal-content h2 { margin-bottom: 20px; color: #f5b042; }
+        .modal-content h2 { margin-bottom: 20px; color: #ffd700; }
         .modal-content input, .modal-content textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 16px;
-            border: 1px solid rgba(245,176,66,0.3);
-            background: #061b44;
-            color: white;
-            font-family: inherit;
+            width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 10px;
+            border: 1px solid rgba(255,215,0,0.3); background: #002238; color: white; font-family: inherit; outline: none;
         }
+        .modal-content input:focus { border-color: #ffd700; }
         
-        /* Кастомное уведомление */
         .custom-toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: linear-gradient(135deg, #f5b042, #ffd966);
-            color: #0a2463;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 14px;
-            z-index: 500;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(245,176,66,0.4);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #ffd700; color: #002238; padding: 14px 30px; border-radius: 50px;
+            font-weight: 700; z-index: 500; display: none; box-shadow: 0 5px 20px rgba(0,0,0,0.4);
         }
-        .custom-toast.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
-        }
-        .custom-toast i { font-size: 18px; }
-        
-        .footer { text-align: center; padding: 20px; color: #f5b042aa; border-top: 1px solid rgba(245,176,66,0.2); margin-top: 30px; font-size: 13px; }
-        @media (max-width: 768px) {
-            .profile-header { flex-direction: column; text-align: center; }
+        .footer { text-align: center; padding: 30px; color: #82c0e0; border-top: 1px solid rgba(255,215,0,0.1); margin-top: 50px; font-size: 14px; }
+        @media (max-width: 900px) {
             .watch-container { flex-direction: column; }
-            .search-bar input { width: 120px; }
+            .profile-header { flex-direction: column; text-align: center; }
+            .profile-stats { justify-content: center; }
         }
     </style>
 </head>
@@ -503,13 +302,14 @@
                 <span id="userNameSpan"></span>
                 <div class="avatar" id="avatarSpan"></div>
             </div>
+            <button class="btn-danger" onclick="logout()" style="padding: 6px 14px; font-size: 11px; margin-left: 5px;">Шығу</button>
         </div>
     </div>
 </div>
 
 <div class="nav-links" id="navLinks" style="display: none;">
-    <div class="nav-link active" onclick="showHome()">🏠 Басты</div>
-    <div class="nav-link" onclick="showProfile()">👤 Менің каналым</div>
+    <div class="nav-link active" id="navHomeLink" onclick="showHome()">🏠 Басты</div>
+    <div class="nav-link" id="navProfileLink" onclick="showProfile()">👤 Менің каналым</div>
 </div>
 
 <div id="homePage" class="home-container">
@@ -521,17 +321,16 @@
         <div class="profile-big-avatar" id="profileBigAvatar"></div>
         <div>
             <h2 id="profileName"></h2>
-            <p style="color:#bbd4ff;">@<span id="profileLoginName"></span></p>
+            <p style="color:#82c0e0; margin-top: 5px;">@<span id="profileLoginName"></span></p>
             <div class="profile-stats">
-                <div class="profile-stat"><div class="profile-stat-value" id="profileSubsCount">0</div><div class="profile-stat-label">жазылушы</div></div>
-                <div class="profile-stat"><div class="profile-stat-value" id="profileVideosCount">0</div><div class="profile-stat-label">видео</div></div>
-                <div class="profile-stat"><div class="profile-stat-value" id="profileLikesCount">0</div><div class="profile-stat-label">лайк</div></div>
+                <div class="profile-stat"><div class="profile-stat-value" id="profileSubsCount">0</div><div class="profile-stat-label" id="lblSubs">жазылушы</div></div>
+                <div class="profile-stat"><div class="profile-stat-value" id="profileVideosCount">0</div><div class="profile-stat-label" id="lblVids">видео</div></div>
+                <div class="profile-stat"><div class="profile-stat-value" id="profileLikesCount">0</div><div class="profile-stat-label" id="lblLikes">лайк</div></div>
             </div>
-            <button class="btn-outline" onclick="openEditProfileModal()" style="margin-top: 15px;"><i class="fas fa-edit"></i> Профильді өңдеу</button>
-            <button class="btn-primary" onclick="openUploadModal()" style="margin-top: 15px; margin-left: 10px;"><i class="fas fa-upload"></i> Видео жүктеу</button>
+            <button class="btn-primary" onclick="openUploadModal()" style="margin-top: 20px;"><i class="fas fa-upload"></i> Видео жүктеу</button>
         </div>
     </div>
-    <h3 style="margin-bottom: 20px; color:#f5b042;">📹 Менің видеоым</h3>
+    <h3 style="margin-bottom: 25px; color:#ffd700;" id="myVideosTitle">📹 Менің видеоларым</h3>
     <div class="videos-grid" id="profileVideosGrid"></div>
 </div>
 
@@ -539,90 +338,44 @@
     <div class="video-section">
         <div class="video-wrapper">
             <div class="custom-player" id="customPlayer">
-                <video id="mainVideo" src=""></video>
-                <div class="subtitles-container" id="subtitlesContainer" style="display: none;">
-                    <div class="subtitle-text" id="subtitleText"></div>
-                </div>
-                <div class="player-controls">
-                    <div class="progress-container" id="progressContainer"><div class="progress-fill" id="progressFill"></div></div>
-                    <div class="controls-row">
-                        <button class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
-                        <div class="volume-container">
-                            <button class="control-btn" id="muteBtn"><i class="fas fa-volume-up"></i></button>
-                            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="1">
-                        </div>
-                        <div class="time-display" id="timeDisplay">0:00 / 0:00</div>
-                        <div class="right-controls">
-                            <div class="settings-btn">
-                                <button class="control-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
-                                <div class="settings-menu" id="settingsMenu">
-                                    <button onclick="changeSpeed(0.5)">0.5x</button>
-                                    <button onclick="changeSpeed(0.75)">0.75x</button>
-                                    <button onclick="changeSpeed(1)">1x</button>
-                                    <button onclick="changeSpeed(1.25)">1.25x</button>
-                                    <button onclick="changeSpeed(1.5)">1.5x</button>
-                                    <button onclick="changeSpeed(2)">2x</button>
-                                    <hr style="margin:5px 0;">
-                                    <button onclick="toggleSubtitles()">Субтитры (AI)</button>
-                                </div>
-                            </div>
-                            <button class="control-btn" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <video id="mainVideo" controls></video> </div>
         </div>
+        
         <div class="video-info-section" id="watchInfoSection"></div>
         
         <div class="comments-section">
-            <div class="comments-title"><i class="far fa-comments"></i> <span id="commentsTitle">Комментарийлер</span> (<span id="commentsCount">0</span>)</div>
-            <div class="comment-input-area" id="commentInputArea">
-                <div class="comment-avatar" id="commentAvatar">?</div>
+            <h3 id="commentsTitle">Комментарийлер (0)</h3>
+            <div class="comment-input-area">
                 <textarea id="commentInput" class="comment-input" rows="2" placeholder="Пікір қалдырыңыз..."></textarea>
-                <button class="comment-post-btn" onclick="postComment()"><span id="postBtnText">Жіберу</span></button>
+                <button class="btn-primary" onclick="postComment()" id="commentBtn">Жіберу</button>
             </div>
             <div class="comments-list" id="commentsList"></div>
         </div>
     </div>
+    
     <div class="recommendations-section">
-        <div class="rec-title">🎬 Ұсыныстар</div>
+        <h3 style="color:#ffd700; margin-bottom: 15px;" id="recTitle">🎬 Ұсыныстар</h3>
         <div id="recommendationsList"></div>
     </div>
 </div>
 
-<!-- Модалки -->
 <div id="uploadModal" class="modal">
     <div class="modal-content">
         <h2>📤 Видео жүктеу</h2>
         <input type="text" id="uploadTitle" placeholder="Бейне атауы *">
         <textarea id="uploadDesc" placeholder="Сипаттама" rows="3"></textarea>
         <input type="file" id="uploadFile" accept="video/mp4,video/webm">
-        <button class="btn-primary" onclick="confirmUpload()" style="width:100%; margin-top:10px;">✅ Жүктеу</button>
-        <button class="btn-outline" onclick="closeModal('upload')" style="width:100%; margin-top:10px;">Жабу</button>
-    </div>
-</div>
-
-<div id="editProfileModal" class="modal">
-    <div class="modal-content">
-        <h2>✏️ Профильді өңдеу</h2>
-        <div id="editAvatar" style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#f5b042,#ffd966);margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:32px;background-size:cover;"></div>
-        <input type="text" id="editName" placeholder="Жаңа есім">
-        <input type="text" id="editAvatarUrl" placeholder="Аватарка URL">
-        <button class="btn-primary" onclick="saveProfileEdit()" style="width:100%">💾 Сақтау</button>
-        <button class="btn-outline" onclick="closeModal('editProfile')" style="width:100%; margin-top:10px;">Жабу</button>
+        <button class="btn-primary" onclick="confirmUpload()" style="width:100%;">✅ Жүктеу</button>
+        <button class="btn-outline" onclick="closeModal('upload')" style="width:100%; margin-top: 10px;">Жабу</button>
     </div>
 </div>
 
 <div id="registerModal" class="modal">
     <div class="modal-content">
         <h2>📝 Тіркелу</h2>
-        <input type="email" id="regEmail" placeholder="Email (@gmail.com, @mail.com)">
         <input type="text" id="regLogin" placeholder="Логин">
         <input type="password" id="regPass" placeholder="Пароль">
-        <button class="btn-primary" onclick="sendVerificationCode()" style="width:100%">📧 Код жіберу</button>
-        <input type="text" id="regCode" placeholder="6 таңбалы код" style="margin-top:10px;">
-        <div id="codeHint" style="display:none; font-size:12px; text-align:center; margin:10px 0;"></div>
-        <button class="btn-primary" onclick="completeRegistration()" style="width:100%; margin-top:10px;">✅ Тіркелу</button>
+        <button class="btn-primary" onclick="completeRegistration()" style="width:100%">✅ Тіркелу</button>
         <button class="btn-outline" onclick="closeModal('register')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
@@ -630,735 +383,477 @@
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <h2>🔐 Кіру</h2>
-        <input type="text" id="loginInput" placeholder="Логин немесе Email">
+        <input type="text" id="loginInput" placeholder="Логин">
         <input type="password" id="loginPass" placeholder="Пароль">
         <button class="btn-primary" onclick="login()" style="width:100%">Кіру</button>
         <button class="btn-outline" onclick="closeModal('login')" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
-<!-- Кастомное уведомление -->
-<div id="customToast" class="custom-toast">
-    <i class="fas fa-check-circle"></i>
-    <span id="toastMessage"></span>
-</div>
+<div id="customToast" class="custom-toast"></div>
 
 <script>
-    // ============ ГЕОЛОКАЦИЯ ============
-    let userCountry = 'KZ';
     let currentLang = 'kk';
-    
-    function detectCountry() {
-        fetch('https://ipapi.co/country/')
-            .then(res => res.text())
-            .then(country => {
-                userCountry = country.trim();
-                if (userCountry === 'KZ') {
-                    currentLang = localStorage.getItem('qaz_lang') || 'kk';
-                } else {
-                    currentLang = 'ru';
-                    localStorage.setItem('qaz_lang', 'ru');
-                }
-                document.getElementById('langSelect').value = currentLang;
-                if (userCountry !== 'KZ') {
-                    document.getElementById('langSelect').style.opacity = '0.5';
-                    document.getElementById('langSelect').disabled = true;
-                }
-                applyTranslation();
-                renderHomePage();
-            })
-            .catch(() => {
-                currentLang = localStorage.getItem('qaz_lang') || 'kk';
-                document.getElementById('langSelect').value = currentLang;
-                applyTranslation();
-                renderHomePage();
-            });
-    }
-    
-    function showCustomToast(message, isError = false) {
-        const toast = document.getElementById('customToast');
-        const toastMsg = document.getElementById('toastMessage');
-        toastMsg.innerText = message;
-        if (isError) {
-            toast.style.background = "linear-gradient(135deg, #ff4444, #cc0000)";
-        } else {
-            toast.style.background = "linear-gradient(135deg, #f5b042, #ffd966)";
-        }
-        toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3000);
-    }
-    
-    // ============ ПЕРЕВОД ============
-    const translations = {
-        kk: {
-            loginBtn: "Кіру", registerBtn: "Тіркелу", logoutBtn: "Шығу",
-            editProfile: "Профильді өңдеу", uploadVideo: "Видео жүктеу",
-            myVideos: "📹 Менің видеоым", recommendations: "🎬 Ұсыныстар",
-            subsLabel: "жазылушы", videosLabel: "видео", likesLabel: "лайк",
-            homeNav: "🏠 Басты", profileNav: "👤 Менің каналым",
-            comments: "Комментарийлер", postComment: "Жіберу", commentPlaceholder: "Пікір қалдырыңыз...",
-            views: "көрсетілім", like: "лайк", subscribers: "жазылушы", subscribe: "Жазылу", subscribed: "Жазылдыңыз",
-            fillAll: "Барлық өрістерді толтырыңыз!", invalidEmail: "Қате email!", registerSuccess: "Тіркелу сәтті! Қош келдіңіз!",
-            wrongCredentials: "Қате логин немесе пароль!", loginSuccess: "Қош келдіңіз!",
-            needLogin: "Кіру қажет!", enterTitle: "Атауын енгізіңіз!", selectFile: "Файл таңдаңыз!",
-            videoUploaded: "Видео сәтті жүктелді!", profileSaved: "Профиль жаңартылды!",
-            cantSubscribe: "Өзіңізге жазыла алмайсыз!", subscribedMsg: "Жазылдыңыз ✅", unsubscribedMsg: "Жазылымнан шықтыңыз ❌",
-            speed: "жылдамдық", subtitlesBtn: "Субтитры (AI)", uploadSuccess: "✅ Видео сәтті жүктелді!",
-            profileUpdateSuccess: "✏️ Профиль сәтті жаңартылды!", searchPlaceholder: "Іздеу...", noResults: "Ештеңе табылмады"
-        },
-        ru: {
-            loginBtn: "Вход", registerBtn: "Регистрация", logoutBtn: "Выйти",
-            editProfile: "Редактировать профиль", uploadVideo: "Загрузить видео",
-            myVideos: "📹 Мои видео", recommendations: "🎬 Рекомендации",
-            subsLabel: "подписчиков", videosLabel: "видео", likesLabel: "лайков",
-            homeNav: "🏠 Главная", profileNav: "👤 Мой канал",
-            comments: "Комментарии", postComment: "Отправить", commentPlaceholder: "Оставьте комментарий...",
-            views: "просмотров", like: "лайков", subscribers: "подписчиков", subscribe: "Подписаться", subscribed: "Подписан",
-            fillAll: "Заполните все поля!", invalidEmail: "Неверный email!", registerSuccess: "Регистрация успешна! Добро пожаловать!",
-            wrongCredentials: "Неверный логин или пароль!", loginSuccess: "Добро пожаловать!",
-            needLogin: "Нужно войти!", enterTitle: "Введите название!", selectFile: "Выберите файл!",
-            videoUploaded: "Видео успешно загружено!", profileSaved: "Профиль обновлён!",
-            cantSubscribe: "Нельзя подписаться на себя!", subscribedMsg: "Вы подписались ✅", unsubscribedMsg: "Вы отписались ❌",
-            speed: "скорость", subtitlesBtn: "Субтитры (AI)", uploadSuccess: "✅ Видео успешно загружено!",
-            profileUpdateSuccess: "✏️ Профиль успешно обновлён!", searchPlaceholder: "Поиск...", noResults: "Ничего не найдено"
-        }
-    };
-    
-    function applyTranslation() {
-        const t = translations[currentLang];
-        document.getElementById('loginBtn') && (document.getElementById('loginBtn').innerText = t.loginBtn);
-        document.getElementById('registerBtn') && (document.getElementById('registerBtn').innerText = t.registerBtn);
-        if(document.querySelectorAll('.nav-link')[0]) document.querySelectorAll('.nav-link')[0].innerHTML = t.homeNav;
-        if(document.querySelectorAll('.nav-link')[1]) document.querySelectorAll('.nav-link')[1].innerHTML = t.profileNav;
-        document.getElementById('searchInput') && (document.getElementById('searchInput').placeholder = t.searchPlaceholder);
-        if(document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label')) 
-            document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label').innerText = t.subsLabel;
-        if(document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label'))
-            document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label').innerText = t.videosLabel;
-        if(document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label'))
-            document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label').innerText = t.likesLabel;
-        if(document.querySelector('#profilePage h3')) document.querySelector('#profilePage h3').innerText = t.myVideos;
-        if(document.querySelector('.rec-title')) document.querySelector('.rec-title').innerHTML = t.recommendations;
-        document.getElementById('commentsTitle') && (document.getElementById('commentsTitle').innerText = t.comments);
-        document.getElementById('postBtnText') && (document.getElementById('postBtnText').innerText = t.postComment);
-        document.getElementById('commentInput') && (document.getElementById('commentInput').placeholder = t.commentPlaceholder);
-        if(currentPage === 'home') renderHomePage();
-        else if(currentPage === 'profile') showProfile();
-        else if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
-    }
-    
-    // ============ ДАННЫЕ ============
     let users = [];
     let videos = [];
-    let likes = {};
-    let dislikes = {};
-    let subs = {};
-    let comments = {};
-    let viewsRecord = new Set();
+    let likes = {};     // { videoId: [userId, userId...] }
+    let dislikes = {};  // { videoId: [userId, userId...] }
+    let subs = {};      // { authorId: [followerId...] }
+    let comments = {};  // { videoId: [{name, text, date}...] }
     let currentUser = null;
-    let pendingRegistration = null;
     let currentPage = 'home';
     let currentVideoId = null;
-    let subtitleInterval = null;
-    let subtitlesEnabled = false;
-    let currentSubtitles = [];
-    let currentSearchQuery = '';
-    
-    const subtitlePhrases = {
-        kk: ["Сәлеметсіз бе!", "Қызықты тақырып", "Назар аударыңыз", "Керемет!", "Рахмет көргеніңізге", "Лайк басыңыз", "Жазылыңыз", "Келесі видеода кездескенше!"],
-        ru: ["Здравствуйте!", "Интересная тема", "Обратите внимание", "Отлично!", "Спасибо за просмотр", "Поставьте лайк", "Подпишитесь", "До встречи в следующем видео!"]
+
+    const translations = {
+        kk: {
+            search: "Іздеу...", noResults: "Ештеңе табылмады", views: "көрсетілім",
+            subs: "жазылушы", vids: "видео", likes: "лайк", myVids: "📹 Менің видеоларым",
+            rec: "🎬 Ұсыныстар", comms: "Комментарийлер", send: "Жіберу", place: "Пікір қалдырыңыз...",
+            needLog: "Алдымен жүйеге кіріңіз!", fill: "Барлық өрістерді толтырыңыз!",
+            succLog: "Қош келдіңіз!", wrong: "Қате логин немесе пароль!",
+            succReg: "Тіркелу сәтті өтті!", titleErr: "Атауын енгізіңіз!", fileErr: "Файлды таңдаңыз!",
+            mainNav: "🏠 Басты", channelNav: "👤 Менің каналым"
+        },
+        ru: {
+            search: "Поиск...", noResults: "Ничего не найдено", views: "просмотров",
+            subs: "подписчиков", vids: "видео", likes: "лайков", myVids: "📹 Мои видео",
+            rec: "🎬 Рекомендации", comms: "Комментарии", send: "Отправить", place: "Оставьте комментарий...",
+            needLog: "Сначала войдите в аккаунт!", fill: "Заполните все поля!",
+            succLog: "Добро пожаловать!", wrong: "Неверный логин или пароль!",
+            succReg: "Регистрация успешна!", titleErr: "Введите название!", fileErr: "Выберите файл!",
+            mainNav: "🏠 Главная", channelNav: "👤 Мой канал"
+        }
     };
-    
-    function generateAISubtitles(duration) {
-        const phrases = subtitlePhrases[currentLang] || subtitlePhrases.ru;
-        const subs = [];
-        let time = 3;
-        while(time < (duration || 60)) {
-            subs.push({ time: time, text: phrases[Math.floor(Math.random() * phrases.length)] });
-            time += 5 + Math.random() * 4;
-        }
-        return subs;
+
+    function showToast(msg) {
+        const toast = document.getElementById('customToast');
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2500);
     }
-    
+
     function loadData() {
-        const saved = localStorage.getItem('qaztube_data_final2');
-        if(saved) {
-            const data = JSON.parse(saved);
-            users = data.users || [];
-            videos = data.videos || [];
-            likes = data.likes || {};
-            dislikes = data.dislikes || {};
-            subs = data.subs || {};
-            comments = data.comments || {};
-            viewsRecord = new Set(data.viewsRecord || []);
-        }
-        const savedCurrent = localStorage.getItem('qaztube_current_final2');
-        if(savedCurrent) {
-            const cur = JSON.parse(savedCurrent);
-            const exists = users.find(u => String(u.id) === String(cur.id));
-            if(exists) currentUser = exists;
-        }
+        try {
+            const data = localStorage.getItem('qaztube_master_storage');
+            if (data) {
+                const parsed = JSON.parse(data);
+                users = parsed.users || [];
+                videos = parsed.videos || [];
+                likes = parsed.likes || {};
+                dislikes = parsed.dislikes || {};
+                subs = parsed.subs || {};
+                comments = parsed.comments || {};
+            }
+            const cur = localStorage.getItem('qaztube_current_user');
+            if (cur) currentUser = JSON.parse(cur);
+        } catch(e) { console.error("Data load error", e); }
     }
-    
+
     function saveData() {
-        localStorage.setItem('qaztube_data_final2', JSON.stringify({
-            users, videos, likes, dislikes, subs, comments,
-            viewsRecord: [...viewsRecord]
-        }));
-        if(currentUser) localStorage.setItem('qaztube_current_final2', JSON.stringify(currentUser));
-        else localStorage.removeItem('qaztube_current_final2');
+        const data = { users, videos, likes, dislikes, subs, comments };
+        localStorage.setItem('qaztube_master_storage', JSON.stringify(data));
+        if (currentUser) localStorage.setItem('qaztube_current_user', JSON.stringify(currentUser));
+        else localStorage.removeItem('qaztube_current_user');
     }
-    
-    function getSubscriberCount(channelId) {
-        let count = 0;
-        for(let uid in subs) if(subs[uid] && subs[uid].includes(channelId)) count++;
-        return count;
-    }
-    
-    function getUserLikes(userId) {
-        let total = 0;
-        for(let v of videos) if(v.authorId === userId && likes[v.id]) total += likes[v.id].length;
-        return total;
-    }
-    
-    function isValidEmail(email) {
-        return /@(gmail\.com|mail\.com|yandex\.com|yandex\.kz|mail\.ru)$/i.test(email);
-    }
-    
-    function searchVideos() {
-        const query = document.getElementById('searchInput').value.trim().toLowerCase();
-        currentSearchQuery = query;
-        renderHomePage(query);
-    }
-    
-    function sendVerificationCode() {
+
+    function updateLanguage() {
+        currentLang = document.getElementById('langSelect').value;
         const t = translations[currentLang];
-        const email = document.getElementById('regEmail').value.trim();
-        const login = document.getElementById('regLogin').value.trim();
-        const pass = document.getElementById('regPass').value;
-        if(!email || !login || !pass) { showCustomToast(t.fillAll); return; }
-        if(!isValidEmail(email)) { showCustomToast(t.invalidEmail); return; }
-        if(users.find(u => u.email === email)) { showCustomToast("Email тіркелген!"); return; }
-        if(users.find(u => u.login === login)) { showCustomToast("Логин алынған!"); return; }
-        const code = Math.floor(100000 + Math.random() * 900000).toString();
-        pendingRegistration = { email, login, password: pass, code };
-        document.getElementById('codeHint').style.display = 'block';
-        document.getElementById('codeHint').innerHTML = `📧 Код: <strong>${code}</strong>`;
-        showCustomToast(`Код: ${code}`);
-    }
-    
-    function completeRegistration() {
-        if(!pendingRegistration || document.getElementById('regCode').value !== pendingRegistration.code) {
-            showCustomToast("Қате код!"); return;
-        }
-        const newUser = {
-            id: String(Date.now()), login: pendingRegistration.login, email: pendingRegistration.email,
-            password: pendingRegistration.password, name: pendingRegistration.login,
-            avatar: pendingRegistration.login[0].toUpperCase(), avatarUrl: null
-        };
-        users.push(newUser);
-        currentUser = newUser;
-        saveData();
-        closeModal('register');
-        updateUI();
+        
+        document.getElementById('searchInput').placeholder = t.search;
+        document.getElementById('navHomeLink').innerText = t.mainNav;
+        document.getElementById('navProfileLink').innerText = t.channelNav;
+        document.getElementById('lblSubs').innerText = t.subs;
+        document.getElementById('lblVids').innerText = t.vids;
+        document.getElementById('lblLikes').innerText = t.likes;
+        document.getElementById('myVideosTitle').innerText = t.myVids;
+        document.getElementById('recTitle').innerText = t.rec;
+        document.getElementById('commentBtn').innerText = t.send;
+        document.getElementById('commentInput').placeholder = t.place;
+        
         renderHomePage();
-        showCustomToast(translations[currentLang].registerSuccess);
-        pendingRegistration = null;
+        if (currentPage === 'profile') showProfile();
+        if (currentPage === 'watch' && currentVideoId) renderWatchPage();
     }
-    
-    function login() {
-        const t = translations[currentLang];
-        const input = document.getElementById('loginInput').value.trim();
-        const pass = document.getElementById('loginPass').value;
-        const user = users.find(u => (u.login === input || u.email === input) && u.password === pass);
-        if(!user) { showCustomToast(t.wrongCredentials); return; }
-        currentUser = user;
-        saveData();
-        closeModal('login');
-        updateUI();
-        renderHomePage();
-        showCustomToast(t.loginSuccess);
-    }
-    
-    function logout() {
-        currentUser = null;
-        localStorage.removeItem('qaztube_current_final2');
-        updateUI();
-        renderHomePage();
-        showCustomToast(translations[currentLang].logoutBtn);
-        showHome();
-    }
-    
+
     function updateUI() {
-        if(currentUser) {
+        if (currentUser) {
             document.getElementById('unauthButtons').classList.add('hidden');
             document.getElementById('authButtons').classList.remove('hidden');
             document.getElementById('navLinks').style.display = 'flex';
-            document.getElementById('userNameSpan').innerText = currentUser.name || currentUser.login;
-            const av = document.getElementById('avatarSpan');
-            if(currentUser.avatarUrl) {
-                av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
-                av.style.backgroundSize = 'cover';
-                av.innerText = '';
-            } else {
-                av.style.backgroundImage = 'none';
-                av.style.background = 'linear-gradient(135deg, #f5b042, #ffd966)';
-                av.innerText = currentUser.avatar || currentUser.login[0].toUpperCase();
-            }
-            const commentAv = document.getElementById('commentAvatar');
-            if(commentAv) commentAv.innerText = (currentUser.name || currentUser.login)[0].toUpperCase();
+            document.getElementById('userNameSpan').innerText = currentUser.login;
+            document.getElementById('avatarSpan').innerText = currentUser.login[0].toUpperCase();
         } else {
             document.getElementById('unauthButtons').classList.remove('hidden');
             document.getElementById('authButtons').classList.add('hidden');
             document.getElementById('navLinks').style.display = 'none';
         }
     }
-    
-    function openUploadModal() {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
-        document.getElementById('uploadTitle').value = '';
-        document.getElementById('uploadDesc').value = '';
-        document.getElementById('uploadFile').value = '';
-        openModal('upload');
-    }
-    
-    function confirmUpload() {
+
+    // РЕГИСТРАЦИЯ И ВХОД
+    function completeRegistration() {
+        const login = document.getElementById('regLogin').value.trim();
+        const pass = document.getElementById('regPass').value;
         const t = translations[currentLang];
-        const title = document.getElementById('uploadTitle').value.trim();
-        const file = document.getElementById('uploadFile').files[0];
-        if(!title) { showCustomToast(t.enterTitle); return; }
-        if(!file) { showCustomToast(t.selectFile); return; }
+        if(!login || !pass) { showToast(t.fill); return; }
+        if(users.find(u => u.login.toLowerCase() === login.toLowerCase())) { showToast("Логин бос емес! / Логин занят!"); return; }
         
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const newVideo = {
-                id: String(Date.now()),
-                title: title,
-                desc: document.getElementById('uploadDesc').value,
-                authorId: currentUser.id,
-                authorName: currentUser.name || currentUser.login,
-                date: new Date().toISOString(),
-                views: 0,
-                src: e.target.result
-            };
-            videos.push(newVideo);
-            saveData();
-            closeModal('upload');
-            renderHomePage();
-            if(currentPage === 'profile') showProfile();
-            showCustomToast(t.uploadSuccess);
-        };
-        reader.readAsDataURL(file);
+        const newUser = { id: 'u_' + Date.now(), login: login, password: pass };
+        users.push(newUser);
+        currentUser = newUser;
+        saveData();
+        updateUI();
+        closeModal('register');
+        showToast(t.succReg);
+        showHome();
     }
-    
-    function renderHomePage(searchQuery = '') {
+
+    function login() {
+        const login = document.getElementById('loginInput').value.trim();
+        const pass = document.getElementById('loginPass').value;
         const t = translations[currentLang];
-        const container = document.getElementById('homeVideosGrid');
-        let filteredVideos = [...videos];
         
-        if(searchQuery) {
-            filteredVideos = videos.filter(v => 
-                v.title.toLowerCase().includes(searchQuery) || 
-                v.authorName.toLowerCase().includes(searchQuery)
-            );
+        const user = users.find(u => u.login.toLowerCase() === login.toLowerCase() && u.password === pass);
+        if(!user) { showToast(t.wrong); return; }
+        
+        currentUser = user;
+        saveData();
+        updateUI();
+        closeModal('login');
+        showToast(t.succLog);
+        showHome();
+    }
+
+    function logout() {
+        currentUser = null;
+        saveData();
+        updateUI();
+        showHome();
+    }
+
+    // ПОИСК И ЛЕНТА
+    function searchVideos() {
+        const query = document.getElementById('searchInput').value.trim().toLowerCase();
+        renderHomePage(query);
+    }
+
+    function renderHomePage(query = '') {
+        currentPage = 'home';
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('profilePage').style.display = 'none';
+        document.getElementById('watchPage').style.display = 'none';
+        
+        document.getElementById('navHomeLink').classList.add('active');
+        document.getElementById('navProfileLink').classList.remove('active');
+
+        const grid = document.getElementById('homeVideosGrid');
+        const t = translations[currentLang];
+        
+        let filtered = [...videos];
+        if (query) {
+            filtered = videos.filter(v => v.title.toLowerCase().includes(query) || v.authorName.toLowerCase().includes(query));
         }
-        
-        if(filteredVideos.length === 0) {
-            container.innerHTML = `<div style="text-align:center;padding:60px;"><i class="fas fa-video" style="font-size:50px;color:#f5b042;margin-bottom:15px;display:block;"></i>🎬 ${t.noResults || 'Ештеңе табылмады'}</div>`;
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:50px;">${t.noResults}</div>`;
             return;
         }
-        
-        let html = '';
-        for(let i = filteredVideos.length-1; i >= 0; i--) {
-            const v = filteredVideos[i];
-            const likeCount = likes[v.id] ? likes[v.id].length : 0;
-            html += `<div class="video-card" onclick="openWatchPage('${v.id}')">
-                <div class="thumbnail"><video src="${v.src}" muted></video></div>
-                <div class="video-details">
-                    <div class="video-channel-avatar">${v.authorName[0].toUpperCase()}</div>
-                    <div class="video-meta">
-                        <div class="video-title">${escapeHtml(v.title)}</div>
-                        <div class="channel-name">${escapeHtml(v.authorName)}</div>
-                        <div class="video-stats">${v.views} ${t.views} • ❤️ ${likeCount}</div>
+
+        grid.innerHTML = filtered.reverse().map(v => {
+            const vLikes = likes[v.id] ? likes[v.id].length : 0;
+            return `
+                <div class="video-card" onclick="openWatchPage('${v.id}')">
+                    <div class="thumbnail"><video src="${v.src}"></video></div>
+                    <div class="video-details">
+                        <div class="video-channel-avatar">${v.authorName[0].toUpperCase()}</div>
+                        <div class="video-meta">
+                            <div class="video-title">${escapeHtml(v.title)}</div>
+                            <div class="channel-name">${escapeHtml(v.authorName)}</div>
+                            <div class="video-stats">${v.views || 0} ${t.views} • ❤️ ${vLikes}</div>
+                        </div>
                     </div>
                 </div>
-            </div>`;
-        }
-        container.innerHTML = html;
-        document.querySelectorAll('.thumbnail video').forEach(v => {
-            v.addEventListener('mouseenter', () => v.play());
-            v.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
-        });
+            `;
+        }).join('');
     }
-    
+
+    // ПРОФИЛЬ СТРАНИЦА
     function showProfile() {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
+        if(!currentUser) return;
         currentPage = 'profile';
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'none';
         document.getElementById('profilePage').style.display = 'block';
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.querySelectorAll('.nav-link')[1].classList.add('active');
         
-        const av = document.getElementById('profileBigAvatar');
-        if(currentUser.avatarUrl) {
-            av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
-            av.style.backgroundSize = 'cover';
-            av.innerText = '';
-        } else {
-            av.style.backgroundImage = 'none';
-            av.style.background = 'linear-gradient(135deg, #f5b042, #ffd966)';
-            av.innerText = currentUser.avatar || currentUser.login[0].toUpperCase();
-        }
-        document.getElementById('profileName').innerText = currentUser.name || currentUser.login;
+        document.getElementById('navHomeLink').classList.remove('active');
+        document.getElementById('navProfileLink').classList.add('active');
+
+        document.getElementById('profileBigAvatar').innerText = currentUser.login[0].toUpperCase();
+        document.getElementById('profileName').innerText = currentUser.login;
         document.getElementById('profileLoginName').innerText = currentUser.login;
-        document.getElementById('profileSubsCount').innerText = getSubscriberCount(currentUser.id);
-        document.getElementById('profileVideosCount').innerText = videos.filter(v => v.authorId === currentUser.id).length;
-        document.getElementById('profileLikesCount').innerText = getUserLikes(currentUser.id);
+
+        // Расчет счетчиков
+        const myVids = videos.filter(v => v.authorId === currentUser.id);
+        document.getElementById('profileVideosCount').innerText = myVids.length;
         
-        const userVideos = videos.filter(v => v.authorId === currentUser.id).reverse();
-        const container = document.getElementById('profileVideosGrid');
-        if(userVideos.length === 0) {
-            container.innerHTML = '<div style="text-align:center;padding:40px;color:#8aa8dd;">📭 Сізде әлі видео жоқ. Жүктеңіз!</div>';
+        let totalLikes = 0;
+        myVids.forEach(v => { if(likes[v.id]) totalLikes += likes[v.id].length; });
+        document.getElementById('profileLikesCount').innerText = totalLikes;
+
+        const totalSubs = subs[currentUser.id] ? subs[currentUser.id].length : 0;
+        document.getElementById('profileSubsCount').innerText = totalSubs;
+
+        const grid = document.getElementById('profileVideosGrid');
+        const t = translations[currentLang];
+
+        if(myVids.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1;color:#82c0e0;">Видео әлі жүктелмеген / Видео еще не загружены.</div>`;
             return;
         }
-        let html = '<div class="videos-grid">';
-        for(let v of userVideos) {
-            html += `<div class="video-card" onclick="openWatchPage('${v.id}')">
+
+        grid.innerHTML = myVids.reverse().map(v => `
+            <div class="video-card" onclick="openWatchPage('${v.id}')">
                 <div class="thumbnail"><video src="${v.src}"></video></div>
                 <div class="video-details">
                     <div class="video-channel-avatar">${v.authorName[0].toUpperCase()}</div>
                     <div class="video-meta">
                         <div class="video-title">${escapeHtml(v.title)}</div>
-                        <div class="video-stats">${v.views} ${translations[currentLang].views}</div>
+                        <div class="video-stats">${v.views || 0} ${t.views}</div>
                     </div>
                 </div>
-            </div>`;
-        }
-        html += '</div>';
-        container.innerHTML = html;
+            </div>
+        `).join('');
     }
-    
-    function openEditProfileModal() {
-        if(!currentUser) return;
-        document.getElementById('editName').value = currentUser.name || '';
-        document.getElementById('editAvatarUrl').value = currentUser.avatarUrl || '';
-        const av = document.getElementById('editAvatar');
-        if(currentUser.avatarUrl) {
-            av.style.backgroundImage = `url(${currentUser.avatarUrl})`;
-            av.style.backgroundSize = 'cover';
-            av.innerText = '';
-        } else {
-            av.style.backgroundImage = 'none';
-            av.style.background = 'linear-gradient(135deg, #f5b042, #ffd966)';
-            av.innerText = currentUser.avatar || currentUser.login[0].toUpperCase();
-        }
-        openModal('editProfile');
+
+    // ЗАГРУЗКА ВИДЕО
+    function openUploadModal() {
+        if(!currentUser) { showToast(translations[currentLang].needLog); return; }
+        openModal('upload');
     }
-    
-    function saveProfileEdit() {
+
+    function confirmUpload() {
+        const title = document.getElementById('uploadTitle').value.trim();
+        const file = document.getElementById('uploadFile').files[0];
+        const desc = document.getElementById('uploadDesc').value.trim();
         const t = translations[currentLang];
-        const newName = document.getElementById('editName').value.trim();
-        const newAvatar = document.getElementById('editAvatarUrl').value.trim();
-        if(newName) currentUser.name = newName;
-        if(newAvatar) currentUser.avatarUrl = newAvatar;
-        else delete currentUser.avatarUrl;
-        const idx = users.findIndex(u => u.id === currentUser.id);
-        if(idx !== -1) users[idx] = currentUser;
-        saveData();
-        updateUI();
-        closeModal('editProfile');
-        showCustomToast(t.profileUpdateSuccess);
-        if(currentPage === 'profile') showProfile();
-        renderHomePage();
+
+        if(!title) { showToast(t.titleErr); return; }
+        if(!file) { showToast(t.fileErr); return; }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const newVideo = {
+                id: 'v_' + Date.now(),
+                title: title,
+                desc: desc,
+                authorId: currentUser.id,
+                authorName: currentUser.login,
+                views: 0,
+                src: e.target.result
+            };
+            videos.push(newVideo);
+            likes[newVideo.id] = [];
+            dislikes[newVideo.id] = [];
+            comments[newVideo.id] = [];
+            
+            saveData();
+            closeModal('upload');
+            showToast("Жүктелді! / Загружено!");
+            if(currentPage === 'profile') showProfile(); else renderHomePage();
+        };
+        reader.readAsDataURL(file);
     }
-    
-    function openWatchPage(videoId, isLangChange = false) {
-        const video = videos.find(v => v.id === videoId);
-        if(!video) return;
+
+    // СТРАНИЦА ПРОСМОТРА И ЛОГИКА ЛАЙКОВ/ДИЗЛАЙКОВ
+    function openWatchPage(id) {
+        currentVideoId = id;
         currentPage = 'watch';
-        currentVideoId = videoId;
+        
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('profilePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'flex';
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.querySelectorAll('.nav-link')[0].classList.add('active');
-        
-        const mainVideo = document.getElementById('mainVideo');
-        mainVideo.src = video.src;
-        mainVideo.load();
-        
-        mainVideo.onloadedmetadata = () => {
-            if(!video.subtitles || video.subtitles.length === 0 || isLangChange) {
-                video.subtitles = generateAISubtitles(mainVideo.duration || 60);
-                saveData();
-            }
-            currentSubtitles = video.subtitles;
-            if(subtitlesEnabled) restartSubtitles();
-        };
-        
+
+        const video = videos.find(v => v.id === id);
+        if(video) {
+            video.views = (video.views || 0) + 1;
+            saveData();
+        }
+        renderWatchPage();
+    }
+
+    function renderWatchPage() {
+        const video = videos.find(v => v.id === currentVideoId);
+        if(!video) return;
+
         const t = translations[currentLang];
-        const likeCount = likes[video.id] ? likes[video.id].length : 0;
-        const dislikeCount = dislikes[video.id] ? dislikes[video.id].length : 0;
-        const isLiked = currentUser && likes[video.id] && likes[video.id].includes(currentUser.id);
-        const isDisliked = currentUser && dislikes[video.id] && dislikes[video.id].includes(currentUser.id);
-        const isSubscribed = currentUser && subs[currentUser.id] && subs[currentUser.id].includes(video.authorId);
-        const isOwn = currentUser && currentUser.id === video.authorId;
-        
+        const mainVideo = document.getElementById('mainVideo');
+        if(mainVideo.src !== video.src) mainVideo.src = video.src;
+
+        // Обеспечиваем массивы
+        if (!likes[video.id]) likes[video.id] = [];
+        if (!dislikes[video.id]) dislikes[video.id] = [];
+        if (!subs[video.authorId]) subs[video.authorId] = [];
+
+        const isLiked = currentUser && likes[video.id].includes(currentUser.id);
+        const isDisliked = currentUser && dislikes[video.id].includes(currentUser.id);
+        const isSubbed = currentUser && subs[video.authorId].includes(currentUser.id);
+
         document.getElementById('watchInfoSection').innerHTML = `
             <div class="watch-title">${escapeHtml(video.title)}</div>
-            <div class="watch-stats" id="watchStats">${video.views} ${t.views} • 👍 ${likeCount} • 👎 ${dislikeCount}</div>
+            <div class="watch-stats">${video.views} ${t.views}</div>
             <div class="channel-info">
                 <div class="channel-left">
                     <div class="channel-avatar-big">${video.authorName[0].toUpperCase()}</div>
                     <div>
-                        <div class="channel-name-big">${escapeHtml(video.authorName)}</div>
-                        <div style="font-size:12px;">${getSubscriberCount(video.authorId)} ${t.subscribers}</div>
+                        <div style="font-weight:700;">${escapeHtml(video.authorName)}</div>
+                        <div style="font-size:12px; color:#82c0e0;">${subs[video.authorId].length} ${t.subs}</div>
                     </div>
                 </div>
-                <button class="subscribe-btn ${isOwn ? 'disabled' : ''}" onclick="subscribeAction('${video.authorId}')" ${isOwn ? 'disabled' : ''}>${isOwn ? 'Бұл сізсіз' : (isSubscribed ? '✅ ' + t.subscribed : '🔔 ' + t.subscribe)}</button>
+                <button class="btn-primary" onclick="toggleSubscribe('${video.authorId}')">
+                    ${isSubbed ? 'Жазылдыңыз ✓' : 'Жазылу'}
+                </button>
             </div>
+            <p style="margin-top:15px; font-size:14px; color:#aad5ff;">${escapeHtml(video.desc || '')}</p>
             <div class="action-buttons">
-                <div class="action-btn ${isLiked ? 'liked' : ''}" onclick="rateVideo('like')"><i class="fas fa-thumbs-up"></i> <span id="likeCount">${likeCount}</span></div>
-                <div class="action-btn ${isDisliked ? 'disliked' : ''}" onclick="rateVideo('dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislikeCount">${dislikeCount}</span></div>
+                <div class="action-btn ${isLiked ? 'active-like' : ''}" onclick="handleReaction('like')">
+                    <i class="fas fa-thumbs-up"></i> <span>${likes[video.id].length}</span>
+                </div>
+                <div class="action-btn ${isDisliked ? 'active-dislike' : ''}" onclick="handleReaction('dislike')">
+                    <i class="fas fa-thumbs-down"></i> <span>${dislikes[video.id].length}</span>
+                </div>
             </div>
         `;
-        
-        const viewKey = `${currentUser ? currentUser.id : 'guest'}_${video.id}`;
-        if(!isLangChange && !viewsRecord.has(viewKey) && (!currentUser || currentUser.id !== video.authorId)) {
-            video.views++;
-            viewsRecord.add(viewKey);
-            saveData();
-            const statsEl = document.getElementById('watchStats');
-            if(statsEl) statsEl.innerHTML = `${video.views} ${t.views} • 👍 ${likeCount} • 👎 ${dislikeCount}`;
-        }
-        
-        renderRecommendations(video.id);
+
         renderComments();
-        setupPlayer();
+        renderRecommendations();
     }
-    
-    function rateVideo(type) {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
-        if(!currentVideoId) return;
-        if(type === 'like') {
-            if(!likes[currentVideoId]) likes[currentVideoId] = [];
-            if(!dislikes[currentVideoId]) dislikes[currentVideoId] = [];
-            const likeIdx = likes[currentVideoId].indexOf(currentUser.id);
-            const dislikeIdx = dislikes[currentVideoId].indexOf(currentUser.id);
-            if(likeIdx === -1) {
-                likes[currentVideoId].push(currentUser.id);
-                if(dislikeIdx !== -1) dislikes[currentVideoId].splice(dislikeIdx, 1);
-                showCustomToast("👍 Лайк қойылды!");
+
+    function handleReaction(type) {
+        if(!currentUser) { showToast(translations[currentLang].needLog); return; }
+        
+        const vLikes = likes[currentVideoId] || [];
+        const vDislikes = dislikes[currentVideoId] || [];
+
+        if (type === 'like') {
+            if (vLikes.includes(currentUser.id)) {
+                likes[currentVideoId] = vLikes.filter(id => id !== currentUser.id);
             } else {
-                likes[currentVideoId].splice(likeIdx, 1);
-                showCustomToast("👍 Лайк алынып тасталды");
+                vLikes.push(currentUser.id);
+                likes[currentVideoId] = vLikes;
+                dislikes[currentVideoId] = vDislikes.filter(id => id !== currentUser.id);
             }
         } else {
-            if(!dislikes[currentVideoId]) dislikes[currentVideoId] = [];
-            if(!likes[currentVideoId]) likes[currentVideoId] = [];
-            const dislikeIdx = dislikes[currentVideoId].indexOf(currentUser.id);
-            const likeIdx = likes[currentVideoId].indexOf(currentUser.id);
-            if(dislikeIdx === -1) {
-                dislikes[currentVideoId].push(currentUser.id);
-                if(likeIdx !== -1) likes[currentVideoId].splice(likeIdx, 1);
-                showCustomToast("👎 Дизлайк қойылды!");
+            if (vDislikes.includes(currentUser.id)) {
+                dislikes[currentVideoId] = vDislikes.filter(id => id !== currentUser.id);
             } else {
-                dislikes[currentVideoId].splice(dislikeIdx, 1);
-                showCustomToast("👎 Дизлайк алынып тасталды");
+                vDislikes.push(currentUser.id);
+                dislikes[currentVideoId] = vDislikes;
+                likes[currentVideoId] = vLikes.filter(id => id !== currentUser.id);
             }
         }
+
         saveData();
-        openWatchPage(currentVideoId, true);
+        renderWatchPage();
     }
-    
-    function subscribeAction(authorId) {
-        const t = translations[currentLang];
-        if(!currentUser) { showCustomToast(t.needLogin); return; }
-        if(currentUser.id === authorId) { showCustomToast(t.cantSubscribe); return; }
-        if(!subs[currentUser.id]) subs[currentUser.id] = [];
-        const idx = subs[currentUser.id].indexOf(authorId);
-        if(idx === -1) {
-            subs[currentUser.id].push(authorId);
-            showCustomToast(t.subscribedMsg);
+
+    function toggleSubscribe(authorId) {
+        if(!currentUser) { showToast(translations[currentLang].needLog); return; }
+        if(currentUser.id === authorId) { showToast("Өзіңізге жазыла алмайсыз!"); return; }
+
+        if (!subs[authorId]) subs[authorId] = [];
+        
+        if (subs[authorId].includes(currentUser.id)) {
+            subs[authorId] = subs[authorId].filter(id => id !== currentUser.id);
         } else {
-            subs[currentUser.id].splice(idx, 1);
-            showCustomToast(t.unsubscribedMsg);
+            subs[authorId].push(currentUser.id);
         }
+
         saveData();
-        if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
+        renderWatchPage();
     }
-    
+
+    // КОММЕНТАРИИ
     function renderComments() {
-        const videoComments = comments[currentVideoId] || [];
-        document.getElementById('commentsCount').innerText = videoComments.length;
-        const container = document.getElementById('commentsList');
-        if(videoComments.length === 0) {
-            container.innerHTML = '<div style="text-align:center;padding:20px;color:#8aa8dd;">💬 Әлі комментарий жоқ. Бірінші болыңыз!</div>';
+        const vComments = comments[currentVideoId] || [];
+        document.getElementById('commentsTitle').innerText = `${translations[currentLang].comms} (${vComments.length})`;
+        
+        const list = document.getElementById('commentsList');
+        if (vComments.length === 0) {
+            list.innerHTML = `<div style="color:#82c0e0; font-size:14px;">Пікірлер жоқ. Бірінші болыңыз!</div>`;
             return;
         }
-        let html = '';
-        for(let c of [...videoComments].reverse()) {
-            const author = users.find(u => u.id === c.userId) || { name: c.userName, avatar: c.userName[0].toUpperCase() };
-            html += `<div class="comment-item">
-                <div class="comment-avatar-small">${author.avatar || author.name[0].toUpperCase()}</div>
-                <div class="comment-content">
-                    <div class="comment-author">${escapeHtml(c.userName)}</div>
-                    <div class="comment-text">${escapeHtml(c.text)}</div>
-                    <div class="comment-date">${new Date(c.date).toLocaleDateString()}</div>
+
+        list.innerHTML = vComments.map(c => `
+            <div class="comment-item">
+                <div class="video-channel-avatar" style="width:30px; height:30px; font-size:12px;">${c.name[0].toUpperCase()}</div>
+                <div>
+                    <div class="comment-author">${escapeHtml(c.name)} <span style="font-size:10px; color:#82c0e0; margin-left:10px;">${c.date}</span></div>
+                    <div style="font-size:14px;">${escapeHtml(c.text)}</div>
                 </div>
-            </div>`;
-        }
-        container.innerHTML = html;
+            </div>
+        `).join('');
     }
-    
+
     function postComment() {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showToast(translations[currentLang].needLog); return; }
         const text = document.getElementById('commentInput').value.trim();
         if(!text) return;
+
         if(!comments[currentVideoId]) comments[currentVideoId] = [];
+        
         comments[currentVideoId].push({
-            id: Date.now(), userId: currentUser.id, userName: currentUser.name || currentUser.login,
-            text: text, date: new Date().toISOString()
+            name: currentUser.login,
+            text: text,
+            date: new Date().toLocaleDateString()
         });
+
         saveData();
         document.getElementById('commentInput').value = '';
         renderComments();
-        showCustomToast("💬 Комментарий қосылды!");
     }
-    
-    function renderRecommendations(currentId) {
+
+    function renderRecommendations() {
+        const list = document.getElementById('recommendationsList');
+        const listVids = videos.filter(v => v.id !== currentVideoId).slice(-5);
         const t = translations[currentLang];
-        const container = document.getElementById('recommendationsList');
-        const others = videos.filter(v => v.id !== currentId).reverse();
-        if(others.length === 0) { container.innerHTML = '<div style="color:#8aa8dd;">🎬 Басқа видео жоқ</div>'; return; }
-        let html = '';
-        for(let v of others) {
-            html += `<div class="recommendation-card" onclick="openWatchPage('${v.id}')">
+
+        if(listVids.length === 0) {
+            list.innerHTML = `<div style="color:#82c0e0; font-size:13px;">Видеолар жоқ</div>`;
+            return;
+        }
+
+        list.innerHTML = listVids.map(v => `
+            <div class="recommendation-card" onclick="openWatchPage('${v.id}')">
                 <div class="rec-thumb"><video src="${v.src}"></video></div>
-                <div class="rec-info">
-                    <div class="rec-video-title">${escapeHtml(v.title)}</div>
-                    <div class="rec-channel-name">${escapeHtml(v.authorName)}</div>
-                    <div class="rec-video-stats">${v.views} ${t.views}</div>
+                <div>
+                    <div style="font-size:13px; font-weight:600; line-height:1.3; max-height:2.6em; overflow:hidden;">${escapeHtml(v.title)}</div>
+                    <div style="font-size:11px; color:#82c0e0; margin-top:4px;">${escapeHtml(v.authorName)}</div>
+                    <div style="font-size:10px; color:#6baecf;">${v.views || 0} ${t.views}</div>
                 </div>
-            </div>`;
-        }
-        container.innerHTML = html;
+            </div>
+        `).join('');
     }
-    
-    function restartSubtitles() {
-        if(subtitleInterval) clearInterval(subtitleInterval);
-        const video = document.getElementById('mainVideo');
-        const subText = document.getElementById('subtitleText');
-        subtitleInterval = setInterval(() => {
-            if(!subtitlesEnabled || !video || video.paused) return;
-            const ct = video.currentTime;
-            let active = null;
-            for(let s of currentSubtitles) if(ct >= s.time) active = s;
-            subText.textContent = active ? active.text : '';
-        }, 200);
-    }
-    
-    function toggleSubtitles() {
-        subtitlesEnabled = !subtitlesEnabled;
-        const container = document.getElementById('subtitlesContainer');
-        if(subtitlesEnabled && currentSubtitles.length) {
-            container.style.display = 'block';
-            restartSubtitles();
-            showCustomToast(translations[currentLang].subtitlesBtn + ' ✅');
-        } else {
-            container.style.display = 'none';
-            if(subtitleInterval) clearInterval(subtitleInterval);
-            showCustomToast(translations[currentLang].subtitlesBtn + ' ❌');
-        }
-    }
-    
-    function changeSpeed(s) { document.getElementById('mainVideo').playbackRate = s; showCustomToast(`${translations[currentLang].speed}: ${s}x`); document.getElementById('settingsMenu').classList.remove('show'); }
-    
-    function setupPlayer() {
-        const video = document.getElementById('mainVideo');
-        const playPause = document.getElementById('playPauseBtn');
-        const progressBar = document.getElementById('progressContainer');
-        const progressFill = document.getElementById('progressFill');
-        const muteBtn = document.getElementById('muteBtn');
-        const volume = document.getElementById('volumeSlider');
-        const timeDisp = document.getElementById('timeDisplay');
-        const fullscreen = document.getElementById('fullscreenBtn');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const settingsMenu = document.getElementById('settingsMenu');
-        const player = document.getElementById('customPlayer');
-        
-        function format(sec) {
-            if(isNaN(sec)) return '0:00';
-            const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
-            return `${m}:${s < 10 ? '0' + s : s}`;
-        }
-        function update() {
-            if(video.duration) {
-                timeDisp.textContent = `${format(video.currentTime)} / ${format(video.duration)}`;
-                progressFill.style.width = (video.currentTime / video.duration) * 100 + '%';
-            }
-        }
-        video.addEventListener('timeupdate', update);
-        video.addEventListener('loadedmetadata', update);
-        playPause.onclick = () => video.paused ? video.play() : video.pause();
-        video.onplay = () => playPause.innerHTML = '<i class="fas fa-pause"></i>';
-        video.onpause = () => playPause.innerHTML = '<i class="fas fa-play"></i>';
-        progressBar.onclick = (e) => {
-            const rect = progressBar.getBoundingClientRect();
-            video.currentTime = ((e.clientX - rect.left) / rect.width) * video.duration;
-        };
-        muteBtn.onclick = () => {
-            video.muted = !video.muted;
-            muteBtn.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-            volume.value = video.muted ? 0 : video.volume;
-        };
-        volume.oninput = (e) => { video.volume = parseFloat(e.target.value); video.muted = false; muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>'; };
-        fullscreen.onclick = () => { if(player.requestFullscreen) player.requestFullscreen(); };
-        settingsBtn.onclick = (e) => { e.stopPropagation(); settingsMenu.classList.toggle('show'); };
-        document.addEventListener('click', () => settingsMenu.classList.remove('show'));
-        video.play();
-    }
-    
+
+    // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
     function showHome() {
-        currentPage = 'home';
-        currentSearchQuery = '';
         document.getElementById('searchInput').value = '';
-        document.getElementById('homePage').style.display = 'block';
-        document.getElementById('watchPage').style.display = 'none';
-        document.getElementById('profilePage').style.display = 'none';
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.querySelectorAll('.nav-link')[0].classList.add('active');
-        if(subtitleInterval) clearInterval(subtitleInterval);
         renderHomePage();
     }
-    
-    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     function openModal(type) { document.getElementById(type + 'Modal').style.display = 'flex'; }
     function closeModal(type) { document.getElementById(type + 'Modal').style.display = 'none'; }
-    
-    document.getElementById('langSelect').onchange = () => {
-        if(userCountry === 'KZ') {
-            currentLang = document.getElementById('langSelect').value;
-            localStorage.setItem('qaz_lang', currentLang);
-            applyTranslation();
-            if(currentPage === 'home') renderHomePage();
-            else if(currentPage === 'profile') showProfile();
-            else if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
-        }
-    };
-    
-    window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.style.display = 'none'; };
-    
+    function escapeHtml(str) { return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : ''; }
+
+    window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
+    document.getElementById('langSelect').onchange = updateLanguage;
+
+    // СТАРТ ИНИЦИАЛИЗАЦИИ
     loadData();
-    detectCountry();
     updateUI();
+    updateLanguage();
 </script>
 
 <div class="footer">
-    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Қазақстан видеохостингі | Лайк/дизлайк | Комментарийлер
+    QazaqTube — Қазақстан видеохостингі | 2026
 </div>
 </body>
 </html>
