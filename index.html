@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>QazaqTube — Көк-сары стриминг</title>
+    <title>QazaqTube — Көк-сары стриминг | Регистрация с почтой</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,33 +14,27 @@
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(145deg, #0a2463 0%, #1e3a8a 100%);
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0a2463, #030c1f);
             color: #f0f4ff;
             min-height: 100vh;
             scroll-behavior: smooth;
         }
 
-        /* Кастом скролл */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a2463;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #f5b042;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ffcc66;
+        /* анимация градиента */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Хедер — стекло + золото */
+        /* кастом скролл */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a2463; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #f5b042; border-radius: 10px; }
+
         .header {
-            background: rgba(10, 36, 99, 0.85);
+            background: rgba(3, 18, 43, 0.85);
             backdrop-filter: blur(16px);
             padding: 1rem 2rem;
             display: flex;
@@ -50,28 +46,22 @@
             z-index: 200;
             flex-wrap: wrap;
             gap: 1rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         .logo {
             font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #FFD966, #FFB347, #ffffff);
+            background: linear-gradient(135deg, #FFD966, #FFB347, #FFE6B3);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             letter-spacing: -0.5px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .logo span {
-            font-size: 1rem;
-            font-weight: 500;
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: #FFD966;
-            letter-spacing: 0;
-        }
+        .logo i { font-size: 2rem; color: #f5b042; background: none; -webkit-background-clip: unset; }
 
         .controls {
             display: flex;
@@ -88,53 +78,28 @@
             border-radius: 40px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-        .lang-select:hover {
-            background: #f5b042;
-            color: #0a2463;
-            border-color: white;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 0.8rem;
+            transition: 0.2s;
         }
 
         .btn {
             padding: 0.5rem 1.5rem;
-            border: none;
             border-radius: 40px;
-            cursor: pointer;
+            border: none;
             font-weight: 700;
-            transition: all 0.25s ease;
+            cursor: pointer;
+            transition: all 0.25s;
             font-size: 0.9rem;
-            letter-spacing: 0.3px;
         }
         .btn-primary {
             background: linear-gradient(95deg, #f5b042, #FFD966);
             color: #0a2463;
-            box-shadow: 0 4px 12px rgba(245,176,66,0.3);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(245,176,66,0.5);
-            background: linear-gradient(95deg, #ffbb4a, #ffe08c);
+            box-shadow: 0 4px 12px rgba(245,176,66,0.4);
         }
         .btn-outline {
             background: rgba(255,255,240,0.1);
             border: 1.5px solid #f5b042;
             color: #FFE6B3;
-            backdrop-filter: blur(4px);
         }
-        .btn-outline:hover {
-            background: #f5b042;
-            color: #0a2463;
-            border-color: white;
-            transform: scale(1.02);
-        }
-
         .user-info {
             display: flex;
             align-items: center;
@@ -142,191 +107,51 @@
             background: rgba(255,255,200,0.08);
             padding: 0.3rem 1rem 0.3rem 0.8rem;
             border-radius: 60px;
-            backdrop-filter: blur(8px);
         }
         .avatar {
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             background: linear-gradient(135deg, #f5b042, #FFD966);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #0a2463;
             box-shadow: 0 0 0 2px #ffdd99;
+            background-size: cover;
+            background-position: center;
         }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
-        /* Контейнер */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Панель загрузки — неон-желтый акцент */
+        /* панель загрузки видео */
         .upload-panel {
-            background: rgba(15, 43, 110, 0.7);
+            background: rgba(15, 43, 110, 0.6);
             backdrop-filter: blur(12px);
             border-radius: 32px;
             padding: 1.8rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             border: 1px solid #f5b042;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.3);
-            transition: all 0.2s;
-        }
-        .upload-panel h3 {
-            font-size: 1.6rem;
-            margin-bottom: 1rem;
-            color: #FFE6B3;
-            border-left: 5px solid #f5b042;
-            padding-left: 1rem;
-        }
-        .upload-form input, .upload-form textarea {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            margin-bottom: 1rem;
-            background: #0a2463cc;
-            border: 1px solid #3b5baa;
-            border-radius: 28px;
-            color: white;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-        .upload-form input:focus, .upload-form textarea:focus {
-            outline: none;
-            border-color: #f5b042;
-            box-shadow: 0 0 0 3px rgba(245,176,66,0.3);
-        }
-        .upload-form textarea {
-            border-radius: 24px;
-            min-height: 90px;
-            resize: vertical;
         }
 
-        /* Сетка видео — карточки с блеском */
         .videos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
             margin-top: 1rem;
         }
-
         .video-card {
-            background: rgba(6, 28, 78, 0.75);
+            background: rgba(6, 28, 78, 0.7);
             backdrop-filter: blur(8px);
             border-radius: 28px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: 0.3s;
             border: 1px solid rgba(245,176,66,0.4);
-            box-shadow: 0 12px 25px -12px black;
         }
-        .video-card:hover {
-            transform: translateY(-8px);
-            border-color: #f5b042;
-            box-shadow: 0 25px 35px -12px #f5b04240;
-            background: rgba(10, 45, 100, 0.85);
-        }
+        .video-card:hover { transform: translateY(-6px); border-color: #f5b042; }
 
-        .video-thumb {
-            width: 100%;
-            height: 190px;
-            background: radial-gradient(circle at 30% 20%, #1f489b, #071c47);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: 0.2s;
-        }
-        .video-thumb::after {
-            content: "🎬";
-            font-size: 3.8rem;
-            opacity: 0.8;
-            text-shadow: 0 4px 12px #f5b042;
-            transition: 0.2s;
-        }
-        .video-card:hover .video-thumb::after {
-            transform: scale(1.05);
-            opacity: 1;
-        }
-
-        .video-info {
-            padding: 1.3rem;
-        }
-        .video-title {
-            font-weight: 800;
-            font-size: 1.2rem;
-            margin-bottom: 0.6rem;
-            color: #FFFAF0;
-            line-height: 1.3;
-        }
-        .video-stats {
-            font-size: 0.8rem;
-            color: #bbd4ff;
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 0.8rem;
-            flex-wrap: wrap;
-        }
-
-        /* Кнопки лайк / подписка */
-        .video-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
-            flex-wrap: wrap;
-        }
-        .like-btn, .subscribe-btn {
-            background: rgba(255, 255, 210, 0.08);
-            backdrop-filter: blur(4px);
-            border: none;
-            padding: 0.4rem 1.2rem;
-            border-radius: 50px;
-            color: #f0f4ff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.85rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .like-btn.liked {
-            background: #f5b042;
-            color: #0a2463;
-            box-shadow: 0 0 6px #ffcc66;
-        }
-        .subscribe-btn.subscribed {
-            background: #FFD966;
-            color: #0a2463;
-        }
-        .like-btn:hover, .subscribe-btn:hover {
-            background: #f5b042cc;
-            color: #0a2463;
-            transform: scale(0.96);
-        }
-
-        /* Пустое состояние */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: rgba(15, 43, 110, 0.4);
-            backdrop-filter: blur(12px);
-            border-radius: 48px;
-            margin-top: 2rem;
-            border: 1px dashed #f5b042;
-        }
-        .empty-state h3 {
-            font-size: 2.2rem;
-            background: linear-gradient(135deg, #FFD966, #FFB347);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.8rem;
-        }
-
-        /* Модалки */
+        /* модалки */
         .modal {
             display: none;
             position: fixed;
@@ -334,33 +159,26 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(2, 12, 35, 0.9);
+            background: rgba(2, 12, 35, 0.95);
             backdrop-filter: blur(8px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
         }
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
         .modal-content {
             background: #0a1b44;
-            border-radius: 40px;
+            border-radius: 48px;
             padding: 2rem;
             width: 90%;
-            max-width: 460px;
+            max-width: 500px;
             border: 2px solid #f5b042;
             box-shadow: 0 30px 40px rgba(0,0,0,0.5);
         }
-        .modal-content h2 {
-            font-size: 1.9rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(120deg, #FFE6B3, #f5b042);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .input-group {
+            margin-bottom: 1rem;
         }
-        .input-group input {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 0.9rem 1rem;
             border-radius: 60px;
@@ -369,248 +187,146 @@
             color: white;
             font-size: 1rem;
         }
-        .close-modal {
-            margin-top: 1rem;
-            background: #2a4180;
-            color: white;
+        .profile-avatar-preview {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
         }
-
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: #FFE6B3aa;
-            font-size: 0.85rem;
-            border-top: 1px solid #f5b04233;
-            margin-top: 2rem;
+        .avatar-preview {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #f5b042;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            background-size: cover;
+            background-position: center;
         }
-
-        @media (max-width: 680px) {
-            .header { flex-direction: column; text-align: center; }
-            .container { padding: 1rem; }
-            .logo { font-size: 1.7rem; }
+        .footer { text-align: center; padding: 2rem; color: #FFE6B3aa; border-top: 1px solid #f5b04233; margin-top: 2rem; }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f5b042;
+            color: #0a2463;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: bold;
+            z-index: 1100;
+            animation: fadeOut 3s forwards;
         }
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
     </style>
 </head>
 <body>
-
 <div class="header">
-    <div class="logo">QAZAQ TUBE <span>💙💛 10x kúsh</span></div>
+    <div class="logo"><i class="fas fa-play-circle"></i> QAZAQ TUBE <span style="font-size:0.9rem;">💙💛 10x</span></div>
     <div class="controls">
-        <select id="languageSelect" class="lang-select" onchange="changeLanguage()">
-            <option value="kk">Қазақша</option>
-            <option value="ru">Русский</option>
-        </select>
-        <div class="auth-buttons" id="authButtons">
-            <button class="btn btn-outline" id="loginBtn" onclick="openModal('loginModal')">Kіru</button>
-            <button class="btn btn-primary" id="registerBtn" onclick="openModal('registerModal')">Tirkeлу</button>
-        </div>
-        <div class="user-info" id="userInfo" style="display: none;">
-            <span id="userNameDisplay"></span>
-            <div class="avatar" id="userAvatar"></div>
-            <button class="btn btn-outline" id="logoutBtn" onclick="logout()" style="padding: 0.3rem 1rem;">Shyǵu</button>
-        </div>
+        <select id="languageSelect" class="lang-select" onchange="changeLanguage()"><option value="kk">Қазақша</option><option value="ru">Русский</option></select>
+        <div class="auth-buttons" id="authButtons"><button class="btn btn-outline" id="loginBtn" onclick="openModal('loginModal')">Kіru</button><button class="btn btn-primary" id="registerBtn" onclick="openModal('registerModal')">Tirkeлу</button></div>
+        <div class="user-info" id="userInfo" style="display:none"><span id="userDisplayName"></span><div class="avatar" id="userAvatarElem"></div><button class="btn btn-outline" onclick="logout()" style="padding:0.3rem 1rem;">Shyǵu</button><button class="btn btn-primary" onclick="openSettings()" style="padding:0.3rem 1rem;"><i class="fas fa-cog"></i></button></div>
     </div>
 </div>
-
 <div class="container">
-    <div id="uploadPanel" class="upload-panel" style="display: none;">
-        <h3 id="uploadTitle">📤 Jańa beıne jukteý</h3>
-        <div class="upload-form">
-            <input type="text" id="videoTitle" placeholder="Beıne ataýy">
-            <textarea id="videoDesc" placeholder="Sıpattama"></textarea>
-            <button class="btn btn-primary" id="uploadBtn" onclick="uploadVideo()">➕ Beıne qosý</button>
-        </div>
-    </div>
-
-    <div id="videosContainer">
-        <div class="empty-state">
-            <h3 id="emptyTitle">📭 Ázirge beıne joq</h3>
-            <p id="emptyText">Munda paıdalanýshylardyń beıneleri paıda bolady. Birinshi bolý!</p>
-        </div>
-    </div>
+    <div id="uploadPanel" class="upload-panel" style="display:none;"><h3>📤 Жаңа бейне жүктеу</h3><div class="upload-form"><input type="text" id="videoTitle" placeholder="Бейне атауы"><textarea id="videoDesc" placeholder="Сипаттама"></textarea><button class="btn btn-primary" onclick="uploadVideo()">➕ Бейне қосу</button></div></div>
+    <div id="videosContainer"><div class="empty-state" style="text-align:center; padding:3rem;"><h3>📭 Әзірге бейне жоқ</h3><p>Бірінші болып видео жүктеңіз!</p></div></div>
 </div>
 
-<!-- Register Modal -->
-<div id="registerModal" class="modal">
-    <div class="modal-content">
-        <h2 id="regTitle">📝 Tirkeý</h2>
-        <div class="input-group"><input type="text" id="regUsername" placeholder="Qoldanýshy aty"></div>
-        <div class="input-group"><input type="email" id="regEmail" placeholder="Elektrondyq poshta"></div>
-        <div class="input-group"><input type="password" id="regPassword" placeholder="Qúpıa sóz"></div>
-        <button class="btn btn-primary" id="regSubmitBtn" onclick="register()">Tirkeý</button>
-        <button class="btn close-modal" onclick="closeModal('registerModal')">Jabu</button>
-    </div>
-</div>
+<!-- Модалка регистрации с почтой и кодом -->
+<div id="registerModal" class="modal"><div class="modal-content"><h2>📝 Тіркелу</h2><div class="input-group"><input type="email" id="regEmail" placeholder="Email (example@gmail.com)"></div><div class="input-group"><input type="text" id="regUsername" placeholder="Қолданушы аты (логин)"></div><div class="input-group"><input type="password" id="regPassword" placeholder="Құпия сөз"></div><div class="input-group"><input type="text" id="regCode" placeholder="6 таңбалы код"></div><button class="btn btn-primary" onclick="sendCode()">📧 Код жіберу</button><button class="btn btn-primary" onclick="completeRegister()" style="margin-top:10px;">✅ Тіркелу</button><button class="btn close-modal" onclick="closeModal('registerModal')">Жабу</button></div></div>
 
-<!-- Login Modal -->
-<div id="loginModal" class="modal">
-    <div class="modal-content">
-        <h2 id="loginTitle">🔐 Kіru</h2>
-        <div class="input-group"><input type="text" id="loginUsername" placeholder="Qoldanýshy aty"></div>
-        <div class="input-group"><input type="password" id="loginPassword" placeholder="Qúpıa sóz"></div>
-        <button class="btn btn-primary" id="loginSubmitBtn" onclick="login()">Kіru</button>
-        <button class="btn close-modal" onclick="closeModal('loginModal')">Jabu</button>
-    </div>
-</div>
+<!-- Модалка логина -->
+<div id="loginModal" class="modal"><div class="modal-content"><h2>🔐 Кіру</h2><div class="input-group"><input type="text" id="loginUsername" placeholder="Логин немесе Email"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Құпия сөз"></div><button class="btn btn-primary" onclick="login()">Кіру</button><button class="btn close-modal" onclick="closeModal('loginModal')">Жабу</button></div></div>
+
+<!-- Модалка настроек (смена ника и аватарки) -->
+<div id="settingsModal" class="modal"><div class="modal-content"><h2>⚙️ Профильді өңдеу</h2><div class="profile-avatar-preview"><div id="settingsAvatarPreview" class="avatar-preview" style="width:100px;height:100px;"></div></div><div class="input-group"><input type="text" id="settingsNickname" placeholder="Жаңа есім (ник)"></div><div class="input-group"><input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL (немесе эмодзи / инициал)"></div><button class="btn btn-primary" onclick="saveProfile()">Сақтау</button><button class="btn close-modal" onclick="closeModal('settingsModal')">Жабу</button></div></div>
 
 <script>
-    // ========== TILDER ==========
-    const translations = {
-        kk: {
-            appName: "QazaqTube",
-            login: "Kіru",
-            register: "Tirkeлу",
-            logout: "Shyǵu",
-            uploadTitle: "📤 Jańa beıne jukteý",
-            uploadBtn: "➕ Beıne qosý",
-            videoTitlePlaceholder: "Beıne ataýy",
-            videoDescPlaceholder: "Sıpattama",
-            emptyTitle: "📭 Ázirge beıne joq",
-            emptyText: "Munda paıdalanýshylardyń beıneleri paıda bolady. Birinshi bolý!",
-            regTitle: "📝 Tirkeý",
-            regUsernamePlace: "Qoldanýshy aty",
-            regEmailPlace: "Elektrondyq poshta",
-            regPasswordPlace: "Qúpıa sóz",
-            regSubmit: "Tirkeý",
-            close: "Jabu",
-            loginTitle: "🔐 Kіru",
-            loginUsernamePlace: "Qoldanýshy aty",
-            loginPasswordPlace: "Qúpıa sóz",
-            loginSubmit: "Kіru",
-            authRequired: "Aldymen kirińiz!",
-            fillAll: "Barlyq órіsterdi tolturyńyz!",
-            userExists: "Qoldanýshy bar!",
-            regSuccess: "Tirkeý sátti! Endi kirińiz.",
-            wrongCreds: "Qate aty nemese qúpıa sóz",
-            needLoginLike: "Laık basý úshin kirińiz",
-            needLoginSub: "Jazylý úshin kirińiz",
-            videoAdded: "Beıne qosyldy!",
-            enterTitle: "Beıne ataýyn engizińiz",
-            likes: "laık",
-            views: "kórsetilim",
-            subscribe: "🔔 Jazylý",
-            subscribed: "✅ Jazyldyńyz",
-            unsubscribe: "Basy tartý",
-            footer: "💙💛 QazaqTube — óz videohostingińiz. Derekter jergilikti saqtalady."
-        },
-        ru: {
-            appName: "QazaqTube",
-            login: "Вход",
-            register: "Регистрация",
-            logout: "Выйти",
-            uploadTitle: "📤 Загрузить новое видео",
-            uploadBtn: "➕ Добавить видео",
-            videoTitlePlaceholder: "Название видео",
-            videoDescPlaceholder: "Описание",
-            emptyTitle: "📭 Пока нет видео",
-            emptyText: "Здесь будут видео пользователей. Будьте первым!",
-            regTitle: "📝 Регистрация",
-            regUsernamePlace: "Имя пользователя",
-            regEmailPlace: "Email",
-            regPasswordPlace: "Пароль",
-            regSubmit: "Зарегистрироваться",
-            close: "Закрыть",
-            loginTitle: "🔐 Вход",
-            loginUsernamePlace: "Имя пользователя",
-            loginPasswordPlace: "Пароль",
-            loginSubmit: "Войти",
-            authRequired: "Сначала войдите!",
-            fillAll: "Заполните все поля!",
-            userExists: "Пользователь уже существует!",
-            regSuccess: "Регистрация успешна! Теперь войдите.",
-            wrongCreds: "Неверное имя или пароль",
-            needLoginLike: "Войдите чтобы поставить лайк",
-            needLoginSub: "Войдите чтобы подписаться",
-            videoAdded: "Видео добавлено!",
-            enterTitle: "Введите название видео",
-            likes: "лайков",
-            views: "просмотров",
-            subscribe: "🔔 Подписаться",
-            subscribed: "✅ Вы подписаны",
-            unsubscribe: "Отписаться",
-            footer: "💙💛 QazaqTube — ваш видеохостинг. Все данные локально."
-        }
-    };
-
+    // ========== Тілдер ==========
     let currentLang = "kk";
-
-    function changeLanguage() {
-        const select = document.getElementById("languageSelect");
-        currentLang = select.value;
-        applyLanguage();
-        renderAllVideos();
-    }
-
-    function applyLanguage() {
-        const t = translations[currentLang];
-        if(!t) return;
-        document.title = t.appName;
-        document.getElementById("loginBtn") && (document.getElementById("loginBtn").innerText = t.login);
-        document.getElementById("registerBtn") && (document.getElementById("registerBtn").innerText = t.register);
-        if(document.getElementById("logoutBtn")) document.getElementById("logoutBtn").innerText = t.logout;
-        const upTitle = document.getElementById("uploadTitle");
-        if(upTitle) upTitle.innerText = t.uploadTitle;
-        const upBtn = document.getElementById("uploadBtn");
-        if(upBtn) upBtn.innerText = t.uploadBtn;
-        const titleInp = document.getElementById("videoTitle");
-        if(titleInp) titleInp.placeholder = t.videoTitlePlaceholder;
-        const descInp = document.getElementById("videoDesc");
-        if(descInp) descInp.placeholder = t.videoDescPlaceholder;
-        const emptyH = document.getElementById("emptyTitle");
-        if(emptyH) emptyH.innerText = t.emptyTitle;
-        const emptyP = document.getElementById("emptyText");
-        if(emptyP) emptyP.innerText = t.emptyText;
-        const regH = document.querySelector("#registerModal h2");
-        if(regH) regH.innerText = t.regTitle;
-        document.getElementById("regUsername") && (document.getElementById("regUsername").placeholder = t.regUsernamePlace);
-        document.getElementById("regEmail") && (document.getElementById("regEmail").placeholder = t.regEmailPlace);
-        document.getElementById("regPassword") && (document.getElementById("regPassword").placeholder = t.regPasswordPlace);
-        const regSub = document.getElementById("regSubmitBtn");
-        if(regSub) regSub.innerText = t.regSubmit;
-        document.querySelectorAll(".close-modal").forEach(btn => btn.innerText = t.close);
-        const loginH = document.querySelector("#loginModal h2");
-        if(loginH) loginH.innerText = t.loginTitle;
-        const logUser = document.getElementById("loginUsername");
-        if(logUser) logUser.placeholder = t.loginUsernamePlace;
-        const logPass = document.getElementById("loginPassword");
-        if(logPass) logPass.placeholder = t.loginPasswordPlace;
-        const logSub = document.getElementById("loginSubmitBtn");
-        if(logSub) logSub.innerText = t.loginSubmit;
-        const footerDiv = document.querySelector(".footer");
-        if(footerDiv) footerDiv.innerHTML = t.footer + "<br style='margin:6px'> 🌐 Жұмыс істейді: GitHub Pages, Netlify, Vercel";
-    }
-
-    // ========== Деректер ==========
-    let users = JSON.parse(localStorage.getItem('qaz_users_blue')) || [];
-    let videos = JSON.parse(localStorage.getItem('qaz_videos_blue')) || [];
-    let subscriptions = JSON.parse(localStorage.getItem('qaz_subs_blue')) || {};
-    let likes = JSON.parse(localStorage.getItem('qaz_likes_blue')) || {};
+    function changeLanguage() { currentLang = document.getElementById("languageSelect").value; applyLanguage(); renderAllVideos(); }
+    function applyLanguage() { /* можно дополнить */ }
+    
+    // ========== ДАННЫЕ ПОЛЬЗОВАТЕЛЕЙ ==========
+    let users = JSON.parse(localStorage.getItem('qaz_users_final')) || [];
+    let videos = JSON.parse(localStorage.getItem('qaz_videos_final')) || [];
+    let subscriptions = JSON.parse(localStorage.getItem('qaz_subs_final')) || {};
+    let likes = JSON.parse(localStorage.getItem('qaz_likes_final')) || {};
     let currentUser = null;
-
-    function saveAll() {
-        localStorage.setItem('qaz_users_blue', JSON.stringify(users));
-        localStorage.setItem('qaz_videos_blue', JSON.stringify(videos));
-        localStorage.setItem('qaz_subs_blue', JSON.stringify(subscriptions));
-        localStorage.setItem('qaz_likes_blue', JSON.stringify(likes));
+    let pendingRegistration = null; // временные данные перед кодом
+    
+    function saveAll() { localStorage.setItem('qaz_users_final', JSON.stringify(users)); localStorage.setItem('qaz_videos_final', JSON.stringify(videos)); localStorage.setItem('qaz_subs_final', JSON.stringify(subscriptions)); localStorage.setItem('qaz_likes_final', JSON.stringify(likes)); }
+    
+    // Отправка кода (имитация)
+    function sendCode() {
+        let email = document.getElementById('regEmail').value.trim();
+        let username = document.getElementById('regUsername').value.trim();
+        let password = document.getElementById('regPassword').value;
+        if(!email || !username || !password) { showToast("Толтырыңыз!"); return; }
+        let emailRegex = /^[^\s@]+@(gmail\.com|yandex\.com|mail\.com|yandex\.ru|inbox\.ru|list\.ru|bk\.ru)$/i;
+        if(!emailRegex.test(email)) { showToast("Тек қолдау көрсетілген пошталар: @gmail.com, @yandex.com, @mail.com"); return; }
+        if(users.find(u => u.email === email)) { showToast("Бұл email тіркелген!"); return; }
+        if(users.find(u => u.username === username)) { showToast("Логин алынған!"); return; }
+        let code = Math.floor(100000 + Math.random() * 900000).toString();
+        pendingRegistration = { email, username, password, code };
+        // Имитация отправки (в реальном проекте - API)
+        showToast(`📧 Код жіберілді: ${code} (сезімталдықпен)`);
+        console.log("Код подтверждения:", code);
     }
-
-    function loadSession() {
-        const saved = localStorage.getItem('qaz_current_user_blue');
-        if(saved) {
-            const user = JSON.parse(saved);
-            const exists = users.find(u => u.id === user.id);
-            if(exists) { currentUser = exists; updateUIForAuth(); }
-            else localStorage.removeItem('qaz_current_user_blue');
-        }
+    
+    function completeRegister() {
+        if(!pendingRegistration) { showToast("Алдымен код жіберіңіз!"); return; }
+        let enteredCode = document.getElementById('regCode').value.trim();
+        if(enteredCode !== pendingRegistration.code) { showToast("Қате код!"); return; }
+        let newUser = {
+            id: Date.now() + Math.random(),
+            username: pendingRegistration.username,
+            email: pendingRegistration.email,
+            password: pendingRegistration.password,
+            displayName: pendingRegistration.username, // ник (отображаемое имя)
+            avatar: pendingRegistration.username[0].toUpperCase(),
+            avatarType: "text",
+            createdAt: new Date().toISOString()
+        };
+        users.push(newUser);
+        saveAll();
+        currentUser = newUser;
+        localStorage.setItem('qaz_current_user_final', JSON.stringify(newUser));
+        closeModal('registerModal');
+        updateUIForAuth();
         renderAllVideos();
+        showToast("Тіркелу сәтті! Қош келдіңіз!");
+        document.getElementById('regEmail').value = ''; document.getElementById('regUsername').value = ''; document.getElementById('regPassword').value = ''; document.getElementById('regCode').value = '';
+        pendingRegistration = null;
     }
-
+    
+    function login() {
+        let loginInput = document.getElementById('loginUsername').value.trim();
+        let password = document.getElementById('loginPassword').value;
+        let user = users.find(u => (u.username === loginInput || u.email === loginInput) && u.password === password);
+        if(!user) { showToast("Қате логин/email немесе құпия сөз"); return; }
+        currentUser = user;
+        localStorage.setItem('qaz_current_user_final', JSON.stringify(user));
+        updateUIForAuth();
+        closeModal('loginModal');
+        renderAllVideos();
+        showToast(`Қайта келдіңіз, ${user.displayName || user.username}`);
+    }
+    
+    function logout() { currentUser = null; localStorage.removeItem('qaz_current_user_final'); updateUIForAuth(); renderAllVideos(); showToast("Шықтыңыз"); }
+    
     function updateUIForAuth() {
         if(currentUser) {
             document.getElementById('authButtons').style.display = 'none';
             document.getElementById('userInfo').style.display = 'flex';
-            document.getElementById('userNameDisplay').innerText = currentUser.username;
-            document.getElementById('userAvatar').innerText = currentUser.username[0].toUpperCase();
+            let display = currentUser.displayName || currentUser.username;
+            document.getElementById('userDisplayName').innerText = display;
+            let avatarElem = document.getElementById('userAvatarElem');
+            if(currentUser.avatar && currentUser.avatarType === 'url') avatarElem.style.backgroundImage = `url(${currentUser.avatar})`;
+            else { avatarElem.style.backgroundImage = ''; avatarElem.style.background = 'linear-gradient(135deg, #f5b042, #FFD966)'; avatarElem.innerText = currentUser.avatar || currentUser.username[0].toUpperCase(); }
             document.getElementById('uploadPanel').style.display = 'block';
         } else {
             document.getElementById('authButtons').style.display = 'flex';
@@ -618,90 +334,68 @@
             document.getElementById('uploadPanel').style.display = 'none';
         }
     }
-
-    function register() {
-        const t = translations[currentLang];
-        const username = document.getElementById('regUsername').value.trim();
-        const email = document.getElementById('regEmail').value.trim();
-        const password = document.getElementById('regPassword').value;
-        if(!username || !email || !password) { alert(t.fillAll); return; }
-        if(users.find(u => u.username === username)) { alert(t.userExists); return; }
-        const newUser = { id: Date.now()+Math.random(), username, email, password, createdAt: new Date().toISOString() };
-        users.push(newUser); saveAll();
-        alert(t.regSuccess);
-        closeModal('registerModal');
-        document.getElementById('regUsername').value = ''; document.getElementById('regEmail').value = ''; document.getElementById('regPassword').value = '';
-        openModal('loginModal');
+    
+    function openSettings() {
+        if(!currentUser) return;
+        document.getElementById('settingsNickname').value = currentUser.displayName || '';
+        document.getElementById('settingsAvatarUrl').value = (currentUser.avatarType === 'url' ? currentUser.avatar : '');
+        let previewDiv = document.getElementById('settingsAvatarPreview');
+        if(currentUser.avatar && currentUser.avatarType === 'url') previewDiv.style.backgroundImage = `url(${currentUser.avatar})`;
+        else { previewDiv.style.backgroundImage = ''; previewDiv.style.background = 'linear-gradient(135deg, #f5b042, #FFD966)'; previewDiv.innerText = currentUser.avatar || currentUser.username[0].toUpperCase(); previewDiv.style.display = 'flex'; previewDiv.style.alignItems = 'center'; previewDiv.style.justifyContent = 'center'; previewDiv.style.fontSize = '3rem'; }
+        openModal('settingsModal');
     }
-
-    function login() {
-        const t = translations[currentLang];
-        const username = document.getElementById('loginUsername').value.trim();
-        const password = document.getElementById('loginPassword').value;
-        const user = users.find(u => u.username === username && u.password === password);
-        if(!user) { alert(t.wrongCreds); return; }
-        currentUser = user;
-        localStorage.setItem('qaz_current_user_blue', JSON.stringify(user));
-        updateUIForAuth(); closeModal('loginModal');
+    
+    function saveProfile() {
+        let newNick = document.getElementById('settingsNickname').value.trim();
+        let avatarInput = document.getElementById('settingsAvatarUrl').value.trim();
+        if(newNick) currentUser.displayName = newNick;
+        if(avatarInput) { currentUser.avatar = avatarInput; currentUser.avatarType = 'url'; }
+        else { currentUser.avatar = currentUser.username[0].toUpperCase(); currentUser.avatarType = 'text'; }
+        let index = users.findIndex(u => u.id === currentUser.id);
+        if(index !== -1) users[index] = currentUser;
+        saveAll();
+        localStorage.setItem('qaz_current_user_final', JSON.stringify(currentUser));
+        updateUIForAuth();
+        closeModal('settingsModal');
         renderAllVideos();
-        document.getElementById('loginUsername').value = ''; document.getElementById('loginPassword').value = '';
+        showToast("Профиль жаңартылды!");
     }
-
-    function logout() { currentUser = null; localStorage.removeItem('qaz_current_user_blue'); updateUIForAuth(); renderAllVideos(); }
-    function uploadVideo() {
-        const t = translations[currentLang];
-        if(!currentUser) { alert(t.authRequired); return; }
-        const title = document.getElementById('videoTitle').value.trim();
-        const desc = document.getElementById('videoDesc').value.trim();
-        if(!title) { alert(t.enterTitle); return; }
-        const newVideo = { id: Date.now()+Math.random(), title, description: desc || (currentLang==="kk"?"Sıpattama joq":"Без описания"), authorId: currentUser.id, authorName: currentUser.username, createdAt: new Date().toISOString(), views:0 };
-        videos.push(newVideo); saveAll();
-        document.getElementById('videoTitle').value = ''; document.getElementById('videoDesc').value = '';
-        renderAllVideos(); alert(t.videoAdded);
-    }
-    function toggleLike(vidId) { const t=translations[currentLang]; if(!currentUser){alert(t.needLoginLike); return;} if(!likes[vidId]) likes[vidId]=[]; const idx=likes[vidId].indexOf(currentUser.id); idx===-1? likes[vidId].push(currentUser.id): likes[vidId].splice(idx,1); saveAll(); renderAllVideos(); }
-    function toggleSubscribe(chId) { const t=translations[currentLang]; if(!currentUser){alert(t.needLoginSub); return false;} if(!subscriptions[currentUser.id]) subscriptions[currentUser.id]=[]; const arr=subscriptions[currentUser.id]; const idx=arr.indexOf(chId); idx===-1? arr.push(chId): arr.splice(idx,1); saveAll(); renderAllVideos(); return true; }
-    function isSubscribedTo(chId){ if(!currentUser) return false; return (subscriptions[currentUser.id]||[]).includes(chId); }
-    function isLiked(vidId){ if(!currentUser) return false; return likes[vidId] && likes[vidId].includes(currentUser.id); }
-    function getLikeCount(vidId){ return likes[vidId] ? likes[vidId].length : 0; }
-
+    
+    // Видео функциялар
+    function uploadVideo() { if(!currentUser){showToast("Кіріңіз");return;} let title=document.getElementById('videoTitle').value.trim(); if(!title){showToast("Атау керек");return;} let newVideo={id:Date.now()+Math.random(), title, description:document.getElementById('videoDesc').value.trim()||"", authorId:currentUser.id, authorName:currentUser.displayName||currentUser.username, createdAt:new Date().toISOString(), views:0}; videos.push(newVideo); saveAll(); document.getElementById('videoTitle').value=''; document.getElementById('videoDesc').value=''; renderAllVideos(); showToast("Бейне қосылды!"); }
+    function toggleLike(vidId){ if(!currentUser){showToast("Лайк үшін кіріңіз");return;} if(!likes[vidId])likes[vidId]=[]; let idx=likes[vidId].indexOf(currentUser.id); idx===-1?likes[vidId].push(currentUser.id):likes[vidId].splice(idx,1); saveAll(); renderAllVideos(); }
+    function toggleSubscribe(chId){ if(!currentUser){showToast("Жазылу үшін кіріңіз");return;} if(!subscriptions[currentUser.id])subscriptions[currentUser.id]=[]; let arr=subscriptions[currentUser.id]; let idx=arr.indexOf(chId); idx===-1?arr.push(chId):arr.splice(idx,1); saveAll(); renderAllVideos(); return true; }
+    function isSubscribedTo(chId){ if(!currentUser)return false; return (subscriptions[currentUser.id]||[]).includes(chId); }
+    function isLiked(vidId){ if(!currentUser)return false; return likes[vidId]&&likes[vidId].includes(currentUser.id); }
+    function getLikeCount(vidId){ return likes[vidId]?likes[vidId].length:0; }
+    
     function renderAllVideos() {
-        const container = document.getElementById('videosContainer');
-        const t = translations[currentLang];
-        if(!videos.length) { container.innerHTML = `<div class="empty-state"><h3>${t.emptyTitle}</h3><p>${t.emptyText}</p></div>`; return; }
-        const sorted = [...videos].reverse();
-        let html = `<div class="videos-grid">`;
-        for(let v of sorted) {
-            const liked = isLiked(v.id);
-            const subbed = isSubscribedTo(v.authorId);
-            let subText = subbed ? (currentLang==="kk"?"✅ Jazyldyńyz":"✅ Отписаться") : (currentLang==="kk"?"🔔 Jazylý":"🔔 Подписаться");
-            html += `
-            <div class="video-card">
-                <div class="video-thumb"></div>
-                <div class="video-info">
-                    <div class="video-title">${escapeHtml(v.title)}</div>
-                    <div class="video-stats"><span>👤 ${escapeHtml(v.authorName)}</span><span>❤️ ${getLikeCount(v.id)} ${t.likes}</span><span>👁️ ${v.views} ${t.views}</span></div>
-                    <div class="video-actions">
-                        <button class="like-btn ${liked ? 'liked' : ''}" onclick="toggleLike('${v.id}')">❤️ ${getLikeCount(v.id)}</button>
-                        <button class="subscribe-btn ${subbed ? 'subscribed' : ''}" onclick="toggleSubscribe('${v.authorId}')">${subText}</button>
-                    </div>
-                    <div style="font-size:0.7rem; margin-top:0.6rem; color:#FFD966;">📅 ${new Date(v.createdAt).toLocaleDateString()}</div>
-                </div>
-            </div>`;
+        let container=document.getElementById('videosContainer');
+        if(!videos.length){ container.innerHTML=`<div style="text-align:center;padding:4rem;background:rgba(0,0,0,0.2);border-radius:48px;"><h3>📭 Бейне жоқ</h3><p>Алғашқы видеоны жүктеңіз!</p></div>`; return; }
+        let sorted=[...videos].reverse();
+        let html=`<div class="videos-grid">`;
+        for(let v of sorted){
+            let liked=isLiked(v.id);
+            let subbed=isSubscribedTo(v.authorId);
+            let subText=subbed?"✅ Жазылдыңыз":"🔔 Жазылу";
+            html+=`<div class="video-card"><div class="video-thumb" style="height:180px;background:radial-gradient(circle at 30% 20%, #1f489b, #071c47);display:flex;align-items:center;justify-content:center;"><i class="fas fa-video" style="font-size:3rem;color:#f5b042;"></i></div><div class="video-info"><div class="video-title">${escapeHtml(v.title)}</div><div class="video-stats"><span>👤 ${escapeHtml(v.authorName)}</span><span>❤️ ${getLikeCount(v.id)} лайк</span><span>👁️ ${v.views}</span></div><div class="video-actions"><button class="like-btn ${liked?'liked':''}" onclick="toggleLike('${v.id}')">❤️ ${getLikeCount(v.id)}</button><button class="subscribe-btn ${subbed?'subscribed':''}" onclick="toggleSubscribe('${v.authorId}')">${subText}</button></div><div style="font-size:0.7rem;margin-top:0.5rem;">📅 ${new Date(v.createdAt).toLocaleDateString()}</div></div></div>`;
         }
-        html += `</div>`;
-        container.innerHTML = html;
+        html+=`</div>`;
+        container.innerHTML=html;
     }
-
-    function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    function escapeHtml(str){ if(!str)return ''; return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+    function showToast(msg){ let t=document.createElement('div'); t.className='toast'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
     function openModal(id){ document.getElementById(id).classList.add('active'); }
     function closeModal(id){ document.getElementById(id).classList.remove('active'); }
-    window.onclick = e => { if(e.target.classList.contains('modal')) e.target.classList.remove('active'); };
-
-    loadSession();
+    window.onclick=e=>{if(e.target.classList.contains('modal'))e.target.classList.remove('active');};
+    
+    // загрузка сессии
+    let savedUser=localStorage.getItem('qaz_current_user_final');
+    if(savedUser){ let u=JSON.parse(savedUser); let exists=users.find(x=>x.id===u.id); if(exists){ currentUser=exists; updateUIForAuth(); } else localStorage.removeItem('qaz_current_user_final'); }
+    renderAllVideos();
     applyLanguage();
-    document.getElementById("languageSelect").value = currentLang;
+    document.getElementById("languageSelect").value=currentLang;
 </script>
-<div class="footer"></div>
+<div class="footer">💙💛 QazaqTube — поштамен растау, ник, аватарка. Барлық деректер жергілікті сақталады.</div>
 </body>
 </html>
