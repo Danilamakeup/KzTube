@@ -244,15 +244,15 @@
             <option value="ru">Русский</option>
         </select>
         <div id="unauthButtons">
-            <button class="btn-outline" onclick="openModal('login')" id="loginBtn">Кіру</button>
-            <button class="btn-primary" onclick="openModal('register')" id="registerBtn">Тіркелу</button>
+            <button class="btn-outline" onclick="openModal('login')" data-lang-key="login">Кіру</button>
+            <button class="btn-primary" onclick="openModal('register')" data-lang-key="register">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
             <div class="user-info">
                 <span id="userNameSpan"></span>
                 <div class="avatar" id="avatarSpan"></div>
-                <button class="btn-outline" onclick="openSettings()" id="settingsBtn">⚙️</button>
-                <button class="btn-outline" onclick="logout()" id="logoutBtn">Шығу</button>
+                <button class="btn-outline" onclick="openSettings()">⚙️</button>
+                <button class="btn-outline" onclick="logout()" data-lang-key="logout">Шығу</button>
             </div>
         </div>
     </div>
@@ -260,44 +260,44 @@
 
 <div class="container">
     <div id="uploadSection" class="upload-area hidden">
-        <h4 id="uploadTitle">📤 Жаңа бейне жүктеу</h4>
-        <input type="text" id="videoTitle" placeholder="Бейне атауы">
-        <textarea id="videoDesc" placeholder="Сипаттама" rows="2"></textarea>
+        <h4 data-lang-key="uploadTitle">📤 Жаңа бейне жүктеу</h4>
+        <input type="text" id="videoTitle" data-lang-placeholder="videoTitlePlaceholder" placeholder="Бейне атауы">
+        <textarea id="videoDesc" data-lang-placeholder="videoDescPlaceholder" placeholder="Сипаттама" rows="2"></textarea>
         <input type="file" id="videoFile" accept="video/mp4,video/webm">
-        <button class="btn-primary" onclick="uploadVideo()" id="uploadBtn">➕ Жүктеу</button>
+        <button class="btn-primary" onclick="uploadVideo()" data-lang-key="uploadBtn">➕ Жүктеу</button>
     </div>
     <div id="videosContainer"></div>
 </div>
 
 <div id="registerModal" class="modal">
     <div class="modal-content">
-        <h2 id="regTitle">📝 Тіркелу</h2>
-        <input type="email" id="regEmail" placeholder="Email">
-        <input type="text" id="regLogin" placeholder="Логин">
-        <input type="password" id="regPass" placeholder="Құпия сөз">
-        <button class="btn-primary" onclick="register()" id="regSubmitBtn" style="width:100%">Тіркелу</button>
-        <button class="btn-outline" onclick="closeModal('register')" id="regCloseBtn" style="width:100%; margin-top:10px;">Жабу</button>
+        <h2 data-lang-key="regTitle">📝 Тіркелу</h2>
+        <input type="email" id="regEmail" data-lang-placeholder="regEmailPlaceholder" placeholder="Email">
+        <input type="text" id="regLogin" data-lang-placeholder="regLoginPlaceholder" placeholder="Логин">
+        <input type="password" id="regPass" data-lang-placeholder="regPassPlaceholder" placeholder="Құпия сөз">
+        <button class="btn-primary" onclick="register()" data-lang-key="regSubmit" style="width:100%">Тіркелу</button>
+        <button class="btn-outline" onclick="closeModal('register')" data-lang-key="regClose" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <div id="loginModal" class="modal">
     <div class="modal-content">
-        <h2 id="loginTitle">🔐 Кіру</h2>
-        <input type="text" id="loginInput" placeholder="Логин немесе Email">
-        <input type="password" id="loginPass" placeholder="Құпия сөз">
-        <button class="btn-primary" onclick="login()" id="loginSubmitBtn" style="width:100%">Кіру</button>
-        <button class="btn-outline" onclick="closeModal('login')" id="loginCloseBtn" style="width:100%; margin-top:10px;">Жабу</button>
+        <h2 data-lang-key="loginTitle">🔐 Кіру</h2>
+        <input type="text" id="loginInput" data-lang-placeholder="loginInputPlaceholder" placeholder="Логин немесе Email">
+        <input type="password" id="loginPass" data-lang-placeholder="loginPassPlaceholder" placeholder="Құпия сөз">
+        <button class="btn-primary" onclick="login()" data-lang-key="loginSubmit" style="width:100%">Кіру</button>
+        <button class="btn-outline" onclick="closeModal('login')" data-lang-key="loginClose" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
 <div id="settingsModal" class="modal">
     <div class="modal-content">
-        <h2 id="settingsTitle">⚙️ Профиль</h2>
+        <h2 data-lang-key="settingsTitle">⚙️ Профиль</h2>
         <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;"></div>
-        <input type="text" id="settingsName" placeholder="Жаңа есім">
-        <input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL">
-        <button class="btn-primary" onclick="saveSettings()" id="settingsSaveBtn" style="width:100%">Сақтау</button>
-        <button class="btn-outline" onclick="closeModal('settings')" id="settingsCloseBtn" style="width:100%; margin-top:10px;">Жабу</button>
+        <input type="text" id="settingsName" data-lang-placeholder="settingsNamePlaceholder" placeholder="Жаңа есім">
+        <input type="text" id="settingsAvatarUrl" data-lang-placeholder="settingsAvatarPlaceholder" placeholder="Аватарка URL">
+        <button class="btn-primary" onclick="saveSettings()" data-lang-key="settingsSave" style="width:100%">Сақтау</button>
+        <button class="btn-outline" onclick="closeModal('settings')" data-lang-key="settingsClose" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
@@ -312,7 +312,6 @@
         kk: {
             login: "Кіру",
             register: "Тіркелу",
-            settings: "⚙️",
             logout: "Шығу",
             uploadTitle: "📤 Жаңа бейне жүктеу",
             uploadBtn: "➕ Жүктеу",
@@ -356,7 +355,6 @@
         ru: {
             login: "Вход",
             register: "Регистрация",
-            settings: "⚙️",
             logout: "Выйти",
             uploadTitle: "📤 Загрузить новое видео",
             uploadBtn: "➕ Загрузить",
@@ -379,7 +377,7 @@
             settingsSave: "Сохранить",
             settingsClose: "Закрыть",
             emptyVideos: "🎬 Видео нет. Будьте первым!",
-            fillAll: "Заполните все поля!",
+            fillAll: "Заполни все поля!",
             emailExists: "Этот email уже зарегистрирован!",
             loginExists: "Этот логин уже занят!",
             registerSuccess: "Регистрация успешна! Добро пожаловать!",
@@ -399,63 +397,28 @@
         }
     };
     
-    let currentLang = 'kk';
+    let currentLang = localStorage.getItem('qaz_lang') || 'kk';
     
     function applyTranslation() {
         const t = translations[currentLang];
         
-        document.getElementById('loginBtn').innerText = t.login;
-        document.getElementById('registerBtn').innerText = t.register;
-        if(document.getElementById('settingsBtn')) document.getElementById('settingsBtn').innerHTML = t.settings;
-        if(document.getElementById('logoutBtn')) document.getElementById('logoutBtn').innerText = t.logout;
-        
-        const uploadTitle = document.getElementById('uploadTitle');
-        if(uploadTitle) uploadTitle.innerText = t.uploadTitle;
-        const uploadBtn = document.getElementById('uploadBtn');
-        if(uploadBtn) uploadBtn.innerText = t.uploadBtn;
-        const videoTitle = document.getElementById('videoTitle');
-        if(videoTitle) videoTitle.placeholder = t.videoTitlePlaceholder;
-        const videoDesc = document.getElementById('videoDesc');
-        if(videoDesc) videoDesc.placeholder = t.videoDescPlaceholder;
-        
-        const regTitle = document.getElementById('regTitle');
-        if(regTitle) regTitle.innerText = t.regTitle;
-        const regEmail = document.getElementById('regEmail');
-        if(regEmail) regEmail.placeholder = t.regEmailPlaceholder;
-        const regLogin = document.getElementById('regLogin');
-        if(regLogin) regLogin.placeholder = t.regLoginPlaceholder;
-        const regPass = document.getElementById('regPass');
-        if(regPass) regPass.placeholder = t.regPassPlaceholder;
-        const regSubmit = document.getElementById('regSubmitBtn');
-        if(regSubmit) regSubmit.innerText = t.regSubmit;
-        const regClose = document.getElementById('regCloseBtn');
-        if(regClose) regClose.innerText = t.regClose;
-        
-        const loginTitle = document.getElementById('loginTitle');
-        if(loginTitle) loginTitle.innerText = t.loginTitle;
-        const loginInput = document.getElementById('loginInput');
-        if(loginInput) loginInput.placeholder = t.loginInputPlaceholder;
-        const loginPass = document.getElementById('loginPass');
-        if(loginPass) loginPass.placeholder = t.loginPassPlaceholder;
-        const loginSubmit = document.getElementById('loginSubmitBtn');
-        if(loginSubmit) loginSubmit.innerText = t.loginSubmit;
-        const loginClose = document.getElementById('loginCloseBtn');
-        if(loginClose) loginClose.innerText = t.loginClose;
-        
-        const settingsTitle = document.getElementById('settingsTitle');
-        if(settingsTitle) settingsTitle.innerText = t.settingsTitle;
-        const settingsName = document.getElementById('settingsName');
-        if(settingsName) settingsName.placeholder = t.settingsNamePlaceholder;
-        const settingsAvatar = document.getElementById('settingsAvatarUrl');
-        if(settingsAvatar) settingsAvatar.placeholder = t.settingsAvatarPlaceholder;
-        const settingsSave = document.getElementById('settingsSaveBtn');
-        if(settingsSave) settingsSave.innerText = t.settingsSave;
-        const settingsClose = document.getElementById('settingsCloseBtn');
-        if(settingsClose) settingsClose.innerText = t.settingsClose;
+        // Перевод обычного текста по дата-атрибутам
+        document.querySelectorAll('[data-lang-key]').forEach(el => {
+            const key = el.getAttribute('data-lang-key');
+            if (t[key]) el.innerText = t[key];
+        });
+
+        // Перевод подсказок (placeholder)
+        document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-lang-placeholder');
+            if (t[key]) el.placeholder = t[key];
+        });
     }
     
+    document.getElementById('langSelect').value = currentLang;
     document.getElementById('langSelect').onchange = function() {
         currentLang = this.value;
+        localStorage.setItem('qaz_lang', currentLang);
         applyTranslation();
         renderVideos(); 
     };
@@ -494,7 +457,6 @@
         else localStorage.removeItem('qaz_current');
     }
     
-    // Регистрация
     function register() {
         const t = translations[currentLang];
         const email = document.getElementById('regEmail').value.trim();
@@ -539,7 +501,6 @@
         document.getElementById('regPass').value = '';
     }
     
-    // Вход
     function login() {
         const t = translations[currentLang];
         const input = document.getElementById('loginInput').value.trim();
@@ -563,7 +524,6 @@
         document.getElementById('loginPass').value = '';
     }
     
-    // Выход
     function logout() {
         const t = translations[currentLang];
         currentUser = null;
@@ -573,7 +533,6 @@
         toast(t.logoutSuccess);
     }
     
-    // Обновление интерфейса
     function updateUI() {
         if(currentUser) {
             document.getElementById('unauthButtons').classList.add('hidden');
@@ -598,7 +557,6 @@
         }
     }
     
-    // Загрузка видео
     function uploadVideo() {
         const t = translations[currentLang];
         if(!currentUser) {
@@ -645,7 +603,6 @@
         reader.readAsDataURL(file);
     }
     
-    // Лайк
     function likeVideo(videoId) {
         videoId = String(videoId);
         const t = translations[currentLang];
@@ -667,7 +624,6 @@
         renderVideos();
     }
     
-    // Подписка
     function subscribeTo(authorId) {
         authorId = String(authorId);
         const t = translations[currentLang];
@@ -699,7 +655,6 @@
         return subs[currentUser.id] && subs[currentUser.id].includes(authorId);
     }
     
-    // Просмотр видео
     function playVideoById(videoId) {
         const video = videos.find(v => String(v.id) === String(videoId));
         if(!video) return;
@@ -717,7 +672,6 @@
         document.getElementById('playerVideo').pause();
     }
     
-    // Настройки
     function openSettings() {
         if(!currentUser) return;
         
@@ -759,7 +713,6 @@
         toast(t.profileSaved);
     }
     
-    // Рендер видео
     function renderVideos() {
         const t = translations[currentLang];
         const container = document.getElementById('videosContainer');
