@@ -230,7 +230,7 @@
             margin-top: 30px;
         }
         .hidden {
-            display: none;
+            display: none !important;
         }
     </style>
 </head>
@@ -269,7 +269,6 @@
     <div id="videosContainer"></div>
 </div>
 
-<!-- Модалка регистрации -->
 <div id="registerModal" class="modal">
     <div class="modal-content">
         <h2 id="regTitle">📝 Тіркелу</h2>
@@ -281,7 +280,6 @@
     </div>
 </div>
 
-<!-- Модалка входа -->
 <div id="loginModal" class="modal">
     <div class="modal-content">
         <h2 id="loginTitle">🔐 Кіру</h2>
@@ -292,19 +290,17 @@
     </div>
 </div>
 
-<!-- Модалка настроек -->
 <div id="settingsModal" class="modal">
     <div class="modal-content">
         <h2 id="settingsTitle">⚙️ Профиль</h2>
         <div id="settingsAvatar" style="width:80px;height:80px;border-radius:50%;background:#f5b042;margin:0 auto 15px;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:bold;"></div>
-        <input type="text" id="settingsName" id="settingsNameInput" placeholder="Жаңа есім">
+        <input type="text" id="settingsName" placeholder="Жаңа есім">
         <input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL">
         <button class="btn-primary" onclick="saveSettings()" id="settingsSaveBtn" style="width:100%">Сақтау</button>
         <button class="btn-outline" onclick="closeModal('settings')" id="settingsCloseBtn" style="width:100%; margin-top:10px;">Жабу</button>
     </div>
 </div>
 
-<!-- Видео плеер -->
 <div id="videoPlayer" class="video-player">
     <div class="close-video" onclick="closePlayer()">✕</div>
     <video id="playerVideo" controls></video>
@@ -314,7 +310,6 @@
     // ============ ПЕРЕВОД ============
     const translations = {
         kk: {
-            // кнопки
             login: "Кіру",
             register: "Тіркелу",
             settings: "⚙️",
@@ -323,7 +318,6 @@
             uploadBtn: "➕ Жүктеу",
             videoTitlePlaceholder: "Бейне атауы",
             videoDescPlaceholder: "Сипаттама",
-            // модалки
             regTitle: "📝 Тіркелу",
             regEmailPlaceholder: "Email",
             regLoginPlaceholder: "Логин",
@@ -340,7 +334,6 @@
             settingsAvatarPlaceholder: "Аватарка URL",
             settingsSave: "Сақтау",
             settingsClose: "Жабу",
-            // сообщения
             emptyVideos: "🎬 Бейнелер жоқ. Бірінші болып жүктеңіз!",
             fillAll: "Барлық өрістерді толтырыңыз!",
             emailExists: "Бұл email тіркелген!",
@@ -411,13 +404,11 @@
     function applyTranslation() {
         const t = translations[currentLang];
         
-        // Кнопки в шапке
         document.getElementById('loginBtn').innerText = t.login;
         document.getElementById('registerBtn').innerText = t.register;
         if(document.getElementById('settingsBtn')) document.getElementById('settingsBtn').innerHTML = t.settings;
         if(document.getElementById('logoutBtn')) document.getElementById('logoutBtn').innerText = t.logout;
         
-        // Панель загрузки
         const uploadTitle = document.getElementById('uploadTitle');
         if(uploadTitle) uploadTitle.innerText = t.uploadTitle;
         const uploadBtn = document.getElementById('uploadBtn');
@@ -427,7 +418,6 @@
         const videoDesc = document.getElementById('videoDesc');
         if(videoDesc) videoDesc.placeholder = t.videoDescPlaceholder;
         
-        // Модалка регистрации
         const regTitle = document.getElementById('regTitle');
         if(regTitle) regTitle.innerText = t.regTitle;
         const regEmail = document.getElementById('regEmail');
@@ -441,7 +431,6 @@
         const regClose = document.getElementById('regCloseBtn');
         if(regClose) regClose.innerText = t.regClose;
         
-        // Модалка входа
         const loginTitle = document.getElementById('loginTitle');
         if(loginTitle) loginTitle.innerText = t.loginTitle;
         const loginInput = document.getElementById('loginInput');
@@ -453,7 +442,6 @@
         const loginClose = document.getElementById('loginCloseBtn');
         if(loginClose) loginClose.innerText = t.loginClose;
         
-        // Модалка настроек
         const settingsTitle = document.getElementById('settingsTitle');
         if(settingsTitle) settingsTitle.innerText = t.settingsTitle;
         const settingsName = document.getElementById('settingsName');
@@ -466,11 +454,10 @@
         if(settingsClose) settingsClose.innerText = t.settingsClose;
     }
     
-    // Смена языка
     document.getElementById('langSelect').onchange = function() {
         currentLang = this.value;
         applyTranslation();
-        renderVideos(); // обновить кнопки в видео
+        renderVideos(); 
     };
     
     // ============ ДАННЫЕ ============
@@ -493,7 +480,7 @@
         if(savedSubs) subs = JSON.parse(savedSubs);
         if(savedCurrent) {
             const cur = JSON.parse(savedCurrent);
-            const exists = users.find(u => u.id === cur.id);
+            const exists = users.find(u => String(u.id) === String(cur.id));
             if(exists) currentUser = exists;
         }
     }
@@ -530,7 +517,7 @@
         }
         
         const newUser = {
-            id: Date.now(),
+            id: String(Date.now()),
             login: login,
             email: email,
             password: pass,
@@ -636,7 +623,7 @@
         const reader = new FileReader();
         reader.onload = function(e) {
             const newVideo = {
-                id: Date.now(),
+                id: String(Date.now()),
                 title: title,
                 desc: desc,
                 authorId: currentUser.id,
@@ -660,6 +647,7 @@
     
     // Лайк
     function likeVideo(videoId) {
+        videoId = String(videoId);
         const t = translations[currentLang];
         if(!currentUser) {
             toast(t.needLoginLike);
@@ -681,6 +669,7 @@
     
     // Подписка
     function subscribeTo(authorId) {
+        authorId = String(authorId);
         const t = translations[currentLang];
         if(!currentUser) {
             toast(t.needLoginSubscribe);
@@ -711,7 +700,10 @@
     }
     
     // Просмотр видео
-    function playVideo(video) {
+    function playVideoById(videoId) {
+        const video = videos.find(v => String(v.id) === String(videoId));
+        if(!video) return;
+        
         const player = document.getElementById('playerVideo');
         player.src = video.src;
         video.views++;
@@ -758,7 +750,7 @@
             delete currentUser.avatarUrl;
         }
         
-        const index = users.findIndex(u => u.id === currentUser.id);
+        const index = users.findIndex(u => String(u.id) === String(currentUser.id));
         if(index !== -1) users[index] = currentUser;
         saveData();
         updateUI();
@@ -784,11 +776,11 @@
             const likeCount = likes[v.id] ? likes[v.id].length : 0;
             const liked = isLiked(v.id);
             const subscribed = isSubscribed(v.authorId);
-            const likeText = currentLang === 'kk' ? 'лайк' : 'лайков';
+            const likeText = t.like;
             
             html += `
                 <div class="video-card">
-                    <div class="video-thumb" onclick="playVideo(${JSON.stringify(v).replace(/"/g, '&quot;')})">
+                    <div class="video-thumb" onclick="playVideoById('${v.id}')">
                         <video src="${v.src}" style="width:100%;height:100%;object-fit:cover;"></video>
                     </div>
                     <div class="video-info">
@@ -821,7 +813,6 @@
         });
     }
     
-    // Модалки
     function openModal(type) {
         document.getElementById(type + 'Modal').style.display = 'flex';
     }
@@ -830,7 +821,6 @@
         document.getElementById(type + 'Modal').style.display = 'none';
     }
     
-    // Тосты
     function toast(msg) {
         const t = document.createElement('div');
         t.className = 'toast';
@@ -839,7 +829,6 @@
         setTimeout(() => t.remove(), 3000);
     }
     
-    // Закрытие модалок по клику вне
     window.onclick = function(e) {
         if(e.target.classList.contains('modal')) {
             e.target.style.display = 'none';
