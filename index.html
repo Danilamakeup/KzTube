@@ -169,9 +169,11 @@
             display: flex; align-items: center; justify-content: center;
             font-weight: bold; color: #002238; flex-shrink: 0;
         }
+        .video-channel-avatar:hover { transform: scale(1.05); }
         .video-meta { flex: 1; overflow: hidden; }
         .video-title { font-weight: 600; font-size: 15px; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .channel-name { font-size: 13px; color: #82c0e0; margin-bottom: 3px; }
+        .channel-name:hover { color: #ffd700; }
         .video-stats { font-size: 12px; color: #6baecf; }
         
         .profile-container { max-width: 1200px; margin: 0 auto; padding: 25px; }
@@ -203,7 +205,7 @@
             display: flex; justify-content: space-between; align-items: center;
             padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        .channel-left { display: flex; align-items: center; gap: 15px; }
+        .channel-left { display: flex; align-items: center; gap: 15px; cursor: pointer; }
         .channel-avatar-big { width: 48px; height: 48px; border-radius: 50%; background: #ffd700; color: #002238; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; }
         
         .action-buttons { display: flex; gap: 15px; margin-top: 20px; }
@@ -211,10 +213,11 @@
             background: rgba(255,255,255,0.07); padding: 10px 20px; border-radius: 40px;
             font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px;
             border: 1px solid rgba(255,215,0,0.2); transition: all 0.2s;
+            user-select: none;
         }
         .action-btn:hover { background: rgba(255,215,0,0.15); border-color: #ffd700; }
-        .action-btn.active-like { background: #ffd700; color: #002238; border-color: #ffd700; }
-        .action-btn.active-dislike { background: #ff4444; color: white; border-color: #ff4444; }
+        .action-btn.active-like { background: #ffd700; color: #002238; border-color: #ffd700; font-weight: 700; }
+        .action-btn.active-dislike { background: #ff4444; color: white; border-color: #ff4444; font-weight: 700; }
         
         .comments-section { margin-top: 30px; background: rgba(0, 34, 56, 0.4); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,215,0,0.15); }
         .comment-input-area { display: flex; gap: 15px; margin-top: 20px; margin-bottom: 25px; }
@@ -281,7 +284,7 @@
             <button class="btn-primary" onclick="openModal('register')">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
-            <div class="user-info" onclick="showProfile()">
+            <div class="user-info" onclick="showMyProfile()">
                 <span id="userNameSpan"></span>
                 <div class="avatar" id="avatarSpan"></div>
             </div>
@@ -292,7 +295,7 @@
 
 <div class="nav-links" id="navLinks" style="display: none;">
     <div class="nav-link active" id="navHomeLink" onclick="showHome()">🏠 Басты</div>
-    <div class="nav-link" id="navProfileLink" onclick="showProfile()">👤 Менің каналым</div>
+    <div class="nav-link" id="navProfileLink" onclick="showMyProfile()">👤 Менің каналым</div>
 </div>
 
 <div id="homePage" class="home-container">
@@ -310,10 +313,11 @@
                 <div class="profile-stat"><div class="profile-stat-value" id="profileVideosCount">0</div><div class="profile-stat-label" id="lblVids">видео</div></div>
                 <div class="profile-stat"><div class="profile-stat-value" id="profileLikesCount">0</div><div class="profile-stat-label" id="lblLikes">лайк</div></div>
             </div>
-            <button class="btn-primary" onclick="openUploadModal()" style="margin-top: 20px;"><i class="fas fa-upload"></i> Видео жүктеу</button>
+            <button class="btn-primary" id="uploadBtn" onclick="openUploadModal()" style="margin-top: 20px;"><i class="fas fa-upload"></i> Видео жүктеу</button>
+            <button class="btn-primary" id="subChannelBtn" onclick="toggleSubscribeFromProfile()" style="margin-top: 20px; display:none;">Жазылу</button>
         </div>
     </div>
-    <h3 style="margin-bottom: 25px; color:#ffd700;" id="myVideosTitle">📹 Менің видеоларым</h3>
+    <h3 style="margin-bottom: 25px; color:#ffd700;" id="myVideosTitle">📹 Видеолар</h3>
     <div class="videos-grid" id="profileVideosGrid"></div>
 </div>
 
@@ -385,11 +389,12 @@
     let currentUser = null;
     let currentPage = 'home';
     let currentVideoId = null;
+    let viewProfileChannelId = null; // Для просмотра чужих профилей
 
     const translations = {
         kk: {
             search: "Іздеу...", noResults: "Ештеңе табылмады", views: "көрсетілім",
-            subs: "жазылушы", vids: "видео", likes: "лайк", myVids: "📹 Менің видеоларым",
+            subs: "жазылушы", vids: "видео", likes: "лайк", myVids: "📹 Видеолар",
             rec: "🎬 Ұсыныстар", comms: "Комментарийлер", send: "Жіберу", place: "Пікір қалдырыңыз...",
             needLog: "Алдымен жүйеге кіріңіз!", fill: "Барлық өрістерді толтырыңыз!",
             succLog: "Қош келдіңіз!", wrong: "Қате логин немесе пароль!",
@@ -398,7 +403,7 @@
         },
         ru: {
             search: "Поиск...", noResults: "Ничего не найдено", views: "просмотров",
-            subs: "подписчиков", vids: "видео", likes: "лайков", myVids: "📹 Мои видео",
+            subs: "подписчиков", vids: "видео", likes: "лайков", myVids: "📹 Видео",
             rec: "🎬 Рекомендации", comms: "Комментарии", send: "Отправить", place: "Оставьте комментарий...",
             needLog: "Сначала войдите в аккаунт!", fill: "Заполните все поля!",
             succLog: "Добро пожаловать!", wrong: "Неверный логин или пароль!",
@@ -407,11 +412,43 @@
         }
     };
 
+    // СТАРТОВЫЕ ВИДЕО ДЛЯ СИМУЛЯЦИИ ЖИВОГО САЙТА
+    const defaultVideos = [
+        {
+            id: 'v_default_1', title: 'Қазақстанның ғажайып табиғаты 4K', desc: 'Шарын шатқалы мен Көлсай көлдерінің әдемі көріністері.',
+            authorId: 'u_default_kaz', authorName: 'KazakhTravel', views: 1420,
+            src: 'https://assets.mixkit.co/videos/preview/mixkit-beautiful-aerial-view-of-a-mountain-valley-41634-large.mp4'
+        },
+        {
+            id: 'v_default_2', title: 'Космическое путешествие — Трейлер', desc: 'Фантастический ролик про полет к далеким звездам.',
+            authorId: 'u_default_space', authorName: 'SpaceX_Fan', views: 985,
+            src: 'https://assets.mixkit.co/videos/preview/mixkit-tunnel-of-futuristic-blue-lights-42330-large.mp4'
+        },
+        {
+            id: 'v_default_3', title: 'Жаңа Жыл 2026 Алматы', desc: 'Алматы қаласындағы мерекелік отшашулар хроникасы.',
+            authorId: 'u_default_almaty', authorName: 'AlmatyLife', views: 2450,
+            src: 'https://assets.mixkit.co/videos/preview/mixkit-fireworks-illuminating-the-night-sky-41582-large.mp4'
+        }
+    ];
+
     function showToast(msg) {
         const toast = document.getElementById('customToast');
         toast.innerText = msg;
         toast.style.display = 'block';
         setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    function initDefaultData() {
+        // Заполнение лайков для стартовых видео
+        defaultVideos.forEach(v => {
+            if (!likes[v.id]) likes[v.id] = ['u_sim_1', 'u_sim_2', 'u_sim_3'];
+            if (!dislikes[v.id]) dislikes[v.id] = [];
+            if (!comments[v.id]) comments[v.id] = [
+                { name: 'Алихан', text: 'Керемет бейнебаян! Маған қатты ұнады.', date: '10.05.2026' },
+                { name: 'Elena_K', text: 'Очень красивое качество съемки, автору лайк!', date: '11.06.2026' }
+            ];
+            if (!subs[v.authorId]) subs[v.authorId] = ['u_sim_1', 'u_sim_2', 'u_sim_3', 'u_sim_4'];
+        });
     }
 
     function loadData() {
@@ -426,6 +463,13 @@
                 subs = parsed.subs || {};
                 comments = parsed.comments || {};
             }
+            
+            // Если видео в базе вообще нет, загружаем стартовые видео
+            if (videos.length === 0) {
+                videos = [...defaultVideos];
+            }
+            initDefaultData();
+
             const cur = localStorage.getItem('qaztube_current_user');
             if (cur) currentUser = JSON.parse(cur);
         } catch(e) { console.error("Data load error", e); }
@@ -453,8 +497,8 @@
         document.getElementById('commentBtn').innerText = t.send;
         document.getElementById('commentInput').placeholder = t.place;
         
-        renderHomePage();
-        if (currentPage === 'profile') showProfile();
+        if (currentPage === 'home') renderHomePage();
+        if (currentPage === 'profile') openChannelProfile(viewProfileChannelId);
         if (currentPage === 'watch' && currentVideoId) renderWatchPage();
     }
 
@@ -482,6 +526,7 @@
         const newUser = { id: 'u_' + Date.now(), login: login, password: pass };
         users.push(newUser);
         currentUser = newUser;
+        if (!subs[newUser.id]) subs[newUser.id] = [];
         saveData();
         updateUI();
         closeModal('register');
@@ -512,6 +557,7 @@
         showHome();
     }
 
+    // ПОИСКОВИК
     function searchVideos() {
         const query = document.getElementById('searchInput').value.trim().toLowerCase();
         renderHomePage(query);
@@ -539,57 +585,93 @@
             return;
         }
 
-        grid.innerHTML = filtered.reverse().map(v => {
+        grid.innerHTML = filtered.map(v => {
             if (!likes[v.id]) likes[v.id] = [];
             return `
-                <div class="video-card" onclick="openWatchPage('${v.id}')">
-                    <div class="thumbnail"><video src="${v.src}"></video></div>
+                <div class="video-card">
+                    <div class="thumbnail" onclick="openWatchPage('${v.id}')"><video src="${v.src}"></video></div>
                     <div class="video-details">
-                        <div class="video-channel-avatar">${v.authorName[0].toUpperCase()}</div>
+                        <div class="video-channel-avatar" onclick="openChannelProfile('${v.authorId}')">${v.authorName[0].toUpperCase()}</div>
                         <div class="video-meta">
-                            <div class="video-title">${escapeHtml(v.title)}</div>
-                            <div class="channel-name">${escapeHtml(v.authorName)}</div>
+                            <div class="video-title" onclick="openWatchPage('${v.id}')">${escapeHtml(v.title)}</div>
+                            <div class="channel-name" onclick="openChannelProfile('${v.authorId}')">${escapeHtml(v.authorName)}</div>
                             <div class="video-stats">${v.views || 0} ${t.views} • ❤️ ${likes[v.id].length}</div>
                         </div>
                     </div>
                 </div>
             `;
-        }).join('');
+        }).reverse().join(''); // Свежие сверху
     }
 
-    function showProfile() {
-        if(!currentUser) return;
+    // ПРОФИЛИ КАНАЛОВ (СВОЙ И ЧУЖОЙ)
+    function showMyProfile() {
+        if(!currentUser) { showToast(translations[currentLang].needLog); return; }
+        openChannelProfile(currentUser.id);
+    }
+
+    function openChannelProfile(authorId) {
+        if (!authorId) return;
+        viewProfileChannelId = authorId;
         currentPage = 'profile';
+        
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'none';
         document.getElementById('profilePage').style.display = 'block';
         
         document.getElementById('navHomeLink').classList.remove('active');
-        document.getElementById('navProfileLink').classList.add('active');
+        if(currentUser && authorId === currentUser.id) {
+            document.getElementById('navProfileLink').classList.add('active');
+            document.getElementById('uploadBtn').style.display = 'inline-block';
+            document.getElementById('subChannelBtn').style.display = 'none';
+        } else {
+            document.getElementById('navProfileLink').classList.remove('active');
+            document.getElementById('uploadBtn').style.display = 'none';
+            document.getElementById('subChannelBtn').style.display = 'inline-block';
+        }
 
-        document.getElementById('profileBigAvatar').innerText = currentUser.login[0].toUpperCase();
-        document.getElementById('profileName').innerText = currentUser.login;
-        document.getElementById('profileLoginName').innerText = currentUser.login;
+        // Находим имя автора
+        let authorName = "Колданұшы";
+        if (currentUser && authorId === currentUser.id) {
+            authorName = currentUser.login;
+        } else {
+            const v = videos.find(vid => vid.authorId === authorId);
+            if (v) authorName = v.authorName;
+            else {
+                const u = users.find(usr => usr.id === authorId);
+                if (u) authorName = u.login;
+            }
+        }
 
-        const myVids = videos.filter(v => v.authorId === currentUser.id);
-        document.getElementById('profileVideosCount').innerText = myVids.length;
+        document.getElementById('profileBigAvatar').innerText = authorName[0].toUpperCase();
+        document.getElementById('profileName').innerText = authorName;
+        document.getElementById('profileLoginName').innerText = authorName.toLowerCase();
+
+        // Статистика канала
+        const chVids = videos.filter(v => v.authorId === authorId);
+        document.getElementById('profileVideosCount').innerText = chVids.length;
         
         let totalLikes = 0;
-        myVids.forEach(v => { if(likes[v.id]) totalLikes += likes[v.id].length; });
+        chVids.forEach(v => { if(likes[v.id]) totalLikes += likes[v.id].length; });
         document.getElementById('profileLikesCount').innerText = totalLikes;
 
-        if (!subs[currentUser.id]) subs[currentUser.id] = [];
-        document.getElementById('profileSubsCount').innerText = subs[currentUser.id].length;
+        if (!subs[authorId]) subs[authorId] = [];
+        document.getElementById('profileSubsCount').innerText = subs[authorId].length;
+
+        // Кнопка подписки на странице профиля
+        if (currentUser && authorId !== currentUser.id) {
+            const isSubbed = subs[authorId].includes(currentUser.id);
+            document.getElementById('subChannelBtn').innerText = isSubbed ? 'Жазылдыңыз ✓' : 'Жазылу';
+        }
 
         const grid = document.getElementById('profileVideosGrid');
         const t = translations[currentLang];
 
-        if(myVids.length === 0) {
-            grid.innerHTML = `<div style="grid-column:1/-1;color:#82c0e0;padding:20px;">Видео әлі жүктелмеген / Видео еще не загружены.</div>`;
+        if(chVids.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1;color:#82c0e0;padding:20px;">Видео әлі жоқ / Видео еще нет.</div>`;
             return;
         }
 
-        grid.innerHTML = myVids.reverse().map(v => `
+        grid.innerHTML = chVids.map(v => `
             <div class="video-card" onclick="openWatchPage('${v.id}')">
                 <div class="thumbnail"><video src="${v.src}"></video></div>
                 <div class="video-details">
@@ -600,7 +682,12 @@
                     </div>
                 </div>
             </div>
-        `).join('');
+        `).reverse().join('');
+    }
+
+    function toggleSubscribeFromProfile() {
+        toggleSubscribe(viewProfileChannelId);
+        openChannelProfile(viewProfileChannelId);
     }
 
     function openUploadModal() {
@@ -617,7 +704,7 @@
         if(!title) { showToast(t.titleErr); return; }
         if(!file) { showToast(t.fileErr); return; }
 
-        showToast("Бейнебаян өңделуде... Күте тұрыңыз / Видео обрабатывается... Пожалуйста, подождите");
+        showToast("Бейнебаян өңделуде... Күте тұрыңыз / Видео обрабатывается...");
 
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -639,18 +726,17 @@
             saveData();
             closeModal('upload');
             
-            // Очистка полей формы
             document.getElementById('uploadTitle').value = '';
             document.getElementById('uploadDesc').value = '';
             document.getElementById('uploadFile').value = '';
 
             showToast("Жүктелді! / Успешно загружено!");
-            
-            if(currentPage === 'profile') showProfile(); else renderHomePage();
+            openChannelProfile(currentUser.id);
         };
         reader.readAsDataURL(file);
     }
 
+    // СТРАНИЦА ПРОСМОТРА
     function openWatchPage(id) {
         currentVideoId = id;
         currentPage = 'watch';
@@ -661,7 +747,7 @@
 
         const video = videos.find(v => v.id === id);
         if(video) {
-            video.views = (video.views || 0) + 1;
+            video.views = (video.views || 0) + 1; // Увеличиваем просмотры
             saveData();
         }
         renderWatchPage();
@@ -690,7 +776,7 @@
             <div class="watch-title">${escapeHtml(video.title)}</div>
             <div class="watch-stats">${video.views} ${t.views}</div>
             <div class="channel-info">
-                <div class="channel-left">
+                <div class="channel-left" onclick="openChannelProfile('${video.authorId}')">
                     <div class="channel-avatar-big">${video.authorName[0].toUpperCase()}</div>
                     <div>
                         <div style="font-weight:700;">${escapeHtml(video.authorName)}</div>
@@ -716,27 +802,34 @@
         renderRecommendations();
     }
 
+    // ОДНОВРЕМЕННЫЕ ЛАЙКИ И ДИЗЛАЙКИ
     function handleReaction(type) {
         if(!currentUser) { showToast(translations[currentLang].needLog); return; }
         
         if (!likes[currentVideoId]) likes[currentVideoId] = [];
         if (!dislikes[currentVideoId]) dislikes[currentVideoId] = [];
 
-        const vLikes = likes[currentVideoId];
-        const vDislikes = dislikes[currentVideoId];
+        let vLikes = likes[currentVideoId];
+        let vDislikes = dislikes[currentVideoId];
 
         if (type === 'like') {
             if (vLikes.includes(currentUser.id)) {
+                // Если уже лайкнуто — снимаем лайк
                 likes[currentVideoId] = vLikes.filter(id => id !== currentUser.id);
             } else {
+                // Добавляем лайк, убираем дизлайк
                 vLikes.push(currentUser.id);
+                likes[currentVideoId] = vLikes;
                 dislikes[currentVideoId] = vDislikes.filter(id => id !== currentUser.id);
             }
         } else {
             if (vDislikes.includes(currentUser.id)) {
+                // Если уже дизлайкнуто — снимаем дизлайк
                 dislikes[currentVideoId] = vDislikes.filter(id => id !== currentUser.id);
             } else {
+                // Добавляем дизлайк, убираем лайк
                 vDislikes.push(currentUser.id);
+                dislikes[currentVideoId] = vDislikes;
                 likes[currentVideoId] = vLikes.filter(id => id !== currentUser.id);
             }
         }
@@ -745,9 +838,10 @@
         renderWatchPage();
     }
 
+    // ПОДПИСКИ
     function toggleSubscribe(authorId) {
         if(!currentUser) { showToast(translations[currentLang].needLog); return; }
-        if(currentUser.id === authorId) { showToast("Өзіңізге жазыла алмайсыз!"); return; }
+        if(currentUser.id === authorId) { showToast("Өзіңізге жазыла алмайсыз! / На себя нельзя подписываться!"); return; }
 
         if (!subs[authorId]) subs[authorId] = [];
         
