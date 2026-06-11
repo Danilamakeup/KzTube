@@ -2,22 +2,18 @@
 <html lang="kk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>QazaqTube — Көк-сары видеохостинг</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QazaqTube</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: radial-gradient(circle at 10% 20%, #0a2463, #030c1f);
-            color: #f0f4ff;
+            color: #fff;
             min-height: 100vh;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a2463; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #f5b042; border-radius: 10px; }
-
         .header {
             background: rgba(3, 18, 43, 0.95);
             backdrop-filter: blur(16px);
@@ -39,11 +35,8 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-        .controls { display: flex; gap: 0.8rem; align-items: center; flex-wrap: wrap; }
+        .controls { display: flex; gap: 0.8rem; align-items: center; }
         .lang-select {
             background: #0f2b6e;
             border: 1px solid #f5b042;
@@ -51,7 +44,6 @@
             padding: 0.4rem 1rem;
             border-radius: 40px;
             cursor: pointer;
-            font-weight: 600;
         }
         .btn {
             padding: 0.4rem 1.2rem;
@@ -59,8 +51,7 @@
             border: none;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.85rem;
+            transition: 0.2s;
         }
         .btn-primary { background: linear-gradient(95deg, #f5b042, #FFD966); color: #0a2463; }
         .btn-outline { background: rgba(255,255,240,0.1); border: 1.5px solid #f5b042; color: #FFE6B3; }
@@ -69,10 +60,9 @@
             width: 38px; height: 38px; border-radius: 50%;
             background: linear-gradient(135deg, #f5b042, #FFD966);
             display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1.1rem; color: #0a2463;
-            background-size: cover; background-position: center;
+            font-weight: bold; background-size: cover; background-position: center;
         }
-        /* компактная панель загрузки — выпадашка */
+        /* маленькая панель загрузки */
         .upload-popup {
             position: absolute;
             top: 70px;
@@ -84,7 +74,6 @@
             border: 1px solid #f5b042;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             z-index: 150;
-            backdrop-filter: blur(12px);
             display: none;
         }
         .upload-popup.active { display: block; }
@@ -121,9 +110,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
-        .video-thumb video, .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .video-thumb video { width: 100%; height: 100%; object-fit: cover; }
         .video-info { padding: 1rem; }
         .video-title { font-weight: 700; margin-bottom: 0.4rem; }
         .video-stats { font-size: 0.75rem; color: #bbd4ff; display: flex; gap: 1rem; margin-bottom: 0.5rem; }
@@ -134,6 +122,7 @@
             border-radius: 50px;
             font-size: 0.8rem;
             cursor: pointer;
+            border: none;
         }
         .like-btn.liked { background: #f5b042; color: #0a2463; }
         .subscribe-btn.subscribed { background: #FFD966; color: #0a2463; }
@@ -158,7 +147,7 @@
             border: 2px solid #f5b042;
         }
         .input-group { margin-bottom: 1rem; }
-        .input-group input, .input-group select {
+        .input-group input {
             width: 100%;
             padding: 0.8rem 1rem;
             border-radius: 60px;
@@ -172,9 +161,11 @@
             background: #f5b042;
             margin: 0 auto 1rem;
             background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
         }
-        .video-player-modal .modal-content { max-width: 800px; width: 90%; }
-        video { width: 100%; border-radius: 20px; }
         .toast {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             background: #f5b042; color: #0a2463; padding: 10px 20px;
@@ -182,7 +173,7 @@
             animation: fadeOut 3s forwards;
         }
         @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
-        .upload-btn-icon { background: #f5b042; border-radius: 40px; padding: 0.4rem 1rem; cursor: pointer; font-size: 0.85rem; }
+        .footer { text-align: center; padding: 2rem; color: #FFE6B3aa; border-top: 1px solid #f5b04233; margin-top: 2rem; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -198,47 +189,46 @@
             <span id="userDisplayName"></span>
             <div class="avatar" id="userAvatarElem"></div>
             <button class="btn btn-outline" onclick="toggleUploadPopup()"><i class="fas fa-upload"></i> Жүктеу</button>
-            <button class="btn btn-outline" onclick="openSettings()"><i class="fas fa-user-cog"></i></button>
+            <button class="btn btn-outline" onclick="openSettings()"><i class="fas fa-cog"></i></button>
             <button class="btn btn-outline" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </div>
 </div>
-<!-- компактная форма загрузки -->
+
 <div id="uploadPopup" class="upload-popup">
     <h4 style="margin-bottom:8px;">📤 Жаңа бейне</h4>
     <input type="text" id="videoTitleUpload" placeholder="Атауы">
     <textarea id="videoDescUpload" placeholder="Сипаттама" rows="2"></textarea>
-    <input type="file" id="videoFileUpload" accept="video/mp4,video/webm,video/quicktime">
-    <button class="btn btn-primary" onclick="uploadVideoFile()" style="width:100%">➕ Жүктеу</button>
+    <input type="file" id="videoFileUpload" accept="video/mp4,video/webm">
+    <button class="btn btn-primary" onclick="uploadVideo()" style="width:100%">➕ Жүктеу</button>
 </div>
 
 <div class="container">
-    <div id="videosContainer"><div style="text-align:center;padding:3rem;">📭 Бейнелер жоқ, бірінші болып жүктеңіз!</div></div>
+    <div id="videosContainer"><div style="text-align:center;padding:3rem;">🎬 Бейнелер жоқ. Бірінші болып жүктеңіз!</div></div>
 </div>
 
-<!-- Модалка регистрации -->
+<!-- Модалки -->
 <div id="registerModal" class="modal"><div class="modal-content"><h2>📝 Тіркелу</h2><div class="input-group"><input type="email" id="regEmail" placeholder="Email (example@gmail.com)"></div><div class="input-group"><input type="text" id="regUsername" placeholder="Логин"></div><div class="input-group"><input type="password" id="regPassword" placeholder="Құпия сөз"></div><div class="input-group"><input type="text" id="regCode" placeholder="6 таңбалы код"></div><button class="btn btn-primary" onclick="sendCode()">📧 Код жіберу</button><button class="btn btn-primary" onclick="completeRegister()" style="margin-top:8px;">✅ Тіркелу</button><button class="btn close-modal" onclick="closeModal('registerModal')">Жабу</button></div></div>
 
 <div id="loginModal" class="modal"><div class="modal-content"><h2>🔐 Кіру</h2><div class="input-group"><input type="text" id="loginUsername" placeholder="Логин немесе Email"></div><div class="input-group"><input type="password" id="loginPassword" placeholder="Құпия сөз"></div><button class="btn btn-primary" onclick="login()">Кіру</button><button class="btn close-modal" onclick="closeModal('loginModal')">Жабу</button></div></div>
 
 <div id="settingsModal" class="modal"><div class="modal-content"><h2>⚙️ Профиль</h2><div id="settingsAvatarPreview" class="avatar-preview"></div><div class="input-group"><input type="text" id="settingsNickname" placeholder="Жаңа есім (ник)"></div><div class="input-group"><input type="text" id="settingsAvatarUrl" placeholder="Аватарка URL (немесе әріп)"></div><button class="btn btn-primary" onclick="saveProfile()">Сақтау</button><button class="btn close-modal" onclick="closeModal('settingsModal')">Жабу</button></div></div>
 
-<div id="videoPlayerModal" class="modal video-player-modal"><div class="modal-content"><video id="playerVideo" controls style="width:100%"></video><button class="btn close-modal" onclick="closeModal('videoPlayerModal')">Жабу</button></div></div>
+<div id="videoModal" class="modal"><div class="modal-content" style="max-width:800px;"><video id="videoPlayer" controls style="width:100%; border-radius:20px;"></video><button class="btn close-modal" onclick="closeModal('videoModal')">Жабу</button></div></div>
 
 <script>
-    // ========== ДАННЫЕ ==========
-    let users = JSON.parse(localStorage.getItem('qaz_users_video')) || [];
-    let videos = JSON.parse(localStorage.getItem('qaz_videos_video')) || [];
-    let subscriptions = JSON.parse(localStorage.getItem('qaz_subs_video')) || {};
-    let likes = JSON.parse(localStorage.getItem('qaz_likes_video')) || {};
+    let users = JSON.parse(localStorage.getItem('qaz_users_final2')) || [];
+    let videos = JSON.parse(localStorage.getItem('qaz_videos_final2')) || [];
+    let subscriptions = JSON.parse(localStorage.getItem('qaz_subs_final2')) || {};
+    let likes = JSON.parse(localStorage.getItem('qaz_likes_final2')) || {};
     let currentUser = null;
     let pendingReg = null;
 
     function saveAll() {
-        localStorage.setItem('qaz_users_video', JSON.stringify(users));
-        localStorage.setItem('qaz_videos_video', JSON.stringify(videos));
-        localStorage.setItem('qaz_subs_video', JSON.stringify(subscriptions));
-        localStorage.setItem('qaz_likes_video', JSON.stringify(likes));
+        localStorage.setItem('qaz_users_final2', JSON.stringify(users));
+        localStorage.setItem('qaz_videos_final2', JSON.stringify(videos));
+        localStorage.setItem('qaz_subs_final2', JSON.stringify(subscriptions));
+        localStorage.setItem('qaz_likes_final2', JSON.stringify(likes));
     }
 
     function sendCode() {
@@ -252,9 +242,10 @@
         if(users.find(u=>u.username===username)) { showToast("Логин алынған"); return; }
         let code = Math.floor(100000+Math.random()*900000).toString();
         pendingReg = { email, username, password, code };
-        showToast(`📧 Код жіберілді: ${code}`);
+        showToast(`📧 Код: ${code}`);
         console.log("Код:", code);
     }
+
     function completeRegister() {
         if(!pendingReg) { showToast("Алдымен код жіберіңіз"); return; }
         if(document.getElementById('regCode').value !== pendingReg.code) { showToast("Қате код"); return; }
@@ -269,116 +260,172 @@
         };
         users.push(newUser); saveAll();
         currentUser = newUser;
-        localStorage.setItem('qaz_current_user_video', JSON.stringify(newUser));
+        localStorage.setItem('qaz_current_user_final2', JSON.stringify(newUser));
         closeModal('registerModal');
-        updateUIForAuth();
-        renderAllVideos();
+        updateUI();
+        renderVideos();
         showToast("Тіркелу сәтті!");
         document.getElementById('regEmail').value=''; document.getElementById('regUsername').value=''; 
         document.getElementById('regPassword').value=''; document.getElementById('regCode').value='';
         pendingReg = null;
     }
+
     function login() {
         let val = document.getElementById('loginUsername').value.trim();
         let pwd = document.getElementById('loginPassword').value;
         let user = users.find(u=>(u.username===val||u.email===val) && u.password===pwd);
         if(!user){ showToast("Қате логин немесе құпия сөз"); return; }
         currentUser = user;
-        localStorage.setItem('qaz_current_user_video', JSON.stringify(user));
-        updateUIForAuth();
+        localStorage.setItem('qaz_current_user_final2', JSON.stringify(user));
+        updateUI();
         closeModal('loginModal');
-        renderAllVideos();
+        renderVideos();
         showToast(`Қош келдің, ${user.displayName||user.username}`);
     }
-    function logout() { currentUser=null; localStorage.removeItem('qaz_current_user_video'); updateUIForAuth(); renderAllVideos(); showToast("Шықтыңыз"); }
-    function updateUIForAuth() {
+
+    function logout() { currentUser=null; localStorage.removeItem('qaz_current_user_final2'); updateUI(); renderVideos(); showToast("Шықтыңыз"); }
+
+    function updateUI() {
         if(currentUser){
             document.getElementById('authButtons').style.display='none';
             document.getElementById('userInfo').style.display='flex';
             document.getElementById('userDisplayName').innerText = currentUser.displayName || currentUser.username;
             let av = document.getElementById('userAvatarElem');
-            if(currentUser.avatarType==='url' && currentUser.avatar) av.style.backgroundImage = `url(${currentUser.avatar})`;
-            else { av.style.backgroundImage=''; av.style.background='linear-gradient(135deg,#f5b042,#FFD966)'; av.innerText = currentUser.avatar || currentUser.username[0].toUpperCase(); }
+            if(currentUser.avatarType==='url' && currentUser.avatar) {
+                av.style.backgroundImage = `url(${currentUser.avatar})`;
+                av.innerText = '';
+            } else {
+                av.style.backgroundImage = '';
+                av.style.background = 'linear-gradient(135deg,#f5b042,#FFD966)';
+                av.innerText = currentUser.avatar || currentUser.username[0].toUpperCase();
+            }
         } else {
             document.getElementById('authButtons').style.display='flex';
             document.getElementById('userInfo').style.display='none';
         }
     }
+
     function toggleUploadPopup() { document.getElementById('uploadPopup').classList.toggle('active'); }
-    function uploadVideoFile() {
+
+    function uploadVideo() {
         if(!currentUser){ showToast("Кіріңіз"); return; }
         let title = document.getElementById('videoTitleUpload').value.trim();
         let desc = document.getElementById('videoDescUpload').value.trim();
-        let fileInput = document.getElementById('videoFileUpload');
+        let file = document.getElementById('videoFileUpload').files[0];
         if(!title) { showToast("Атау керек"); return; }
-        if(!fileInput.files.length) { showToast("Бейне файлды таңдаңыз (mp4/webm)"); return; }
-        let file = fileInput.files[0];
+        if(!file) { showToast("Бейне файлды таңдаңыз"); return; }
         let reader = new FileReader();
         reader.onload = function(e) {
-            let videoData = e.target.result;
             let newVideo = {
                 id: Date.now()+Math.random(),
                 title: title,
-                description: desc||"",
+                description: desc || "",
                 authorId: currentUser.id,
-                authorName: currentUser.displayName||currentUser.username,
+                authorName: currentUser.displayName || currentUser.username,
                 createdAt: new Date().toISOString(),
                 views: 0,
-                videoSrc: videoData,
-                thumbnail: null
+                src: e.target.result
             };
             videos.push(newVideo);
             saveAll();
-            document.getElementById('videoTitleUpload').value='';
-            document.getElementById('videoDescUpload').value='';
-            fileInput.value='';
+            document.getElementById('videoTitleUpload').value = '';
+            document.getElementById('videoDescUpload').value = '';
+            document.getElementById('videoFileUpload').value = '';
             document.getElementById('uploadPopup').classList.remove('active');
-            renderAllVideos();
+            renderVideos();
             showToast("Бейне жүктелді!");
         };
         reader.readAsDataURL(file);
     }
-    function openVideo(video) { 
-        let player = document.getElementById('playerVideo');
-        player.src = video.videoSrc;
+
+    function openVideo(video) {
+        let player = document.getElementById('videoPlayer');
+        player.src = video.src;
         video.views++;
         saveAll();
-        renderAllVideos();
-        openModal('videoPlayerModal');
+        renderVideos();
+        openModal('videoModal');
     }
-    function toggleLike(vidId){ if(!currentUser){ showToast("Лайк үшін кіріңіз"); return; } if(!likes[vidId])likes[vidId]=[]; let idx=likes[vidId].indexOf(currentUser.id); idx===-1?likes[vidId].push(currentUser.id):likes[vidId].splice(idx,1); saveAll(); renderAllVideos(); }
-    function toggleSubscribe(chId){ if(!currentUser){ showToast("Жазылу үшін кіріңіз"); return; } if(!subscriptions[currentUser.id])subscriptions[currentUser.id]=[]; let arr=subscriptions[currentUser.id]; let idx=arr.indexOf(chId); idx===-1?arr.push(chId):arr.splice(idx,1); saveAll(); renderAllVideos(); }
-    function isSubscribedTo(chId){ if(!currentUser)return false; return (subscriptions[currentUser.id]||[]).includes(chId); }
-    function isLiked(vidId){ if(!currentUser)return false; return likes[vidId]&&likes[vidId].includes(currentUser.id); }
-    function getLikeCount(vidId){ return likes[vidId]?likes[vidId].length:0; }
-    function renderAllVideos() {
-        let container=document.getElementById('videosContainer');
-        if(!videos.length){ container.innerHTML=`<div style="text-align:center;padding:3rem;">🎬 Видео жоқ. Бірінші болып жүктеңіз!</div>`; return; }
-        let sorted=[...videos].reverse();
-        let html=`<div class="videos-grid">`;
-        for(let v of sorted){
-            let liked=isLiked(v.id);
-            let subbed=isSubscribedTo(v.authorId);
-            let subText=subbed?"✅ Жазылдыңыз":"🔔 Жазылу";
-            html+=`<div class="video-card" onclick="event.stopPropagation();openVideo(${JSON.stringify(v).replace(/"/g, '&quot;')})">
-                <div class="video-thumb">${v.videoSrc ? `<video src="${v.videoSrc}" style="width:100%;height:100%;object-fit:cover;"></video>` : '<i class="fas fa-video" style="font-size:3rem;"></i>'}</div>
-                <div class="video-info"><div class="video-title">${escapeHtml(v.title)}</div>
-                <div class="video-stats"><span>👤 ${escapeHtml(v.authorName)}</span><span>❤️ ${getLikeCount(v.id)}</span><span>👁️ ${v.views}</span></div>
-                <div class="video-actions" onclick="event.stopPropagation()"><button class="like-btn ${liked?'liked':''}" onclick="toggleLike('${v.id}')">❤️ ${getLikeCount(v.id)}</button>
-                <button class="subscribe-btn ${subbed?'subscribed':''}" onclick="toggleSubscribe('${v.authorId}')">${subText}</button></div>
-                </div></div>`;
+
+    function toggleLike(vidId){
+        if(!currentUser){ showToast("Лайк үшін кіріңіз"); return; }
+        if(!likes[vidId]) likes[vidId]=[];
+        let idx = likes[vidId].indexOf(currentUser.id);
+        if(idx===-1) likes[vidId].push(currentUser.id);
+        else likes[vidId].splice(idx,1);
+        saveAll();
+        renderVideos();
+    }
+
+    function toggleSubscribe(chId){
+        if(!currentUser){ showToast("Жазылу үшін кіріңіз"); return; }
+        if(!subscriptions[currentUser.id]) subscriptions[currentUser.id]=[];
+        let arr = subscriptions[currentUser.id];
+        let idx = arr.indexOf(chId);
+        if(idx===-1) arr.push(chId);
+        else arr.splice(idx,1);
+        saveAll();
+        renderVideos();
+    }
+
+    function isSubscribedTo(chId){
+        if(!currentUser) return false;
+        return (subscriptions[currentUser.id]||[]).includes(chId);
+    }
+
+    function isLiked(vidId){
+        if(!currentUser) return false;
+        return likes[vidId] && likes[vidId].includes(currentUser.id);
+    }
+
+    function getLikeCount(vidId){
+        return likes[vidId] ? likes[vidId].length : 0;
+    }
+
+    function renderVideos() {
+        let container = document.getElementById('videosContainer');
+        if(!videos.length){
+            container.innerHTML = `<div style="text-align:center;padding:3rem;">🎬 Бейнелер жоқ. Бірінші болып жүктеңіз!</div>`;
+            return;
         }
-        html+=`</div>`; container.innerHTML=html;
+        let sorted = [...videos].reverse();
+        let html = `<div class="videos-grid">`;
+        for(let v of sorted){
+            let liked = isLiked(v.id);
+            let subbed = isSubscribedTo(v.authorId);
+            let subText = subbed ? "✅ Жазылдыңыз" : "🔔 Жазылу";
+            html += `<div class="video-card" onclick="openVideo(${JSON.stringify(v).replace(/"/g, '&quot;')})">
+                <div class="video-thumb">${v.src ? `<video src="${v.src}" style="width:100%;height:100%;object-fit:cover;"></video>` : '<i class="fas fa-video" style="font-size:3rem;"></i>'}</div>
+                <div class="video-info">
+                    <div class="video-title">${escapeHtml(v.title)}</div>
+                    <div class="video-stats"><span>👤 ${escapeHtml(v.authorName)}</span><span>❤️ ${getLikeCount(v.id)}</span><span>👁️ ${v.views}</span></div>
+                    <div class="video-actions" onclick="event.stopPropagation()">
+                        <button class="like-btn ${liked?'liked':''}" onclick="toggleLike('${v.id}')">❤️ ${getLikeCount(v.id)}</button>
+                        <button class="subscribe-btn ${subbed?'subscribed':''}" onclick="toggleSubscribe('${v.authorId}')">${subText}</button>
+                    </div>
+                </div>
+            </div>`;
+        }
+        html += `</div>`;
+        container.innerHTML = html;
     }
+
     function openSettings() {
         if(!currentUser) return;
-        document.getElementById('settingsNickname').value = currentUser.displayName||'';
-        document.getElementById('settingsAvatarUrl').value = (currentUser.avatarType==='url'?currentUser.avatar:'');
+        document.getElementById('settingsNickname').value = currentUser.displayName || '';
+        document.getElementById('settingsAvatarUrl').value = (currentUser.avatarType==='url' ? currentUser.avatar : '');
         let preview = document.getElementById('settingsAvatarPreview');
-        if(currentUser.avatarType==='url' && currentUser.avatar) preview.style.backgroundImage = `url(${currentUser.avatar})`;
-        else { preview.style.backgroundImage = ''; preview.style.background = 'linear-gradient(135deg,#f5b042,#FFD966)'; preview.innerText = currentUser.avatar||currentUser.username[0].toUpperCase(); preview.style.display='flex'; preview.style.alignItems='center'; preview.style.justifyContent='center'; preview.style.fontSize='2rem'; }
+        if(currentUser.avatarType==='url' && currentUser.avatar) {
+            preview.style.backgroundImage = `url(${currentUser.avatar})`;
+            preview.innerText = '';
+        } else {
+            preview.style.backgroundImage = '';
+            preview.style.background = 'linear-gradient(135deg,#f5b042,#FFD966)';
+            preview.innerText = currentUser.avatar || currentUser.username[0].toUpperCase();
+        }
         openModal('settingsModal');
     }
+
     function saveProfile() {
         let newNick = document.getElementById('settingsNickname').value.trim();
         let avatarVal = document.getElementById('settingsAvatarUrl').value.trim();
@@ -388,22 +435,29 @@
         let idx = users.findIndex(u=>u.id===currentUser.id);
         if(idx!==-1) users[idx]=currentUser;
         saveAll();
-        localStorage.setItem('qaz_current_user_video', JSON.stringify(currentUser));
-        updateUIForAuth();
+        localStorage.setItem('qaz_current_user_final2', JSON.stringify(currentUser));
+        updateUI();
         closeModal('settingsModal');
-        renderAllVideos();
+        renderVideos();
         showToast("Профиль жаңартылды");
     }
-    function escapeHtml(str){ if(!str)return ''; return str.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+    function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     function showToast(msg){ let t=document.createElement('div'); t.className='toast'; t.innerText=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
     function openModal(id){ document.getElementById(id).classList.add('active'); }
-    function closeModal(id){ document.getElementById(id).classList.remove('active'); if(id==='videoPlayerModal') document.getElementById('playerVideo').pause(); }
-    window.onclick=e=>{ if(e.target.classList.contains('modal')) e.target.classList.remove('active'); if(e.target.classList.contains('modal')) document.getElementById('playerVideo')?.pause(); };
-    let saved=localStorage.getItem('qaz_current_user_video');
-    if(saved){ let u=JSON.parse(saved); let exists=users.find(x=>x.id===u.id); if(exists){ currentUser=exists; updateUIForAuth(); } else localStorage.removeItem('qaz_current_user_video'); }
-    renderAllVideos();
-    function changeLanguage(){} // заглушка
+    function closeModal(id){ document.getElementById(id).classList.remove('active'); if(id==='videoModal') document.getElementById('videoPlayer').pause(); }
+    function changeLanguage() {}
+    window.onclick = e => { if(e.target.classList.contains('modal')) { e.target.classList.remove('active'); document.getElementById('videoPlayer')?.pause(); } };
+
+    let saved = localStorage.getItem('qaz_current_user_final2');
+    if(saved){
+        let u = JSON.parse(saved);
+        let exists = users.find(x=>x.id===u.id);
+        if(exists){ currentUser = exists; updateUI(); }
+        else localStorage.removeItem('qaz_current_user_final2');
+    }
+    renderVideos();
 </script>
-<div class="footer">💙💛 QazaqTube — видео жүктеу, профиль, лайктар, жазылулар</div>
+<div class="footer">💙💛 QazaqTube — Видео жүктеу, профиль, лайктар, жазылулар</div>
 </body>
 </html>
