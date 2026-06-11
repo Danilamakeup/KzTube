@@ -10,12 +10,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a2463 0%, #061845 100%);
+            background: linear-gradient(135deg, #0a2463 0%, #0a1b44 50%, #061845 100%);
             color: #fff;
             min-height: 100vh;
         }
+        
+        /* Желто-голубой дизайн */
         .header {
-            background: rgba(3, 18, 43, 0.95);
+            background: rgba(10, 36, 99, 0.95);
             backdrop-filter: blur(20px);
             padding: 10px 24px;
             display: flex;
@@ -31,7 +33,7 @@
         .logo {
             font-size: 24px;
             font-weight: 800;
-            background: linear-gradient(135deg, #f5b042, #ffd966);
+            background: linear-gradient(135deg, #f5b042, #ffd966, #fff5e0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -125,13 +127,14 @@
         }
         .video-card {
             cursor: pointer;
-            transition: transform 0.2s;
-            background: rgba(6, 28, 78, 0.5);
-            border-radius: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: rgba(10, 27, 68, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
             overflow: hidden;
-            border: 1px solid rgba(245,176,66,0.2);
+            border: 1px solid rgba(245,176,66,0.25);
         }
-        .video-card:hover { transform: translateY(-4px); border-color: #f5b042; }
+        .video-card:hover { transform: translateY(-5px); border-color: #f5b042; box-shadow: 0 10px 25px rgba(245,176,66,0.2); }
         .thumbnail {
             width: 100%;
             aspect-ratio: 16/9;
@@ -139,7 +142,8 @@
             overflow: hidden;
             position: relative;
         }
-        .thumbnail video { width: 100%; height: 100%; object-fit: cover; }
+        .thumbnail video { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .video-card:hover .thumbnail video { transform: scale(1.05); }
         .video-details { display: flex; gap: 12px; padding: 12px; }
         .video-channel-avatar {
             width: 36px;
@@ -166,7 +170,7 @@
             padding: 30px;
             background: rgba(10, 27, 68, 0.7);
             backdrop-filter: blur(10px);
-            border-radius: 24px;
+            border-radius: 28px;
             margin-bottom: 30px;
             border: 1px solid rgba(245,176,66,0.3);
             flex-wrap: wrap;
@@ -272,7 +276,9 @@
             align-items: center;
             gap: 8px;
             border: 1px solid rgba(245,176,66,0.3);
+            transition: all 0.2s;
         }
+        .action-btn:hover { background: rgba(245,176,66,0.2); }
         .action-btn.liked { background: #f5b042; color: #0a2463; border-color: #f5b042; }
         .action-btn.disliked { background: #3a3a5a; color: #ff8888; border-color: #ff6666; }
         
@@ -280,6 +286,7 @@
             margin-top: 30px;
             padding: 20px;
             background: rgba(10, 27, 68, 0.5);
+            backdrop-filter: blur(8px);
             border-radius: 20px;
             border: 1px solid rgba(245,176,66,0.2);
         }
@@ -300,6 +307,7 @@
             justify-content: center;
             font-weight: bold;
             flex-shrink: 0;
+            color: #0a2463;
         }
         .comment-input {
             flex: 1;
@@ -312,7 +320,7 @@
             resize: vertical;
         }
         .comment-input:focus { outline: none; border-color: #f5b042; }
-        .comment-post-btn { padding: 8px 20px; background: #f5b042; color: #0a2463; border-radius: 40px; cursor: pointer; font-weight: 600; }
+        .comment-post-btn { padding: 8px 20px; background: #f5b042; color: #0a2463; border-radius: 40px; cursor: pointer; font-weight: 600; border: none; }
         .comments-list { max-height: 400px; overflow-y: auto; }
         .comment-item {
             display: flex;
@@ -331,6 +339,7 @@
             font-weight: bold;
             font-size: 12px;
             flex-shrink: 0;
+            color: #0a2463;
         }
         .comment-content { flex: 1; }
         .comment-author { font-weight: 600; font-size: 13px; margin-bottom: 4px; color: #f5b042; }
@@ -349,7 +358,7 @@
             transition: background 0.2s;
         }
         .recommendation-card:hover { background: rgba(245,176,66,0.1); }
-        .rec-thumb { width: 168px; height: 94px; background: #1a1a2e; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
+        .rec-thumb { width: 168px; height: 94px; background: #0a1b44; border-radius: 8px; overflow: hidden; flex-shrink: 0; }
         .rec-thumb video { width: 100%; height: 100%; object-fit: cover; }
         .rec-info { flex: 1; }
         .rec-video-title { font-weight: 500; font-size: 14px; margin-bottom: 5px; }
@@ -407,25 +416,36 @@
             color: white;
             font-family: inherit;
         }
-        .toast {
+        
+        /* Кастомное уведомление */
+        .custom-toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(20px);
             background: linear-gradient(135deg, #f5b042, #ffd966);
             color: #0a2463;
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            z-index: 400;
-            animation: fadeOut 3s forwards;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 14px;
+            z-index: 500;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245,176,66,0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            70% { opacity: 1; }
-            100% { opacity: 0; transform: translateX(-50%) translateY(20px); visibility: hidden; }
+        .custom-toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
-        .footer { text-align: center; padding: 20px; color: #f5b042aa; border-top: 1px solid rgba(245,176,66,0.2); margin-top: 30px; }
+        .custom-toast i { font-size: 18px; }
+        
+        .footer { text-align: center; padding: 20px; color: #f5b042aa; border-top: 1px solid rgba(245,176,66,0.2); margin-top: 30px; font-size: 13px; }
         @media (max-width: 768px) {
             .profile-header { flex-direction: column; text-align: center; }
             .watch-container { flex-direction: column; }
@@ -584,6 +604,12 @@
     </div>
 </div>
 
+<!-- Кастомное уведомление -->
+<div id="customToast" class="custom-toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Видео жүктелді!</span>
+</div>
+
 <script>
     // ============ ГЕОЛОКАЦИЯ ============
     let userCountry = 'KZ';
@@ -616,6 +642,16 @@
             });
     }
     
+    function showCustomToast(message) {
+        const toast = document.getElementById('customToast');
+        const toastMsg = document.getElementById('toastMessage');
+        toastMsg.innerText = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+    
     // ============ ПЕРЕВОД ============
     const translations = {
         kk: {
@@ -631,7 +667,7 @@
             needLogin: "Кіру қажет!", enterTitle: "Атауын енгізіңіз!", selectFile: "Файл таңдаңыз!",
             videoUploaded: "Видео жүктелді!", profileSaved: "Профиль жаңартылды!",
             cantSubscribe: "Өзіңізге жазыла алмайсыз!", subscribedMsg: "Жазылдыңыз ✅", unsubscribedMsg: "Жазылымнан шықтыңыз ❌",
-            speed: "жылдамдық", subtitlesBtn: "Субтитры (AI)"
+            speed: "жылдамдық", subtitlesBtn: "Субтитры (AI)", uploadSuccess: "Ваше видео успешно загружено!"
         },
         ru: {
             loginBtn: "Вход", registerBtn: "Регистрация", logoutBtn: "Выйти",
@@ -646,7 +682,7 @@
             needLogin: "Нужно войти!", enterTitle: "Введите название!", selectFile: "Выберите файл!",
             videoUploaded: "Видео загружено!", profileSaved: "Профиль обновлён!",
             cantSubscribe: "Нельзя подписаться на себя!", subscribedMsg: "Вы подписались ✅", unsubscribedMsg: "Вы отписались ❌",
-            speed: "скорость", subtitlesBtn: "Субтитры (AI)"
+            speed: "скорость", subtitlesBtn: "Субтитры (AI)", uploadSuccess: "Ваше видео успешно загружено!"
         }
     };
     
@@ -689,8 +725,8 @@
     let currentSubtitles = [];
     
     const subtitlePhrases = {
-        kk: ["Сәлеметсіз бе!", "Қызықты тақырып", "Назар аударыңыз", "Керемет!", "Рахмет көргеніңізге", "Лайк басыңыз", "Жазылыңыз"],
-        ru: ["Здравствуйте!", "Интересная тема", "Обратите внимание", "Отлично!", "Спасибо за просмотр", "Поставьте лайк", "Подпишитесь"]
+        kk: ["Сәлеметсіз бе!", "Қызықты тақырып", "Назар аударыңыз", "Керемет!", "Рахмет көргеніңізге", "Лайк басыңыз", "Жазылыңыз", "Келесі видеода кездескенше!"],
+        ru: ["Здравствуйте!", "Интересная тема", "Обратите внимание", "Отлично!", "Спасибо за просмотр", "Поставьте лайк", "Подпишитесь", "До встречи в следующем видео!"]
     };
     
     function generateAISubtitles(duration) {
@@ -705,7 +741,7 @@
     }
     
     function loadData() {
-        const saved = localStorage.getItem('qaztube_data');
+        const saved = localStorage.getItem('qaztube_data_final');
         if(saved) {
             const data = JSON.parse(saved);
             users = data.users || [];
@@ -716,7 +752,7 @@
             comments = data.comments || {};
             viewsRecord = new Set(data.viewsRecord || []);
         }
-        const savedCurrent = localStorage.getItem('qaztube_current');
+        const savedCurrent = localStorage.getItem('qaztube_current_final');
         if(savedCurrent) {
             const cur = JSON.parse(savedCurrent);
             const exists = users.find(u => String(u.id) === String(cur.id));
@@ -725,12 +761,12 @@
     }
     
     function saveData() {
-        localStorage.setItem('qaztube_data', JSON.stringify({
+        localStorage.setItem('qaztube_data_final', JSON.stringify({
             users, videos, likes, dislikes, subs, comments,
             viewsRecord: [...viewsRecord]
         }));
-        if(currentUser) localStorage.setItem('qaztube_current', JSON.stringify(currentUser));
-        else localStorage.removeItem('qaztube_current');
+        if(currentUser) localStorage.setItem('qaztube_current_final', JSON.stringify(currentUser));
+        else localStorage.removeItem('qaztube_current_final');
     }
     
     function getSubscriberCount(channelId) {
@@ -754,20 +790,20 @@
         const email = document.getElementById('regEmail').value.trim();
         const login = document.getElementById('regLogin').value.trim();
         const pass = document.getElementById('regPass').value;
-        if(!email || !login || !pass) { toast(t.fillAll); return; }
-        if(!isValidEmail(email)) { toast(t.invalidEmail); return; }
-        if(users.find(u => u.email === email)) { toast("Email тіркелген!"); return; }
-        if(users.find(u => u.login === login)) { toast("Логин алынған!"); return; }
+        if(!email || !login || !pass) { showCustomToast(t.fillAll); return; }
+        if(!isValidEmail(email)) { showCustomToast(t.invalidEmail); return; }
+        if(users.find(u => u.email === email)) { showCustomToast("Email тіркелген!"); return; }
+        if(users.find(u => u.login === login)) { showCustomToast("Логин алынған!"); return; }
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         pendingRegistration = { email, login, password: pass, code };
         document.getElementById('codeHint').style.display = 'block';
         document.getElementById('codeHint').innerHTML = `📧 Код: <strong>${code}</strong>`;
-        toast(`Код: ${code}`);
+        showCustomToast(`Код: ${code}`);
     }
     
     function completeRegistration() {
         if(!pendingRegistration || document.getElementById('regCode').value !== pendingRegistration.code) {
-            toast("Қате код!"); return;
+            showCustomToast("Қате код!"); return;
         }
         const newUser = {
             id: String(Date.now()), login: pendingRegistration.login, email: pendingRegistration.email,
@@ -780,7 +816,7 @@
         closeModal('register');
         updateUI();
         renderHomePage();
-        toast(translations[currentLang].registerSuccess);
+        showCustomToast(translations[currentLang].registerSuccess);
         pendingRegistration = null;
     }
     
@@ -789,21 +825,21 @@
         const input = document.getElementById('loginInput').value.trim();
         const pass = document.getElementById('loginPass').value;
         const user = users.find(u => (u.login === input || u.email === input) && u.password === pass);
-        if(!user) { toast(t.wrongCredentials); return; }
+        if(!user) { showCustomToast(t.wrongCredentials); return; }
         currentUser = user;
         saveData();
         closeModal('login');
         updateUI();
         renderHomePage();
-        toast(t.loginSuccess);
+        showCustomToast(t.loginSuccess);
     }
     
     function logout() {
         currentUser = null;
-        localStorage.removeItem('qaztube_current');
+        localStorage.removeItem('qaztube_current_final');
         updateUI();
         renderHomePage();
-        toast(translations[currentLang].logoutBtn);
+        showCustomToast(translations[currentLang].logoutBtn);
         showHome();
     }
     
@@ -833,7 +869,7 @@
     }
     
     function openUploadModal() {
-        if(!currentUser) { toast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
         document.getElementById('uploadTitle').value = '';
         document.getElementById('uploadDesc').value = '';
         document.getElementById('uploadFile').value = '';
@@ -844,8 +880,8 @@
         const t = translations[currentLang];
         const title = document.getElementById('uploadTitle').value.trim();
         const file = document.getElementById('uploadFile').files[0];
-        if(!title) { toast(t.enterTitle); return; }
-        if(!file) { toast(t.selectFile); return; }
+        if(!title) { showCustomToast(t.enterTitle); return; }
+        if(!file) { showCustomToast(t.selectFile); return; }
         
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -864,7 +900,7 @@
             closeModal('upload');
             renderHomePage();
             if(currentPage === 'profile') showProfile();
-            toast(t.videoUploaded);
+            showCustomToast(t.uploadSuccess || "Ваше видео успешно загружено!");
         };
         reader.readAsDataURL(file);
     }
@@ -900,7 +936,7 @@
     }
     
     function showProfile() {
-        if(!currentUser) { toast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
         currentPage = 'profile';
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'none';
@@ -976,7 +1012,7 @@
         saveData();
         updateUI();
         closeModal('editProfile');
-        toast(t.profileSaved);
+        showCustomToast(t.profileSaved);
         if(currentPage === 'profile') showProfile();
         renderHomePage();
     }
@@ -1047,7 +1083,7 @@
     }
     
     function rateVideo(type) {
-        if(!currentUser) { toast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
         if(!currentVideoId) return;
         if(type === 'like') {
             if(!likes[currentVideoId]) likes[currentVideoId] = [];
@@ -1078,16 +1114,16 @@
     
     function subscribeAction(authorId) {
         const t = translations[currentLang];
-        if(!currentUser) { toast(t.needLogin); return; }
-        if(currentUser.id === authorId) { toast(t.cantSubscribe); return; }
+        if(!currentUser) { showCustomToast(t.needLogin); return; }
+        if(currentUser.id === authorId) { showCustomToast(t.cantSubscribe); return; }
         if(!subs[currentUser.id]) subs[currentUser.id] = [];
         const idx = subs[currentUser.id].indexOf(authorId);
         if(idx === -1) {
             subs[currentUser.id].push(authorId);
-            toast(t.subscribedMsg);
+            showCustomToast(t.subscribedMsg);
         } else {
             subs[currentUser.id].splice(idx, 1);
-            toast(t.unsubscribedMsg);
+            showCustomToast(t.unsubscribedMsg);
         }
         saveData();
         if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
@@ -1117,7 +1153,7 @@
     }
     
     function postComment() {
-        if(!currentUser) { toast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
         const text = document.getElementById('commentInput').value.trim();
         if(!text) return;
         if(!comments[currentVideoId]) comments[currentVideoId] = [];
@@ -1128,7 +1164,7 @@
         saveData();
         document.getElementById('commentInput').value = '';
         renderComments();
-        toast(translations[currentLang].postComment);
+        showCustomToast(translations[currentLang].postComment);
     }
     
     function renderRecommendations(currentId) {
@@ -1169,15 +1205,15 @@
         if(subtitlesEnabled && currentSubtitles.length) {
             container.style.display = 'block';
             restartSubtitles();
-            toast(translations[currentLang].subtitlesBtn + ' ✅');
+            showCustomToast(translations[currentLang].subtitlesBtn + ' ✅');
         } else {
             container.style.display = 'none';
             if(subtitleInterval) clearInterval(subtitleInterval);
-            toast(translations[currentLang].subtitlesBtn + ' ❌');
+            showCustomToast(translations[currentLang].subtitlesBtn + ' ❌');
         }
     }
     
-    function changeSpeed(s) { document.getElementById('mainVideo').playbackRate = s; toast(`${translations[currentLang].speed}: ${s}x`); document.getElementById('settingsMenu').classList.remove('show'); }
+    function changeSpeed(s) { document.getElementById('mainVideo').playbackRate = s; showCustomToast(`${translations[currentLang].speed}: ${s}x`); document.getElementById('settingsMenu').classList.remove('show'); }
     
     function setupPlayer() {
         const video = document.getElementById('mainVideo');
@@ -1238,7 +1274,6 @@
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     function openModal(type) { document.getElementById(type + 'Modal').style.display = 'flex'; }
     function closeModal(type) { document.getElementById(type + 'Modal').style.display = 'none'; }
-    function toast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.innerText = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3000); }
     
     document.getElementById('langSelect').onchange = () => {
         if(userCountry === 'KZ') {
@@ -1259,7 +1294,7 @@
 </script>
 
 <div class="footer">
-    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Жүктеу жұмыс істейді | Лайк/дизлайк | Комментарийлер
+    <i class="fas fa-heart" style="color:#f5b042;"></i> QazaqTube — Қазақстан видеохостингі | Лайк/дизлайк | Комментарийлер
 </div>
 </body>
 </html>
