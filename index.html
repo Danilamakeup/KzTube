@@ -10,7 +10,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            /* Настоящий сочный голубой/бирюзовый дизайн, красиво? красиво!*/ 
             background: linear-gradient(135deg, #005c8a 0%, #003b5c 50%, #002238 100%);
             color: #fff;
             min-height: 100vh;
@@ -23,7 +22,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 3px solid #ffd700; /* Ярко-жёлтый */
+            border-bottom: 3px solid #ffd700;
             position: sticky;
             top: 0;
             z-index: 200;
@@ -194,23 +193,7 @@
         .watch-container { display: flex; max-width: 1500px; margin: 0 auto; padding: 25px; gap: 30px; }
         .video-section { flex: 2.5; }
         .video-wrapper { width: 100%; background: #000; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,215,0,0.2); }
-        .custom-player { position: relative; width: 100%; }
-        .custom-player video { width: 100%; display: block; aspect-ratio: 16/9; }
-        
-        .player-controls {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
-            padding: 20px; opacity: 0; transition: opacity 0.3s;
-        }
-        .custom-player:hover .player-controls { opacity: 1; }
-        .progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; cursor: pointer; margin-bottom: 15px; }
-        .progress-fill { height: 100%; background: #ffd700; width: 0%; border-radius: 3px; }
-        .controls-row { display: flex; align-items: center; gap: 20px; }
-        .control-btn { background: none; border: none; color: white; font-size: 18px; cursor: pointer; }
-        .control-btn:hover { color: #ffd700; }
-        .volume-container { display: flex; align-items: center; gap: 10px; }
-        .volume-slider { width: 90px; }
-        .right-controls { margin-left: auto; display: flex; gap: 20px; position: relative; }
+        .main-video-player { width: 100%; display: block; aspect-ratio: 16/9; background: #000; }
         
         .video-info-section { margin-top: 20px; background: rgba(0, 59, 92, 0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,215,0,0.1); }
         .watch-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; color: #fff; }
@@ -337,8 +320,7 @@
 <div id="watchPage" class="watch-container" style="display: none;">
     <div class="video-section">
         <div class="video-wrapper">
-            <div class="custom-player" id="customPlayer">
-                <video id="mainVideo" controls></video> </div>
+            <video id="mainVideo" class="main-video-player" controls autoplay></video>
         </div>
         
         <div class="video-info-section" id="watchInfoSection"></div>
@@ -364,7 +346,7 @@
         <h2>📤 Видео жүктеу</h2>
         <input type="text" id="uploadTitle" placeholder="Бейне атауы *">
         <textarea id="uploadDesc" placeholder="Сипаттама" rows="3"></textarea>
-        <input type="file" id="uploadFile" accept="video/mp4,video/webm">
+        <input type="file" id="uploadFile" accept="video/mp4,video/webm,video/mkv">
         <button class="btn-primary" onclick="confirmUpload()" style="width:100%;">✅ Жүктеу</button>
         <button class="btn-outline" onclick="closeModal('upload')" style="width:100%; margin-top: 10px;">Жабу</button>
     </div>
@@ -396,10 +378,10 @@
     let currentLang = 'kk';
     let users = [];
     let videos = [];
-    let likes = {};     // { videoId: [userId, userId...] }
-    let dislikes = {};  // { videoId: [userId, userId...] }
-    let subs = {};      // { authorId: [followerId...] }
-    let comments = {};  // { videoId: [{name, text, date}...] }
+    let likes = {};     
+    let dislikes = {};  
+    let subs = {};      
+    let comments = {};  
     let currentUser = null;
     let currentPage = 'home';
     let currentVideoId = null;
@@ -429,7 +411,7 @@
         const toast = document.getElementById('customToast');
         toast.innerText = msg;
         toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
 
     function loadData() {
@@ -490,7 +472,6 @@
         }
     }
 
-    // РЕГИСТРАЦИЯ И ВХОД
     function completeRegistration() {
         const login = document.getElementById('regLogin').value.trim();
         const pass = document.getElementById('regPass').value;
@@ -531,7 +512,6 @@
         showHome();
     }
 
-    // ПОИСК И ЛЕНТА
     function searchVideos() {
         const query = document.getElementById('searchInput').value.trim().toLowerCase();
         renderHomePage(query);
@@ -560,7 +540,7 @@
         }
 
         grid.innerHTML = filtered.reverse().map(v => {
-            const vLikes = likes[v.id] ? likes[v.id].length : 0;
+            if (!likes[v.id]) likes[v.id] = [];
             return `
                 <div class="video-card" onclick="openWatchPage('${v.id}')">
                     <div class="thumbnail"><video src="${v.src}"></video></div>
@@ -569,7 +549,7 @@
                         <div class="video-meta">
                             <div class="video-title">${escapeHtml(v.title)}</div>
                             <div class="channel-name">${escapeHtml(v.authorName)}</div>
-                            <div class="video-stats">${v.views || 0} ${t.views} • ❤️ ${vLikes}</div>
+                            <div class="video-stats">${v.views || 0} ${t.views} • ❤️ ${likes[v.id].length}</div>
                         </div>
                     </div>
                 </div>
@@ -577,7 +557,6 @@
         }).join('');
     }
 
-    // ПРОФИЛЬ СТРАНИЦА
     function showProfile() {
         if(!currentUser) return;
         currentPage = 'profile';
@@ -592,7 +571,6 @@
         document.getElementById('profileName').innerText = currentUser.login;
         document.getElementById('profileLoginName').innerText = currentUser.login;
 
-        // Расчет счетчиков
         const myVids = videos.filter(v => v.authorId === currentUser.id);
         document.getElementById('profileVideosCount').innerText = myVids.length;
         
@@ -600,14 +578,14 @@
         myVids.forEach(v => { if(likes[v.id]) totalLikes += likes[v.id].length; });
         document.getElementById('profileLikesCount').innerText = totalLikes;
 
-        const totalSubs = subs[currentUser.id] ? subs[currentUser.id].length : 0;
-        document.getElementById('profileSubsCount').innerText = totalSubs;
+        if (!subs[currentUser.id]) subs[currentUser.id] = [];
+        document.getElementById('profileSubsCount').innerText = subs[currentUser.id].length;
 
         const grid = document.getElementById('profileVideosGrid');
         const t = translations[currentLang];
 
         if(myVids.length === 0) {
-            grid.innerHTML = `<div style="grid-column:1/-1;color:#82c0e0;">Видео әлі жүктелмеген / Видео еще не загружены.</div>`;
+            grid.innerHTML = `<div style="grid-column:1/-1;color:#82c0e0;padding:20px;">Видео әлі жүктелмеген / Видео еще не загружены.</div>`;
             return;
         }
 
@@ -625,7 +603,6 @@
         `).join('');
     }
 
-    // ЗАГРУЗКА ВИДЕО
     function openUploadModal() {
         if(!currentUser) { showToast(translations[currentLang].needLog); return; }
         openModal('upload');
@@ -640,6 +617,8 @@
         if(!title) { showToast(t.titleErr); return; }
         if(!file) { showToast(t.fileErr); return; }
 
+        showToast("Бейнебаян өңделуде... Күте тұрыңыз / Видео обрабатывается... Пожалуйста, подождите");
+
         const reader = new FileReader();
         reader.onload = function(e) {
             const newVideo = {
@@ -651,6 +630,7 @@
                 views: 0,
                 src: e.target.result
             };
+            
             videos.push(newVideo);
             likes[newVideo.id] = [];
             dislikes[newVideo.id] = [];
@@ -658,13 +638,19 @@
             
             saveData();
             closeModal('upload');
-            showToast("Жүктелді! / Загружено!");
+            
+            // Очистка полей формы
+            document.getElementById('uploadTitle').value = '';
+            document.getElementById('uploadDesc').value = '';
+            document.getElementById('uploadFile').value = '';
+
+            showToast("Жүктелді! / Успешно загружено!");
+            
             if(currentPage === 'profile') showProfile(); else renderHomePage();
         };
         reader.readAsDataURL(file);
     }
 
-    // СТРАНИЦА ПРОСМОТРА И ЛОГИКА ЛАЙКОВ/ДИЗЛАЙКОВ
     function openWatchPage(id) {
         currentVideoId = id;
         currentPage = 'watch';
@@ -687,9 +673,11 @@
 
         const t = translations[currentLang];
         const mainVideo = document.getElementById('mainVideo');
-        if(mainVideo.src !== video.src) mainVideo.src = video.src;
+        if(mainVideo.src !== video.src) {
+            mainVideo.src = video.src;
+            mainVideo.load();
+        }
 
-        // Обеспечиваем массивы
         if (!likes[video.id]) likes[video.id] = [];
         if (!dislikes[video.id]) dislikes[video.id] = [];
         if (!subs[video.authorId]) subs[video.authorId] = [];
@@ -713,7 +701,7 @@
                     ${isSubbed ? 'Жазылдыңыз ✓' : 'Жазылу'}
                 </button>
             </div>
-            <p style="margin-top:15px; font-size:14px; color:#aad5ff;">${escapeHtml(video.desc || '')}</p>
+            <p style="margin-top:15px; font-size:14px; color:#aad5ff; white-space: pre-wrap;">${escapeHtml(video.desc || '')}</p>
             <div class="action-buttons">
                 <div class="action-btn ${isLiked ? 'active-like' : ''}" onclick="handleReaction('like')">
                     <i class="fas fa-thumbs-up"></i> <span>${likes[video.id].length}</span>
@@ -731,15 +719,17 @@
     function handleReaction(type) {
         if(!currentUser) { showToast(translations[currentLang].needLog); return; }
         
-        const vLikes = likes[currentVideoId] || [];
-        const vDislikes = dislikes[currentVideoId] || [];
+        if (!likes[currentVideoId]) likes[currentVideoId] = [];
+        if (!dislikes[currentVideoId]) dislikes[currentVideoId] = [];
+
+        const vLikes = likes[currentVideoId];
+        const vDislikes = dislikes[currentVideoId];
 
         if (type === 'like') {
             if (vLikes.includes(currentUser.id)) {
                 likes[currentVideoId] = vLikes.filter(id => id !== currentUser.id);
             } else {
                 vLikes.push(currentUser.id);
-                likes[currentVideoId] = vLikes;
                 dislikes[currentVideoId] = vDislikes.filter(id => id !== currentUser.id);
             }
         } else {
@@ -747,7 +737,6 @@
                 dislikes[currentVideoId] = vDislikes.filter(id => id !== currentUser.id);
             } else {
                 vDislikes.push(currentUser.id);
-                dislikes[currentVideoId] = vDislikes;
                 likes[currentVideoId] = vLikes.filter(id => id !== currentUser.id);
             }
         }
@@ -774,12 +763,13 @@
 
     // КОММЕНТАРИИ
     function renderComments() {
-        const vComments = comments[currentVideoId] || [];
+        if (!comments[currentVideoId]) comments[currentVideoId] = [];
+        const vComments = comments[currentVideoId];
         document.getElementById('commentsTitle').innerText = `${translations[currentLang].comms} (${vComments.length})`;
         
         const list = document.getElementById('commentsList');
         if (vComments.length === 0) {
-            list.innerHTML = `<div style="color:#82c0e0; font-size:14px;">Пікірлер жоқ. Бірінші болыңыз!</div>`;
+            list.innerHTML = `<div style="color:#82c0e0; font-size:14px; padding:10px 0;">Пікірлер жоқ. Бірінші болыңыз!</div>`;
             return;
         }
 
@@ -814,7 +804,7 @@
 
     function renderRecommendations() {
         const list = document.getElementById('recommendationsList');
-        const listVids = videos.filter(v => v.id !== currentVideoId).slice(-5);
+        const listVids = videos.filter(v => v.id !== currentVideoId).slice(-6);
         const t = translations[currentLang];
 
         if(listVids.length === 0) {
@@ -834,7 +824,6 @@
         `).join('');
     }
 
-    // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
     function showHome() {
         document.getElementById('searchInput').value = '';
         renderHomePage();
@@ -846,7 +835,6 @@
     window.onclick = (e) => { if (e.target.classList.contains('modal')) e.target.style.display = 'none'; };
     document.getElementById('langSelect').onchange = updateLanguage;
 
-    // СТАРТ ИНИЦИАЛИЗАЦИИ
     loadData();
     updateUI();
     updateLanguage();
