@@ -223,7 +223,7 @@
         .watch-container { display: flex; max-width: 1400px; margin: 0 auto; padding: 20px; gap: 30px; flex-wrap: wrap; }
         .video-section { flex: 2.5; min-width: 280px; }
         .video-wrapper { position: relative; width: 100%; background: #000; border-radius: 20px; overflow: hidden; }
-        .custom-player { position: relative; width: 100%; cursor: pointer; }
+        .custom-player { position: relative; width: 100%; }
         .custom-player video { width: 100%; display: block; }
         .player-controls {
             position: absolute;
@@ -234,7 +234,6 @@
             padding: 16px 20px 12px;
             opacity: 0;
             transition: opacity 0.3s;
-            cursor: default;
         }
         .custom-player:hover .player-controls { opacity: 1; }
         .progress-container {
@@ -275,7 +274,6 @@
         .settings-menu.show { display: block; }
         .settings-menu button { background: none; color: white; padding: 8px 12px; width: 100%; text-align: left; border-radius: 8px; }
         .settings-menu button:hover { background: #f5b042; color: #0a2463; }
-        .submenu-title { font-size: 11px; color: #ffd966; padding: 4px 12px; font-weight: bold; }
         
         .video-info-section { margin-top: 20px; }
         .watch-title { font-size: 20px; font-weight: 600; margin-bottom: 12px; }
@@ -292,7 +290,7 @@
         }
         .channel-left { display: flex; align-items: center; gap: 12px; }
         .channel-avatar-big { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #f5b042, #ffd966); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: #0a2463; }
-        .subscribe-btn { background: #f5b042; color: #0a2463; padding: 8px 20px; }
+        .subscribe-btn { background: #f5b042; color: #0a2463; padding: 8px 20px; border-radius: 40px;}
         .subscribe-btn.disabled { background: #3a3a5a; color: #aaa; cursor: not-allowed; }
         .action-buttons { display: flex; gap: 20px; margin-top: 15px; }
         .action-btn {
@@ -495,22 +493,22 @@
             <option value="ru">🇷🇺 Русский</option>
         </select>
         <div id="unauthButtons">
-            <button class="btn-outline" onclick="openModal('login')">Кіру</button>
-            <button class="btn-primary" onclick="openModal('register')">Тіркелу</button>
+            <button id="headerLoginBtn" class="btn-outline" onclick="openModal('login')">Кіру</button>
+            <button id="headerRegisterBtn" class="btn-primary" onclick="openModal('register')">Тіркелу</button>
         </div>
         <div id="authButtons" class="hidden">
             <div class="user-info" onclick="showProfile()">
                 <span id="userNameSpan"></span>
                 <div class="avatar" id="avatarSpan"></div>
             </div>
-            <button class="btn-outline" onclick="logout()" style="margin-left: 8px; padding: 6px 14px;" id="logoutBtnTop">Шығу</button>
+            <button id="headerLogoutBtn" class="btn-outline" onclick="logout()" style="margin-left: 10px;">Шығу</button>
         </div>
     </div>
 </div>
 
-<div class="nav-links" id="navLinks" style="display: none;">
+<div class="nav-links" id="navLinks">
     <div class="nav-link active" onclick="showHome()">🏠 Басты</div>
-    <div class="nav-link" onclick="showProfile()">👤 Менің каналым</div>
+    <div id="myChannelNav" class="nav-link hidden" onclick="showProfile()">👤 Менің каналым</div>
 </div>
 
 <div id="homePage" class="home-container">
@@ -528,8 +526,8 @@
                 <div class="profile-stat"><div class="profile-stat-value" id="profileVideosCount">0</div><div class="profile-stat-label">видео</div></div>
                 <div class="profile-stat"><div class="profile-stat-value" id="profileLikesCount">0</div><div class="profile-stat-label">лайк</div></div>
             </div>
-            <button class="btn-outline" onclick="openEditProfileModal()" style="margin-top: 15px;"><i class="fas fa-edit"></i> Профильді өңдеу</button>
-            <button class="btn-primary" onclick="openUploadModal()" style="margin-top: 15px; margin-left: 10px;"><i class="fas fa-upload"></i> Видео жүктеу</button>
+            <button id="editProfileBtn" class="btn-outline" onclick="openEditProfileModal()" style="margin-top: 15px;"><i class="fas fa-edit"></i> Профильді өңдеу</button>
+            <button id="uploadVideoBtn" class="btn-primary" onclick="openUploadModal()" style="margin-top: 15px; margin-left: 10px;"><i class="fas fa-upload"></i> Видео жүктеу</button>
         </div>
     </div>
     <h3 style="margin-bottom: 20px; color:#f5b042;">📹 Менің видеоым</h3>
@@ -544,7 +542,7 @@
                 <div class="subtitles-container" id="subtitlesContainer" style="display: none;">
                     <div class="subtitle-text" id="subtitleText"></div>
                 </div>
-                <div class="player-controls" id="playerControlsContainer">
+                <div class="player-controls">
                     <div class="progress-container" id="progressContainer"><div class="progress-fill" id="progressFill"></div></div>
                     <div class="controls-row">
                         <button class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
@@ -557,19 +555,14 @@
                             <div class="settings-btn">
                                 <button class="control-btn" id="settingsBtn"><i class="fas fa-cog"></i></button>
                                 <div class="settings-menu" id="settingsMenu">
-                                    <div class="submenu-title">Жылдамдық / Скорость</div>
                                     <button onclick="changeSpeed(0.5)">0.5x</button>
+                                    <button onclick="changeSpeed(0.75)">0.75x</button>
                                     <button onclick="changeSpeed(1)">1x</button>
+                                    <button onclick="changeSpeed(1.25)">1.25x</button>
                                     <button onclick="changeSpeed(1.5)">1.5x</button>
                                     <button onclick="changeSpeed(2)">2x</button>
-                                    <hr style="margin:5px 0; border-color: rgba(245,176,66,0.2);">
-                                    <div class="submenu-title">Сапа / Качество</div>
-                                    <button onclick="changeQuality('Auto')">✓ Авто (Orig)</button>
-                                    <button onclick="changeQuality('1080p')">1080p</button>
-                                    <button onclick="changeQuality('720p')">720p</button>
-                                    <button onclick="changeQuality('480p')">480p</button>
-                                    <hr style="margin:5px 0; border-color: rgba(245,176,66,0.2);">
-                                    <button onclick="toggleSubtitles()">Субтитры (AI)</button>
+                                    <hr style="margin:5px 0;">
+                                    <button id="subtitlesToggleBtn" onclick="toggleSubtitles()">Субтитры (AI)</button>
                                 </div>
                             </div>
                             <button class="control-btn" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
@@ -591,7 +584,7 @@
         </div>
     </div>
     <div class="recommendations-section">
-        <div class="rec-title">🎬 Ұсыныстар</div>
+        <div class="rec-title" id="recommendationsTitle">🎬 Ұсыныстар</div>
         <div id="recommendationsList"></div>
     </div>
 </div>
@@ -681,6 +674,7 @@
     function showCustomToast(message, isError = false) {
         const toast = document.getElementById('customToast');
         const toastMsg = document.getElementById('toastMessage');
+        if (!toast || !toastMsg) return;
         toastMsg.innerText = message;
         if (isError) {
             toast.style.background = "linear-gradient(135deg, #ff4444, #cc0000)";
@@ -730,24 +724,30 @@
     
     function applyTranslation() {
         const t = translations[currentLang];
-        if (document.getElementById('logoutBtnTop')) document.getElementById('logoutBtnTop').innerText = t.logoutBtn;
+        document.getElementById('headerLoginBtn') && (document.getElementById('headerLoginBtn').innerText = t.loginBtn);
+        document.getElementById('headerRegisterBtn') && (document.getElementById('headerRegisterBtn').innerText = t.registerBtn);
+        document.getElementById('headerLogoutBtn') && (document.getElementById('headerLogoutBtn').innerText = t.logoutBtn);
+        
         if(document.querySelectorAll('.nav-link')[0]) document.querySelectorAll('.nav-link')[0].innerHTML = t.homeNav;
-        if(document.querySelectorAll('.nav-link')[1]) document.querySelectorAll('.nav-link')[1].innerHTML = t.profileNav;
+        if(document.getElementById('myChannelNav')) document.getElementById('myChannelNav').innerHTML = t.profileNav;
+        
         document.getElementById('searchInput') && (document.getElementById('searchInput').placeholder = t.searchPlaceholder);
+        document.getElementById('editProfileBtn') && (document.getElementById('editProfileBtn').innerHTML = `<i class="fas fa-edit"></i> ${t.editProfile}`);
+        document.getElementById('uploadVideoBtn') && (document.getElementById('uploadVideoBtn').innerHTML = `<i class="fas fa-upload"></i> ${t.uploadVideo}`);
+        
         if(document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label')) 
             document.querySelector('.profile-stats .profile-stat:first-child .profile-stat-label').innerText = t.subsLabel;
         if(document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label'))
             document.querySelector('.profile-stats .profile-stat:nth-child(2) .profile-stat-label').innerText = t.videosLabel;
         if(document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label'))
             document.querySelector('.profile-stats .profile-stat:nth-child(3) .profile-stat-label').innerText = t.likesLabel;
+            
         if(document.querySelector('#profilePage h3')) document.querySelector('#profilePage h3').innerText = t.myVideos;
-        if(document.querySelector('.rec-title')) document.querySelector('.rec-title').innerHTML = t.recommendations;
+        document.getElementById('recommendationsTitle') && (document.getElementById('recommendationsTitle').innerHTML = t.recommendations);
         document.getElementById('commentsTitle') && (document.getElementById('commentsTitle').innerText = t.comments);
         document.getElementById('postBtnText') && (document.getElementById('postBtnText').innerText = t.postComment);
         document.getElementById('commentInput') && (document.getElementById('commentInput').placeholder = t.commentPlaceholder);
-        if(currentPage === 'home') renderHomePage();
-        else if(currentPage === 'profile') showProfile();
-        else if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
+        document.getElementById('subtitlesToggleBtn') && (document.getElementById('subtitlesToggleBtn').innerText = t.subtitlesBtn);
     }
     
     let users = [];
@@ -756,7 +756,7 @@
     let dislikes = {};
     let subs = {};
     let comments = {};
-    let viewsRecord = [];
+    let viewsRecord = new Set();
     let currentUser = null;
     let pendingRegistration = null;
     let currentPage = 'home';
@@ -773,17 +773,17 @@
     
     function generateAISubtitles(duration) {
         const phrases = subtitlePhrases[currentLang] || subtitlePhrases.ru;
-        const subsList = [];
-        let time = 1;
+        const subs = [];
+        let time = 3;
         while(time < (duration || 60)) {
-            subsList.push({ time: time, text: phrases[Math.floor(Math.random() * phrases.length)] });
-            time += 4 + Math.random() * 3;
+            subs.push({ time: time, text: phrases[Math.floor(Math.random() * phrases.length)] });
+            time += 5 + Math.random() * 4;
         }
-        return subsList;
+        return subs;
     }
     
     function loadData() {
-        const saved = localStorage.getItem('qaztube_data_final3');
+        const saved = localStorage.getItem('qaztube_data_final2');
         if(saved) {
             const data = JSON.parse(saved);
             users = data.users || [];
@@ -792,9 +792,9 @@
             dislikes = data.dislikes || {};
             subs = data.subs || {};
             comments = data.comments || {};
-            viewsRecord = data.viewsRecord || [];
+            viewsRecord = new Set(data.viewsRecord || []);
         }
-        const savedCurrent = localStorage.getItem('qaztube_current_final3');
+        const savedCurrent = localStorage.getItem('qaztube_current_final2');
         if(savedCurrent) {
             const cur = JSON.parse(savedCurrent);
             const exists = users.find(u => String(u.id) === String(cur.id));
@@ -803,11 +803,12 @@
     }
     
     function saveData() {
-        localStorage.setItem('qaztube_data_final3', JSON.stringify({
-            users, videos, likes, dislikes, subs, comments, viewsRecord
+        localStorage.setItem('qaztube_data_final2', JSON.stringify({
+            users, videos, likes, dislikes, subs, comments,
+            viewsRecord: [...viewsRecord]
         }));
-        if(currentUser) localStorage.setItem('qaztube_current_final3', JSON.stringify(currentUser));
-        else localStorage.removeItem('qaztube_current_final3');
+        if(currentUser) localStorage.setItem('qaztube_current_final2', JSON.stringify(currentUser));
+        else localStorage.removeItem('qaztube_current_final2');
     }
     
     function getSubscriberCount(channelId) {
@@ -837,10 +838,10 @@
         const email = document.getElementById('regEmail').value.trim();
         const login = document.getElementById('regLogin').value.trim();
         const pass = document.getElementById('regPass').value;
-        if(!email || !login || !pass) { showCustomToast(t.fillAll); return; }
-        if(!isValidEmail(email)) { showCustomToast(t.invalidEmail); return; }
-        if(users.find(u => u.email === email)) { showCustomToast("Email тіркелген!"); return; }
-        if(users.find(u => u.login === login)) { showCustomToast("Логин алынған!"); return; }
+        if(!email || !login || !pass) { showCustomToast(t.fillAll, true); return; }
+        if(!isValidEmail(email)) { showCustomToast(t.invalidEmail, true); return; }
+        if(users.find(u => u.email === email)) { showCustomToast("Email тіркелген!", true); return; }
+        if(users.find(u => u.login === login)) { showCustomToast("Логин алынған!", true); return; }
         const code = Math.floor(100000 + Math.random() * 900000).toString();
         pendingRegistration = { email, login, password: pass, code };
         document.getElementById('codeHint').style.display = 'block';
@@ -850,7 +851,7 @@
     
     function completeRegistration() {
         if(!pendingRegistration || document.getElementById('regCode').value !== pendingRegistration.code) {
-            showCustomToast("Қате код!"); return;
+            showCustomToast("Қате код!", true); return;
         }
         const newUser = {
             id: String(Date.now()), login: pendingRegistration.login, email: pendingRegistration.email,
@@ -872,7 +873,7 @@
         const input = document.getElementById('loginInput').value.trim();
         const pass = document.getElementById('loginPass').value;
         const user = users.find(u => (u.login === input || u.email === input) && u.password === pass);
-        if(!user) { showCustomToast(t.wrongCredentials); return; }
+        if(!user) { showCustomToast(t.wrongCredentials, true); return; }
         currentUser = user;
         saveData();
         closeModal('login');
@@ -883,7 +884,7 @@
     
     function logout() {
         currentUser = null;
-        localStorage.removeItem('qaztube_current_final3');
+        localStorage.removeItem('qaztube_current_final2');
         updateUI();
         renderHomePage();
         showCustomToast(translations[currentLang].logoutBtn);
@@ -894,7 +895,7 @@
         if(currentUser) {
             document.getElementById('unauthButtons').classList.add('hidden');
             document.getElementById('authButtons').classList.remove('hidden');
-            document.getElementById('navLinks').style.display = 'flex';
+            document.getElementById('myChannelNav').classList.remove('hidden');
             document.getElementById('userNameSpan').innerText = currentUser.name || currentUser.login;
             const av = document.getElementById('avatarSpan');
             if(currentUser.avatarUrl) {
@@ -911,12 +912,13 @@
         } else {
             document.getElementById('unauthButtons').classList.remove('hidden');
             document.getElementById('authButtons').classList.add('hidden');
-            document.getElementById('navLinks').style.display = 'none';
+            document.getElementById('myChannelNav').classList.add('hidden');
         }
+        applyTranslation();
     }
     
     function openUploadModal() {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin, true); return; }
         document.getElementById('uploadTitle').value = '';
         document.getElementById('uploadDesc').value = '';
         document.getElementById('uploadFile').value = '';
@@ -927,8 +929,8 @@
         const t = translations[currentLang];
         const title = document.getElementById('uploadTitle').value.trim();
         const file = document.getElementById('uploadFile').files[0];
-        if(!title) { showCustomToast(t.enterTitle); return; }
-        if(!file) { showCustomToast(t.selectFile); return; }
+        if(!title) { showCustomToast(t.enterTitle, true); return; }
+        if(!file) { showCustomToast(t.selectFile, true); return; }
         
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -940,8 +942,7 @@
                 authorName: currentUser.name || currentUser.login,
                 date: new Date().toISOString(),
                 views: 0,
-                src: e.target.result,
-                subtitles: []
+                src: e.target.result
             };
             videos.push(newVideo);
             saveData();
@@ -966,7 +967,7 @@
         }
         
         if(filteredVideos.length === 0) {
-            container.innerHTML = `<div style="text-align:center;padding:60px;"><i class="fas fa-video" style="font-size:50px;color:#f5b042;margin-bottom:15px;display:block;"></i>🎬 ${t.noResults || 'Ештеңе табылмады'}</div>`;
+            container.innerHTML = `<div style="text-align:center;padding:60px;width:100%;grid-column:1/-1;"><i class="fas fa-video" style="font-size:50px;color:#f5b042;margin-bottom:15px;display:block;"></i>🎬 ${t.noResults || 'Ештеңе табылмады'}</div>`;
             return;
         }
         
@@ -988,19 +989,19 @@
         }
         container.innerHTML = html;
         document.querySelectorAll('.thumbnail video').forEach(v => {
-            v.addEventListener('mouseenter', () => v.play());
+            v.addEventListener('mouseenter', () => v.play().catch(()=>{}));
             v.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
         });
     }
     
     function showProfile() {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin, true); return; }
         currentPage = 'profile';
         document.getElementById('homePage').style.display = 'none';
         document.getElementById('watchPage').style.display = 'none';
         document.getElementById('profilePage').style.display = 'block';
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        document.querySelectorAll('.nav-link')[1].classList.add('active');
+        document.getElementById('myChannelNav').classList.add('active');
         
         const av = document.getElementById('profileBigAvatar');
         if(currentUser.avatarUrl) {
@@ -1021,10 +1022,10 @@
         const userVideos = videos.filter(v => v.authorId === currentUser.id).reverse();
         const container = document.getElementById('profileVideosGrid');
         if(userVideos.length === 0) {
-            container.innerHTML = '<div style="text-align:center;padding:40px;color:#8aa8dd;">📭 Сізде әлі видео жоқ. Жүктеңіз!</div>';
+            container.innerHTML = '<div style="text-align:center;padding:40px;color:#8aa8dd;width:100%;grid-column:1/-1;">📭 Сізде әлі видео жоқ. Жүктеңіз!</div>';
             return;
         }
-        let html = '<div class="videos-grid">';
+        let html = '';
         for(let v of userVideos) {
             html += `<div class="video-card" onclick="openWatchPage('${v.id}')">
                 <div class="thumbnail"><video src="${v.src}"></video></div>
@@ -1037,7 +1038,6 @@
                 </div>
             </div>`;
         }
-        html += '</div>';
         container.innerHTML = html;
     }
     
@@ -1095,19 +1095,33 @@
         mainVideo.onloadedmetadata = () => {
             if(!video.subtitles || video.subtitles.length === 0 || isLangChange) {
                 video.subtitles = generateAISubtitles(mainVideo.duration || 60);
-                const originalVideo = videos.find(v => v.id === videoId);
-                if(originalVideo) originalVideo.subtitles = video.subtitles;
                 saveData();
             }
             currentSubtitles = video.subtitles;
             if(subtitlesEnabled) restartSubtitles();
         };
         
-        if(video.subtitles && video.subtitles.length > 0) {
+        if (isLangChange && video.subtitles) {
             currentSubtitles = video.subtitles;
             if(subtitlesEnabled) restartSubtitles();
         }
         
+        updateWatchInfoSection(video);
+        
+        const viewKey = `${currentUser ? currentUser.id : 'guest'}_${video.id}`;
+        if(!isLangChange && !viewsRecord.has(viewKey) && (!currentUser || currentUser.id !== video.authorId)) {
+            video.views++;
+            viewsRecord.add(viewKey);
+            saveData();
+            updateWatchInfoSection(video);
+        }
+        
+        renderRecommendations(video.id);
+        renderComments();
+        if (!isLangChange) setupPlayer();
+    }
+
+    function updateWatchInfoSection(video) {
         const t = translations[currentLang];
         const likeCount = likes[video.id] ? likes[video.id].length : 0;
         const dislikeCount = dislikes[video.id] ? dislikes[video.id].length : 0;
@@ -1115,7 +1129,7 @@
         const isDisliked = currentUser && dislikes[video.id] && dislikes[video.id].includes(currentUser.id);
         const isSubscribed = currentUser && subs[currentUser.id] && subs[currentUser.id].includes(video.authorId);
         const isOwn = currentUser && currentUser.id === video.authorId;
-        
+
         document.getElementById('watchInfoSection').innerHTML = `
             <div class="watch-title">${escapeHtml(video.title)}</div>
             <div class="watch-stats" id="watchStats">${video.views} ${t.views} • 👍 ${likeCount} • 👎 ${dislikeCount}</div>
@@ -1134,48 +1148,36 @@
                 <div class="action-btn ${isDisliked ? 'disliked' : ''}" onclick="rateVideo('dislike')"><i class="fas fa-thumbs-down"></i> <span id="dislikeCount">${dislikeCount}</span></div>
             </div>
         `;
-        
-        const viewKey = `${currentUser ? currentUser.id : 'guest'}_${video.id}`;
-        if(!isLangChange && !viewsRecord.includes(viewKey) && (!currentUser || currentUser.id !== video.authorId)) {
-            video.views++;
-            viewsRecord.push(viewKey);
-            saveData();
-            const statsEl = document.getElementById('watchStats');
-            if(statsEl) statsEl.innerHTML = `${video.views} ${t.views} • 👍 ${likeCount} • 👎 ${dislikeCount}`;
-        }
-        
-        renderRecommendations(video.id);
-        renderComments();
-        setupPlayer();
     }
     
     function rateVideo(type) {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin, true); return; }
         if(!currentVideoId) return;
-        
-        if(!likes[currentVideoId]) likes[currentVideoId] = [];
-        if(!dislikes[currentVideoId]) dislikes[currentVideoId] = [];
-        
-        const likeIdx = likes[currentVideoId].indexOf(currentUser.id);
-        const dislikeIdx = dislikes[currentVideoId].indexOf(currentUser.id);
-        
         if(type === 'like') {
+            if(!likes[currentVideoId]) likes[currentVideoId] = [];
+            if(!dislikes[currentVideoId]) dislikes[currentVideoId] = [];
+            const likeIdx = likes[currentVideoId].indexOf(currentUser.id);
+            const dislikeIdx = dislikes[currentVideoId].indexOf(currentUser.id);
             if(likeIdx === -1) {
                 likes[currentVideoId].push(currentUser.id);
                 if(dislikeIdx !== -1) dislikes[currentVideoId].splice(dislikeIdx, 1);
-                showCustomToast("👍 Лайк қойылды / Лайк поставлен!");
+                showCustomToast("👍 Лайк қойылды!");
             } else {
                 likes[currentVideoId].splice(likeIdx, 1);
-                showCustomToast("👍 Лайк алынып тасталды / Лайк убран");
+                showCustomToast("👍 Лайк алынып тасталды");
             }
         } else {
+            if(!dislikes[currentVideoId]) dislikes[currentVideoId] = [];
+            if(!likes[currentVideoId]) likes[currentVideoId] = [];
+            const dislikeIdx = dislikes[currentVideoId].indexOf(currentUser.id);
+            const likeIdx = likes[currentVideoId].indexOf(currentUser.id);
             if(dislikeIdx === -1) {
                 dislikes[currentVideoId].push(currentUser.id);
                 if(likeIdx !== -1) likes[currentVideoId].splice(likeIdx, 1);
-                showCustomToast("👎 Дизлайк қойылды / Дизлайк поставлен!");
+                showCustomToast("👎 Дизлайк қойылды!");
             } else {
                 dislikes[currentVideoId].splice(dislikeIdx, 1);
-                showCustomToast("👎 Дизлайк алынып тасталды / Дизлайк убран");
+                showCustomToast("👎 Дизлайк алынып тасталды");
             }
         }
         saveData();
@@ -1184,8 +1186,8 @@
     
     function subscribeAction(authorId) {
         const t = translations[currentLang];
-        if(!currentUser) { showCustomToast(t.needLogin); return; }
-        if(currentUser.id === authorId) { showCustomToast(t.cantSubscribe); return; }
+        if(!currentUser) { showCustomToast(t.needLogin, true); return; }
+        if(currentUser.id === authorId) { showCustomToast(t.cantSubscribe, true); return; }
         if(!subs[currentUser.id]) subs[currentUser.id] = [];
         const idx = subs[currentUser.id].indexOf(authorId);
         if(idx === -1) {
@@ -1196,7 +1198,7 @@
             showCustomToast(t.unsubscribedMsg);
         }
         saveData();
-        if(currentPage === 'watch' && currentVideoId) openWatchPage(currentVideoId, true);
+        openWatchPage(currentVideoId, true);
     }
     
     function renderComments() {
@@ -1211,7 +1213,7 @@
         for(let c of [...videoComments].reverse()) {
             const author = users.find(u => u.id === c.userId) || { name: c.userName, avatar: c.userName[0].toUpperCase() };
             html += `<div class="comment-item">
-                <div class="comment-avatar-small">${author.avatar || author.name[0].toUpperCase()}</div>
+                <div class="comment-avatar-small">${escapeHtml(author.avatar || author.name[0].toUpperCase())}</div>
                 <div class="comment-content">
                     <div class="comment-author">${escapeHtml(c.userName)}</div>
                     <div class="comment-text">${escapeHtml(c.text)}</div>
@@ -1223,7 +1225,7 @@
     }
     
     function postComment() {
-        if(!currentUser) { showCustomToast(translations[currentLang].needLogin); return; }
+        if(!currentUser) { showCustomToast(translations[currentLang].needLogin, true); return; }
         const text = document.getElementById('commentInput').value.trim();
         if(!text) return;
         if(!comments[currentVideoId]) comments[currentVideoId] = [];
@@ -1234,7 +1236,7 @@
         saveData();
         document.getElementById('commentInput').value = '';
         renderComments();
-        showCustomToast("💬 Комментарий қосылды / Добавлен!");
+        showCustomToast("💬 Комментарий қосылды!");
     }
     
     function renderRecommendations(currentId) {
@@ -1264,11 +1266,9 @@
             if(!subtitlesEnabled || !video || video.paused) return;
             const ct = video.currentTime;
             let active = null;
-            for(let s of currentSubtitles) {
-                if(ct >= s.time && ct <= (s.time + 3.5)) active = s;
-            }
+            for(let s of currentSubtitles) if(ct >= s.time) active = s;
             subText.textContent = active ? active.text : '';
-        }, 250);
+        }, 200);
     }
     
     function toggleSubtitles() {
@@ -1280,22 +1280,15 @@
             showCustomToast(translations[currentLang].subtitlesBtn + ' ✅');
         } else {
             container.style.display = 'none';
-            if(subtitleInterval) clearInterval(subtitleInterval);
+            if(subtitleInterval) {
+                clearInterval(subtitleInterval);
+                subtitleInterval = null;
+            }
             showCustomToast(translations[currentLang].subtitlesBtn + ' ❌');
         }
-        document.getElementById('settingsMenu').classList.remove('show');
     }
     
-    function changeSpeed(s) { 
-        document.getElementById('mainVideo').playbackRate = s; 
-        showCustomToast(`${translations[currentLang].speed}: ${s}x`); 
-        document.getElementById('settingsMenu').classList.remove('show'); 
-    }
-    
-    function changeQuality(q) {
-        showCustomToast(`Сапа / Качество изменилось на: ${q}`);
-        document.getElementById('settingsMenu').classList.remove('show');
-    }
+    function changeSpeed(s) { document.getElementById('mainVideo').playbackRate = s; showCustomToast(`${translations[currentLang].speed}: ${s}x`); document.getElementById('settingsMenu').classList.remove('show'); }
     
     function setupPlayer() {
         const video = document.getElementById('mainVideo');
@@ -1309,7 +1302,6 @@
         const settingsBtn = document.getElementById('settingsBtn');
         const settingsMenu = document.getElementById('settingsMenu');
         const player = document.getElementById('customPlayer');
-        const controlsContainer = document.getElementById('playerControlsContainer');
         
         function format(sec) {
             if(isNaN(sec)) return '0:00';
@@ -1322,81 +1314,26 @@
                 progressFill.style.width = (video.currentTime / video.duration) * 100 + '%';
             }
         }
-        
-        video.removeEventListener('timeupdate', update);
         video.addEventListener('timeupdate', update);
         video.addEventListener('loadedmetadata', update);
-        
-        playPause.onclick = (e) => { e.stopPropagation(); togglePlay(); };
-        
-        video.onplay = () => { playPause.innerHTML = '<i class="fas fa-pause"></i>'; restartSubtitles(); };
+        playPause.onclick = () => video.paused ? video.play().catch(()=>{}) : video.pause();
+        video.onplay = () => playPause.innerHTML = '<i class="fas fa-pause"></i>';
         video.onpause = () => playPause.innerHTML = '<i class="fas fa-play"></i>';
-        
         progressBar.onclick = (e) => {
-            e.stopPropagation();
             const rect = progressBar.getBoundingClientRect();
             video.currentTime = ((e.clientX - rect.left) / rect.width) * video.duration;
         };
-        
-        muteBtn.onclick = (e) => {
-            e.stopPropagation();
+        muteBtn.onclick = () => {
             video.muted = !video.muted;
             muteBtn.innerHTML = video.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
             volume.value = video.muted ? 0 : video.volume;
         };
-        
-        volume.onclick = (e) => e.stopPropagation();
         volume.oninput = (e) => { video.volume = parseFloat(e.target.value); video.muted = false; muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>'; };
-        
-        fullscreen.onclick = (e) => { e.stopPropagation(); toggleFullscreen(); };
-        
+        fullscreen.onclick = () => { if(player.requestFullscreen) player.requestFullscreen(); };
         settingsBtn.onclick = (e) => { e.stopPropagation(); settingsMenu.classList.toggle('show'); };
-        controlsContainer.onclick = (e) => e.stopPropagation();
-        
-        let clickTimer = null;
-        player.onclick = function() {
-            if (clickTimer == null) {
-                clickTimer = setTimeout(function () {
-                    clickTimer = null;
-                    togglePlay();
-                }, 250);
-            } else {
-                clearTimeout(clickTimer);
-                clickTimer = null;
-                toggleFullscreen();
-            }
-        };
-        
-        function togglePlay() {
-            if (video.paused) video.play();
-            else video.pause();
-        }
-        
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                if (player.requestFullscreen) player.requestFullscreen();
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-            }
-        }
-        
-        video.play();
+        document.addEventListener('click', () => settingsMenu.classList.remove('show'));
+        video.play().catch(()=>{});
     }
-    
-    window.addEventListener('keydown', function(e) {
-        if (e.code === 'Space') {
-            const activeEl = document.activeElement;
-            if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
-                return; 
-            }
-            e.preventDefault(); 
-            const video = document.getElementById('mainVideo');
-            if (currentPage === 'watch' && video) {
-                if (video.paused) video.play();
-                else video.pause();
-            }
-        }
-    });
     
     function showHome() {
         currentPage = 'home';
@@ -1407,11 +1344,10 @@
         document.getElementById('profilePage').style.display = 'none';
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
         document.querySelectorAll('.nav-link')[0].classList.add('active');
-        if(subtitleInterval) clearInterval(subtitleInterval);
-        
-        const mainVideo = document.getElementById('mainVideo');
-        if(mainVideo) mainVideo.pause();
-        
+        if(subtitleInterval) {
+            clearInterval(subtitleInterval);
+            subtitleInterval = null;
+        }
         renderHomePage();
     }
     
@@ -1430,16 +1366,11 @@
         }
     };
     
-    document.addEventListener('click', () => {
-        const menu = document.getElementById('settingsMenu');
-        if(menu) menu.classList.remove('show');
-    });
-    
     window.onclick = (e) => { if(e.target.classList.contains('modal')) e.target.style.display = 'none'; };
     
     loadData();
-    detectCountry();
     updateUI();
+    detectCountry();
 </script>
 
 <div class="footer">
